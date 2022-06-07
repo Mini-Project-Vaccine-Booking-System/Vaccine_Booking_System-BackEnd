@@ -1,8 +1,5 @@
 package com.example.demo.entity;
 
-
-
-
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -14,54 +11,40 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-
 @Entity
+@Table
 @Data
-@Table(name = "user")
-public class Citizen {
+public class Kelompok {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user")
-    private Long id_user;
+    @Column(name = "id_kelompok")
+    private Long id_Kelompok;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "id_user")
+    private Long id_User;
+   
+    @Column(name = "nik")
+    private String nik;
 
     @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
-    private String password;
+    @Column (name = "nama_kelompok")
+    private String nama_kelompok;
 
-    @Column(name = "role")
-    private String role;
-
-    @Column(name = "kk")
-    private String kk;
-
-    @Column(name = "no_hp")
-    private String no_hp;
-
-    @Column(name = "nama_citizen")
-    private String nama_user;
-
-    @Column(name = "gender")
-    private String gender;
+    @Column(name = "tlp")
+    private String tlp;
 
     @Column(name = "tgl_lahir")
     private Date tgl_lahir;
 
+    @Column(name = "updated_at")
+    private Date updated_at;
 
     @Column(name = "address")
     private String address;
 
-    @Column(name = "updated_at")
-    private Date updated_at;
-
     @Column(name = "created_at")
     private Date created_at;
 
-   
-    
 }
-
