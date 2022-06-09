@@ -56,7 +56,7 @@ public class CitizenController {
         });
         return citizenById;
     }
-    @DeleteMapping("/citizens/{id}")
+    @DeleteMapping("/user/{id}")
     public void deleteCitizen(@PathVariable Long id) {
         Optional<User> citizenById = citizenRepository.findById(id);
         citizenById.ifPresent(res -> {

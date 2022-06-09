@@ -25,6 +25,10 @@ public class VaksinController {
     public Optional<Vaksin> getvaksin(@PathVariable Long id) {
         return vaksinRepository.findById(id);
     }
+    @PostMapping("/vaksin")
+    public Vaksin createNewKelompok(@RequestBody Vaksin payload) {
+        return vaksinRepository.save(payload);
+    }
     @PutMapping("/vaksin/{id}")
     public Optional<Vaksin> updateVaksin(
             @PathVariable Long id,
@@ -42,7 +46,7 @@ public class VaksinController {
         });
         return vaksinById;
     }
-    @DeleteMapping("/stock/{id}")
+    @DeleteMapping("/vaksin/{id}")
     public void deleteStokVaksain(@PathVariable Long id) {
         Optional<Vaksin> vaksinById = vaksinRepository.findById(id);
         vaksinById.ifPresent(res -> {
