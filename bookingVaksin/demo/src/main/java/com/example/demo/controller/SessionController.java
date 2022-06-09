@@ -55,7 +55,7 @@ public class SessionController {
     }
 
     @GetMapping("/sessionDTO")
-        public List<SessionDTO> getPeminjamanDTO() {
+        public List<SessionDTO> getSessionDTO() {
             List<Session> session = sessionRepository.findAll();
             List<SessionDTO> sessionDTO = new ArrayList<>();
             session.forEach(res -> {

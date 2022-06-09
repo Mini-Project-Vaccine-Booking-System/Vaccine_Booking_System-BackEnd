@@ -55,7 +55,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/scheduleDTO")
-        public List<ScheduleDTO> getPeminjamanDTO() {
+        public List<ScheduleDTO> getScheduleDTO() {
             List<Schedule> schedule = scheduleRepository.findAll();
             List<ScheduleDTO> scheduleDTO = new ArrayList<>();
             schedule.forEach(res -> {
