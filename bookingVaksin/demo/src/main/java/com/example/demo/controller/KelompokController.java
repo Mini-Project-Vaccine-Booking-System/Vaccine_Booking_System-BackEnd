@@ -43,9 +43,9 @@ public class KelompokController {
             res.setNik(kelompok.getNik());
             res.setAddress(kelompok.getAddress());
             res.setUsername(kelompok.getUsername());
-            res.setNama_kelompok(kelompok.getNama_kelompok());
+            res.setNamaKelompok(kelompok.getNamaKelompok());
             res.setTlp(kelompok.getTlp());
-            res.setTgl_lahir(kelompok.getTgl_lahir());
+            res.setTglLahir(kelompok.getTglLahir());
             kelompokRepository.save(res);
         });
         return kelompokById;

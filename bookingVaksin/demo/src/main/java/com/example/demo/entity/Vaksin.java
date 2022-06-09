@@ -3,6 +3,9 @@ package com.example.demo.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.sql.Date;
 
 
@@ -27,6 +30,7 @@ public class Vaksin {
     @Column (name = "update_at")
     private Date update_at;
 
+    @CreationTimestamp
     @Column (name = "created_at")
     private Date created_ad;
 

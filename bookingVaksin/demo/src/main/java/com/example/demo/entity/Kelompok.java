@@ -18,10 +18,10 @@ public class Kelompok {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_kelompok")
-    private Long id_Kelompok;
+    private Long idKelompok;
 
     @Column(name = "id_user")
-    private Long id_User;
+    private Long idUser;
    
     @Column(name = "nik")
     private String nik;
@@ -30,21 +30,21 @@ public class Kelompok {
     private String username;
 
     @Column (name = "nama_kelompok")
-    private String nama_kelompok;
+    private String namaKelompok;
 
     @Column(name = "tlp")
     private String tlp;
 
     @Column(name = "tgl_lahir")
-    private Date tgl_lahir;
-
-    @Column(name = "updated_at")
-    private Date updated_at;
+    private Date tglLahir;
 
     @Column(name = "address")
     private String address;
 
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
     @Column(name = "created_at")
-    private Date created_at;
+    private Date createdAt;
 
 }
