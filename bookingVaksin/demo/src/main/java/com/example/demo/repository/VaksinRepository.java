@@ -3,10 +3,10 @@ package com.example.demo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.StokVaksin;
+import com.example.demo.entity.Vaksin;
 
 @Repository
-public interface StockVaksinRepository extends JpaRepository<StokVaksin,Long>  {
+public interface VaksinRepository extends JpaRepository<Vaksin,Long>  {
     
 }
 

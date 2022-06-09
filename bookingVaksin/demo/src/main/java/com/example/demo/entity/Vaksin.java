@@ -8,21 +8,21 @@ import java.sql.Date;
 
 @Entity
 @Data
-@Table(name = "stock_vaksin")
-public class StokVaksin {
+@Table(name = "vaksin")
+public class Vaksin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_stock")
-    private Long id_stock;
+    @Column(name = "id_vaksin")
+    private Long idVaksin;
 
-    @Column (name = "health_id")
-    private  Long health_id;
+    @Column (name = "id_health")
+    private  Long idHealth;
 
-    @Column(name = "quatity")
-    private Integer quantity;
+    @Column(name = "nama")
+    private String nama;
 
-    @Column (name = "jenis_vaksin")
-    private String jenis_vaksin;
+    @Column(name = "quantity")
+    private Long quantity;
 
     @Column (name = "update_at")
     private Date update_at;

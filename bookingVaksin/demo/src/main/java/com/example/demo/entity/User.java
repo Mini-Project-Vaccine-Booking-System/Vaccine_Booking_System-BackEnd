@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Citizen {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -40,8 +40,8 @@ public class Citizen {
     @Column(name = "password")
     private String password;
 
-    // @Column(name = "role")
-    // private String role;
+    @Column(name = "role")
+    private String role;
 
     @Column(name = "nik")
     private String nik;
@@ -49,8 +49,8 @@ public class Citizen {
     @Column(name = "no_hp")
     private String no_hp;
 
-    @Column(name = "nama_citizen")
-    private String nama_user;
+    @Column(name = "nama")
+    private String nama;
 
     @Column(name = "gender")
     private String gender;
@@ -61,16 +61,23 @@ public class Citizen {
     @Column(name = "image")
     private String image;
 
-    // @Column(name = "address")
-    // private String address;
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "kota")
+    private String kota;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updated_at;
+    private Date updatedAt;
+
+    
+    @Column(name= "updated_by")
+    private String updatedBy;
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private Date created_at;
+    private Date createdAt;
 
    
     

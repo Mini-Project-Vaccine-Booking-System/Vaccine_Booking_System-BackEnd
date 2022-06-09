@@ -6,11 +6,11 @@ import java.sql.Date;
 
 
 @Data
-public class StokVaksinDTO {
-    private long id_stock;
-    private long health_id;
-    private Integer quantity;
-    private String jenis_vaksin;
+public class VaksinDTO {
+    private long idVaksin;
+    private long idHealth;
+    private String nama;
+    private Long quantity;
     private Date update_at;
     private Date created_ad;
     private String created_by;

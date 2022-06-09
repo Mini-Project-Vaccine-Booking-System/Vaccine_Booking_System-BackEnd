@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.demo.entity.Citizen;
-import com.example.demo.entity.dto.CitizenDTO;
-import com.example.demo.repository.CitizenRepository;
+import com.example.demo.entity.User;
+import com.example.demo.entity.dto.UserDTO;
+import com.example.demo.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,43 +22,43 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class CitizenController {
     @Autowired
-    private CitizenRepository citizenRepository;
+    private UserRepository citizenRepository;
 
     @GetMapping("/user")
-    public List<Citizen> getCitizens() {
+    public List<User> getCitizens() {
         return citizenRepository.findAll();
     }
     @GetMapping("/user/{id}")
-    public Optional <Citizen> geCitizens(@PathVariable Long id) {
+    public Optional <User> geCitizens(@PathVariable Long id) {
         return citizenRepository.findById(id);
     }
     @PostMapping("/user")
-    public Citizen createNewCitizen(@RequestBody Citizen payload) {
+    public User createNewCitizen(@RequestBody User payload) {
         return citizenRepository.save(payload);
     }
     @PutMapping("/user/{id}") 
-    public Optional<Citizen> updateCitizen(
+    public Optional<User> updateCitizen(
         @PathVariable Long id, 
-        @RequestBody Citizen  citizen) {
-            Optional<Citizen> citizenById = citizenRepository.findById(id);
+        @RequestBody User  citizen) {
+            Optional<User> citizenById = citizenRepository.findById(id);
         
         citizenById.ifPresent(res -> {
             res.setNik(citizen.getNik());
             res.setNo_hp(citizen.getNo_hp());
-            res.setNama_user(citizen.getNama_user());
+            res.setNama(citizen.getNama());
             res.setGender(citizen.getGender());
             res.setTgl_lahir(citizen.getTgl_lahir());
             res.setImage(citizen.getImage());
             res.setUsername(citizen.getUsername());
             res.setPassword(citizen.getPassword());
-            res.setUpdated_at(citizen.getUpdated_at());
+            res.setUpdatedAt(citizen.getUpdatedAt());
             citizenRepository.save(res);
         });
         return citizenById;
     }
     @DeleteMapping("/citizens/{id}")
     public void deleteCitizen(@PathVariable Long id) {
-        Optional<Citizen> citizenById = citizenRepository.findById(id);
+        Optional<User> citizenById = citizenRepository.findById(id);
         citizenById.ifPresent(res -> {
             citizenRepository.delete(res);
         });
