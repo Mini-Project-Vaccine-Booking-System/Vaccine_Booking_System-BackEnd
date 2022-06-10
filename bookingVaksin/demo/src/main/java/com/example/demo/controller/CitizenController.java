@@ -63,27 +63,27 @@ public class CitizenController {
             citizenRepository.delete(res);
         });
     }
-    @GetMapping("/citizenDTO")
-    public List<UserDTO> getCitizenDTO() {
-        List<User> citizen = citizenRepository.findAll();
-        List<UserDTO> citizenDTO = new ArrayList<>();
-        citizen.forEach(res -> {
-            CitizenDTO citizen1 = new CitizenDTO();
-            citizen1.setId_user(res.getId_user());
-            citizen1.setKk(res.getKk());
-            citizen1.setNo_hp(res.getNo_hp());
-            citizen1.setNama_user(res.getNama_user());
-            citizen1.setGender(res.getGender());
-            citizen1.setTgl_lahir(res.getTgl_lahir());
-            citizen1.setAddress(res.getAddress());
-            citizen1.setUsername(res.getUsername());
-            citizen1.setRole(res.getRole());
-            citizen1.setUpdated_at(res.getUpdated_at());
-            citizen1.setCreated_at(res.getCreated_at());
-            citizenDTO.add(citizen1);
-        });
-        return citizenDTO;
-    }
+    // @GetMapping("/citizenDTO")
+    // public List<UserDTO> getCitizenDTO() {
+    //     List<User> citizen = citizenRepository.findAll();
+    //     List<UserDTO> citizenDTO = new ArrayList<>();
+    //     citizen.forEach(res -> {
+    //         CitizenDTO citizen1 = new CitizenDTO();
+    //         citizen1.setId_user(res.getId_user());
+    //         citizen1.setKk(res.getKk());
+    //         citizen1.setNo_hp(res.getNo_hp());
+    //         citizen1.setNama_user(res.getNama_user());
+    //         citizen1.setGender(res.getGender());
+    //         citizen1.setTgl_lahir(res.getTgl_lahir());
+    //         citizen1.setAddress(res.getAddress());
+    //         citizen1.setUsername(res.getUsername());
+    //         citizen1.setRole(res.getRole());
+    //         citizen1.setUpdated_at(res.getUpdated_at());
+    //         citizen1.setCreated_at(res.getCreated_at());
+    //         citizenDTO.add(citizen1);
+    //     });
+    //     return citizenDTO;
+    // }
 
     
 }

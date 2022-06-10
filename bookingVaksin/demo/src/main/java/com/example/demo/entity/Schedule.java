@@ -6,13 +6,19 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "schedule")
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Getter
+@Setter
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
