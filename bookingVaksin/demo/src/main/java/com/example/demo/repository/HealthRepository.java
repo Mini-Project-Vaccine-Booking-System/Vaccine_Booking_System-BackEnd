@@ -10,5 +10,5 @@ import com.example.demo.entity.Health;
 @Repository
 public interface HealthRepository extends JpaRepository<Health,Long>  {
     List<Health> findByName(String name);
-    // List<Health> findByNameAndAge(String name, int age);
+    List<Health> findByCity(String city);
 }

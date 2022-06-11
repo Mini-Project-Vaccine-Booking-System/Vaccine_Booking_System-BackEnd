@@ -33,7 +33,7 @@ public class CitizenController {
         return citizenRepository.findAll();
     }
     @GetMapping("/user/{id}")
-    public Optional <User> geCitizens(@PathVariable Long id) {
+    public Optional <User> getCitizen(@PathVariable Long id) {
         return citizenRepository.findById(id);
     }
     @PostMapping("/user")
