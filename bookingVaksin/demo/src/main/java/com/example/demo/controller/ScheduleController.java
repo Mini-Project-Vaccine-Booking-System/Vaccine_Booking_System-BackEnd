@@ -36,48 +36,29 @@ public class ScheduleController {
     public Schedule createNewKelompok(@RequestBody Schedule payload) {
         return scheduleRepository.save(payload);
     }
-    // @PutMapping("/schedule/{id}")
-    // public Optional<Schedule> updateSchedule(
-    //         @PathVariable Long id,
-    //         @RequestBody Schedule schedule) {
-    //     Optional<Schedule>scheduleById = scheduleRepository.findById(id);
+    @PutMapping("/schedule/{id}")
+    public Optional<Schedule> updateSchedule(
+            @PathVariable Long id,
+            @RequestBody Schedule schedule) {
+        Optional<Schedule>scheduleById = scheduleRepository.findById(id);
 
-    //     scheduleById.ifPresent(res -> {
-    //         res.setIdHealth(schedule.getIdHealth());
-    //         res.setNama(schedule.getNama());
-    //         scheduleRepository.save(res);
-    //     });
-    //     return scheduleById;
-    // }
-    // @PutMapping("/user/{id}") 
-    // public Optional<Schedule> updateSchedule(
-    //     @PathVariable Long id, 
-    //     @RequestBody Schedule  schedule) {
-    //         Optional<Schedule> scheduleById = scheduleRepository.findById(id);
-        
-    //     scheduleById.ifPresent(res -> {
-    //         res.setStart(schedule.getStart());
-    //         res.setNama(schedule.getNama());
-    //         res.setNama(citizen.getNama());
-    //         res.setGender(citizen.getGender());
-    //         res.setTgl_lahir(citizen.getTgl_lahir());
-    //         res.setImage(citizen.getImage());
-    //         res.setUsername(citizen.getUsername());
-    //         res.setPassword(citizen.getPassword());
-    //         res.setUpdatedAt(citizen.getUpdatedAt());
-    //         scheduleRepository.save(res);
-    //     });
-    //     return scheduleById;
-    // }
+        scheduleById.ifPresent(res -> {
+            res.setIdSchedule(schedule.getIdSchedule());
+            res.setIdSession(schedule.getIdSession());
+            res.setStart(schedule.getStart());
+            res.setEnd(schedule.getEnd());
+            scheduleRepository.save(res);
+        });
+        return scheduleById;
+    }
+  
     // @GetMapping("/scheduleDTO")
     //     public List<ScheduleDTO> getScheduleDTO() {
     //         List<Schedule> schedule = scheduleRepository.findAll();
     //         List<ScheduleDTO> scheduleDTO = new ArrayList<>();
     //         schedule.forEach(res -> {
     //             ScheduleDTO schedule1 = new ScheduleDTO();
-    //             schedule1.setIdHealth(res.getIdHealth());
-    //             schedule1.setNama(res.getNama());
-    //             schedule1.setQuantity(res.getQuantity());
+           
     //             schedule1.setUpdate_at(res.getUpdate_at());
     //             schedule1.setCreated_ad(res.getCreated_ad());
     //             schedule1.setCreated_by(res.getCreated_by());

@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.entity.User;
-import com.example.demo.entity.dto.UserDTO;
+
 import com.example.demo.repository.UserRepository;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CitizenController {
     @Autowired
     private UserRepository citizenRepository;
+
 
     @GetMapping("/user")
     public List<User> getCitizens() {
@@ -63,6 +67,15 @@ public class CitizenController {
             citizenRepository.delete(res);
         });
     }
+    // private UserServi userServi;
+    // public CitizenController(UserServi userServi) {
+    //     this.userServi = userServi;
+    // }
+    // @GetMapping("/user/search")
+    // public ResponseEntity<List<User>> seacrhUsers(@RequestParam("query") String query) {
+    //     return ResponseEntity.ok(userServi.searchUsers(query));
+    // }
+   
     // @GetMapping("/citizenDTO")
     // public List<UserDTO> getCitizenDTO() {
     //     List<User> citizen = citizenRepository.findAll();
