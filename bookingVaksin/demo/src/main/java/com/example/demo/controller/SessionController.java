@@ -35,22 +35,22 @@ public class SessionController {
     public Session createNewKelompok(@RequestBody Session payload) {
         return sessionRepository.save(payload);
     }
-    @PutMapping("/session/{id}")
-    public Optional<Session> updateSession(
-            @PathVariable Long id,
-            @RequestBody Session session) {
-        Optional<Session>sessionById = sessionRepository.findById(id);
+    // @PutMapping("/session/{id}")
+    // public Optional<Session> updateSession(
+    //         @PathVariable Long id,
+    //         @RequestBody Session session) {
+    //     Optional<Session>sessionById = sessionRepository.findById(id);
 
-        sessionById.ifPresent(res -> {
-            res.setIdHealth(session.getIdHealth());
-            res.setNama(session.getNama());
+    //     sessionById.ifPresent(res -> {
+    //         res.setIdHealth(session.getIdHealth());
+    //         res.setNama(session.getNama());
             
-            res.setUpdate_at(session.getUpdate_at());
-            res.setCreated_ad(session.getCreated_ad());
-            res.setCreated_by(session.getCreated_by());
-            sessionRepository.save(res);
-        }); 
-        return sessionById;
-    }
+    //         res.setUpdate_at(session.getUpdate_at());
+    //         res.setCreated_ad(session.getCreated_ad());
+    //         res.setCreated_by(session.getCreated_by());
+    //         sessionRepository.save(res);
+    //     }); 
+    //     return sessionById;
+    // }
     
 }

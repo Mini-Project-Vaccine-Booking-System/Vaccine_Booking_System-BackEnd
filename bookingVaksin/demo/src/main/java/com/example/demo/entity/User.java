@@ -3,14 +3,12 @@ package com.example.demo.entity;
 
 
 
-import java.sql.Date;
+import java.util    .Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,8 +26,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user")
-    private Long id_user;
+    private Long idUser;
 
     @Column(name = "email")
     private String email;
@@ -47,7 +44,7 @@ public class User {
     private String nik;
 
     @Column(name = "no_hp")
-    private String no_hp;
+    private String noHp;
 
     @Column(name = "nama")
     private String nama;
@@ -56,7 +53,7 @@ public class User {
     private String gender;
 
     @Column(name = "tgl_lahir")
-    private Date tgl_lahir;
+    private Date tglLahir;
 
     @Column(name = "image")
     private String image;
@@ -79,7 +76,17 @@ public class User {
     @Column(name = "created_at")
     private Date createdAt;
 
-   
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Kelompok> kelompok;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Vaksin> vaksin;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Session> session;
     
 }
 

@@ -15,49 +15,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Kelompok;
+import com.example.demo.entity.dto.KelompokDTO;
 import com.example.demo.repository.KelompokRepository;
+import com.example.demo.service.KelompokService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/kelompok")
 public class KelompokController {
     @Autowired
-    private KelompokRepository kelompokRepository;
+    private KelompokService kelompokService;
 
-    @GetMapping("/kelompok")
+
+    @GetMapping(value = "")
     public List<Kelompok> getKelompok() {
-        return kelompokRepository.findAll();
+        return kelompokService.getKelompok();
     }
-    @PostMapping("/kelompok")
-    public Kelompok createNewKelompok(@RequestBody Kelompok payload) {
-        return kelompokRepository.save(payload);
+    @GetMapping(value = "/{id}")
+    public Optional <Kelompok> getKelompok(@PathVariable(value = "id") Long id) {
+        return kelompokService.findById(id);
     }
-    @PutMapping("/kelompok/{id}") 
-    public Optional<Kelompok> updateKelompok(
-        @PathVariable Long id, 
-        @RequestBody Kelompok  kelompok) {
-            Optional<Kelompok> kelompokById = kelompokRepository.findById(id);
-        
-        kelompokById.ifPresent(res -> {
-            // res.setId_user(kelompok.getId_user());
-            // res.setId_kelompok(kelompok.getId_kelompok());
-            res.setNik(kelompok.getNik());
-            res.setAddress(kelompok.getAddress());
-            res.setUsername(kelompok.getUsername());
-            res.setNamaKelompok(kelompok.getNamaKelompok());
-            res.setTlp(kelompok.getTlp());
-            res.setTglLahir(kelompok.getTglLahir());
-            kelompokRepository.save(res);
-        });
-        return kelompokById;
+    @PostMapping(value = "")
+    public Kelompok createNewKelompok(@RequestBody Kelompok request) {
+        return kelompokService.save(request);
     }
 
-    @DeleteMapping("/kelompok/{id}")
-    public void deleteKelompok(@PathVariable Long id) {
-        Optional<Kelompok> kelompokById = kelompokRepository.findById(id);
-        kelompokById.ifPresent(res -> {
-            kelompokRepository.delete(res);
-        });
+    @PutMapping(value = "/{id}") 
+    public Optional<Kelompok> updateKelompok(
+        @PathVariable (value = "id") Long id, @RequestBody KelompokDTO  request) {
+            return kelompokService.updateKelompok(id, request);
     }
+    @DeleteMapping(value = "/{id}")
+    public String deleteKelompok(@PathVariable (value = "id") Long id) {
+      return kelompokService.deleteKelompok(id);
+    }
+
     
 
 }

@@ -4,13 +4,11 @@ package com.example.demo.entity;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -33,14 +31,16 @@ public class Session {
     @Column(name="id_session")
     private Long idSession;
 
-    @Column(name="id_Health")
-    private Long idHealth;
+    @ManyToOne
+    @JoinColumn(name = "id_health", nullable = false)
+    private User user;
 
     @Column(name="start")
     private LocalDateTime start;
 
-    @Column(name="nama")
-    private String nama;
+    @ManyToOne
+    @JoinColumn(name = "nama_vaksin", nullable = false)
+    private Vaksin vaksin;
 
     @Column(name="end")
     private LocalDateTime end;
@@ -54,5 +54,9 @@ public class Session {
 
     @Column (name = "created_by")
     private String created_by;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "session")
+    private List<Schedule> schedule;
 }
 

@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.entity.User;
-
-import com.example.demo.repository.UserRepository;
-
+import com.example.demo.entity.dto.UserDTO;
+import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,50 +21,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class CitizenController {
     @Autowired
-    private UserRepository citizenRepository;
+    private UserService userService;
 
 
-    @GetMapping("/user")
+    @GetMapping(value = "")
     public List<User> getCitizens() {
-        return citizenRepository.findAll();
+        return userService.getCitizens();
     }
-    @GetMapping("/user/{id}")
-    public Optional <User> getCitizen(@PathVariable Long id) {
-        return citizenRepository.findById(id);
+    @GetMapping(value = "/{id}")
+    public Optional <User> getCitizen(@PathVariable(value = "id") Long id) {
+        return userService.findById(id);
     }
-    @PostMapping("/user")
-    public User createNewCitizen(@RequestBody User payload) {
-        return citizenRepository.save(payload);
+    @PostMapping(value = "")
+    public User createNewCitizen(@RequestBody User request) {
+        return userService.save(request);
     }
-    @PutMapping("/user/{id}") 
+
+    @PutMapping(value = "/{id}") 
     public Optional<User> updateCitizen(
-        @PathVariable Long id, 
-        @RequestBody User  citizen) {
-            Optional<User> citizenById = citizenRepository.findById(id);
-        
-        citizenById.ifPresent(res -> {
-            res.setNik(citizen.getNik());
-            res.setNo_hp(citizen.getNo_hp());
-            res.setNama(citizen.getNama());
-            res.setGender(citizen.getGender());
-            res.setTgl_lahir(citizen.getTgl_lahir());
-            res.setImage(citizen.getImage());
-            res.setUsername(citizen.getUsername());
-            res.setPassword(citizen.getPassword());
-            res.setUpdatedAt(citizen.getUpdatedAt());
-            citizenRepository.save(res);
-        });
-        return citizenById;
+        @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
+            return userService.updateCitizen(id, citizen);
     }
-    @DeleteMapping("/user/{id}")
-    public void deleteCitizen(@PathVariable Long id) {
-        Optional<User> citizenById = citizenRepository.findById(id);
-        citizenById.ifPresent(res -> {
-            citizenRepository.delete(res);
-        });
+    @DeleteMapping(value = "/{id}")
+    public String deleteCitizen(@PathVariable (value = "id") Long id) {
+      return userService.deleteCitizen(id);
     }
     // private UserServi userServi;
     // public CitizenController(UserServi userServi) {

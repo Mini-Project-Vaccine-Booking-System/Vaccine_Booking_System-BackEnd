@@ -36,21 +36,21 @@ public class ScheduleController {
     public Schedule createNewKelompok(@RequestBody Schedule payload) {
         return scheduleRepository.save(payload);
     }
-    @PutMapping("/schedule/{id}")
-    public Optional<Schedule> updateSchedule(
-            @PathVariable Long id,
-            @RequestBody Schedule schedule) {
-        Optional<Schedule>scheduleById = scheduleRepository.findById(id);
+    // @PutMapping("/schedule/{id}")
+    // public Optional<Schedule> updateSchedule(
+    //         @PathVariable Long id,
+    //         @RequestBody Schedule schedule) {
+    //     Optional<Schedule>scheduleById = scheduleRepository.findById(id);
 
-        scheduleById.ifPresent(res -> {
-            res.setIdSchedule(schedule.getIdSchedule());
-            res.setIdSession(schedule.getIdSession());
-            res.setStart(schedule.getStart());
-            res.setEnd(schedule.getEnd());
-            scheduleRepository.save(res);
-        });
-        return scheduleById;
-    }
+    //     scheduleById.ifPresent(res -> {
+    //         res.setIdSchedule(schedule.getIdSchedule());
+    //         res.setIdSession(schedule.getIdSession());
+    //         res.setStart(schedule.getStart());
+    //         res.setEnd(schedule.getEnd());
+    //         scheduleRepository.save(res);
+    //     });
+    //     return scheduleById;
+    // }
   
     // @GetMapping("/scheduleDTO")
     //     public List<ScheduleDTO> getScheduleDTO() {

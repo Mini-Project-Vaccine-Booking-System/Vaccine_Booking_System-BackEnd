@@ -4,9 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
+import java.util.List;
 
 
 @Entity
@@ -17,9 +20,10 @@ public class Vaksin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vaksin")
     private Long idVaksin;
-
-    @Column (name = "id_health")
-    private  Long idHealth;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_health", nullable = false)
+    private  User user;
 
     @Column(name = "nama")
     private String nama;
@@ -36,4 +40,12 @@ public class Vaksin {
 
     @Column (name = "created_by")
     private String created_by;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vaksin")
+    private List<Session> session;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vaksin")
+    private List<Booking> booking;
 }

@@ -2,12 +2,7 @@ package com.example.demo.entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,14 +17,17 @@ public class Booking {
     @Column(name = "id_booking")
     private Long idBooking;
 
-    @Column(name = "id_kelompok")
-    private Long idKelompok;
+    @ManyToOne
+    @JoinColumn(name = "id_kelompok", nullable = false)
+    private Kelompok kelompok;
 
-    @Column(name="id_schedule")
-    private Long idSchedule;
+    @ManyToOne
+    @JoinColumn(name = "id_schedule", nullable = false)
+    private Schedule schedule;
 
-    @Column(name="id_vaksin")
-    private Long idVaksin;
+    @ManyToOne
+    @JoinColumn(name = "id_vaksin", nullable = false)
+    private Vaksin vaksin;
 
     @CreationTimestamp
     @Column(name = "created_at")

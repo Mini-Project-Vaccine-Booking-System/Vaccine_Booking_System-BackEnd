@@ -1,19 +1,23 @@
 package com.example.demo.entity.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.Data;
 
 @Data
 public class UserDTO {
-    private long id_user;
+    private long idUser;
     private String kk;
-    private String no_hp;
-    private String nama_user;
+    private String nik;
+    private String noHp;
+    private String nama;
     private String gender;
-    private Date tgl_lahir;
+    private String image;
+    private Date tglLahir;
     private String address;
     private String username;
+    private String password;
+    private String kota;
     private String role;
     private Date updated_at;
     private Date created_at;
