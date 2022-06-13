@@ -7,6 +7,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Date;
 import java.util.List;
@@ -25,12 +26,13 @@ public class Vaksin {
     @JoinColumn(name = "id_health", nullable = false)
     private  User user;
 
-    @Column(name = "nama")
+    @Column(name = "nama", nullable = false)
     private String nama;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity",nullable = false)
     private Long quantity;
 
+    @UpdateTimestamp
     @Column (name = "update_at")
     private Date update_at;
 

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Vaksin;
 import com.example.demo.entity.dto.VaksinDTO;
 import com.example.demo.repository.VaksinRepository;
+import com.example.demo.service.VaksinService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,45 +13,34 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/vaksin")
 public class VaksinController {
     @Autowired
-    private VaksinRepository vaksinRepository;
+    private VaksinService vaksinService;
 
-    @GetMapping("/vaksin")
-    public List<Vaksin> getvaksin() {
-        return vaksinRepository.findAll();
+    @GetMapping(value = "")
+    public List<Vaksin> getVaksin() {
+        return vaksinService.getvaksin();
     }
-    @GetMapping("/vaksin/{id}")
-    public Optional<Vaksin> getvaksin(@PathVariable Long id) {
-        return vaksinRepository.findById(id);
+    
+    @GetMapping(value = "/{id}")
+    public Optional <Vaksin> getVaksin(@PathVariable(value = "id") Long id) {
+        return vaksinService.findById(id);
     }
-    @PostMapping("/vaksin")
-    public Vaksin createNewKelompok(@RequestBody Vaksin payload) {
-        return vaksinRepository.save(payload);
+    
+    @PostMapping(value = "")
+    public Vaksin createNewVaksin(@RequestBody VaksinDTO request) {
+        return vaksinService.save(request);
     }
-    @PutMapping("/vaksin/{id}")
+    
+    @PutMapping(value = "/{id}") 
     public Optional<Vaksin> updateVaksin(
-            @PathVariable Long id,
-            @RequestBody Vaksin vaksin) {
-        Optional<Vaksin>vaksinById = vaksinRepository.findById(id);
-
-        vaksinById.ifPresent(res -> {
-            res.setNama(vaksin.getNama());
-            res.setQuantity(vaksin.getQuantity());
-            res.setUpdate_at(vaksin.getUpdate_at());
-            res.setCreated_ad(vaksin.getCreated_ad());
-            res.setCreated_by(vaksin.getCreated_by());
-            vaksinRepository.save(res);
-        });
-        return vaksinById;
+        @PathVariable Long id, @RequestBody VaksinDTO  request) {
+            return vaksinService.updateVaksin(id, request);
     }
-    @DeleteMapping("/vaksin/{id}")
-    public void deleteStokVaksain(@PathVariable Long id) {
-        Optional<Vaksin> vaksinById = vaksinRepository.findById(id);
-        vaksinById.ifPresent(res -> {
-            vaksinRepository.delete(res);
-        });
+    @DeleteMapping(value = "/{id}")
+    public String deleteVaksin(@PathVariable (value = "id") Long id) {
+      return vaksinService.deleteVaksin(id);
     }
     // @GetMapping("/vaksinDTO")
     //     public List<VaksinDTO> getPeminjamanDTO() {

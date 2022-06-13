@@ -7,6 +7,9 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.Data;
 
 @Entity
@@ -19,30 +22,32 @@ public class Kelompok {
     private Long idKelompok;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "idUser")
     private User user;
    
     @Column(name = "nik")
     private String nik;
 
-    @Column(name = "username")
+    @Column(name = "username",nullable = false)
     private String username;
 
-    @Column (name = "nama_kelompok")
+    @Column (name = "nama_kelompok",nullable = false)
     private String namaKelompok;
 
-    @Column(name = "tlp")
+    @Column(name = "tlp",nullable = false)
     private String tlp;
 
-    @Column(name = "tgl_lahir")
+    @Column(name = "tgl_lahir",nullable = false)
     private Date tglLahir;
 
-    @Column(name = "address")
+    @Column(name = "address",nullable = false)
     private String address;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
 

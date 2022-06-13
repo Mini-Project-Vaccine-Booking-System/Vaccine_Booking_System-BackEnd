@@ -4,14 +4,22 @@ import lombok.Data;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 
 @Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class VaksinDTO {
-    private long idVaksin;
     private long idHealth;
+
     private String nama;
     private Long quantity;
-    private Date update_at;
-    private Date created_ad;
-    private String created_by;
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @Column(name = "created_at")
+    private Date createdAt;
 }

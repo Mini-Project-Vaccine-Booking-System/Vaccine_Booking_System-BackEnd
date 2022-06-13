@@ -2,8 +2,9 @@ package com.example.demo.entity;
 
 
 
-import java.sql.Date;
-import java.time.LocalDateTime;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -36,14 +37,14 @@ public class Session {
     private User user;
 
     @Column(name="start")
-    private LocalDateTime start;
+    private LocalTime start;
 
     @ManyToOne
     @JoinColumn(name = "nama_vaksin", nullable = false)
     private Vaksin vaksin;
 
     @Column(name="end")
-    private LocalDateTime end;
+    private LocalTime end;
     
     @Column (name = "update_at")
     private Date update_at;

@@ -10,9 +10,12 @@ import com.example.demo.entity.dto.KelompokDTO;
 import com.example.demo.repository.KelompokRepository;
 import com.example.demo.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class KelompokService {
     @Autowired
@@ -24,10 +27,31 @@ public class KelompokService {
         return kelompokRepository.findAll();
     }
 
-    public Kelompok save(Kelompok request) {
-        return kelompokRepository.save(request);
+    public Kelompok save(KelompokDTO request) {
+    try{    
+        Kelompok kelompok = new Kelompok();
+        log.info("search user id {}", request.getIdUser());
+        User user = userRepository.findById(request.getIdUser())
+            .orElseThrow(()->  new Exception( " Id User" + request.getIdUser() + "Not Found"));
+
+        log.info("save kelompok");
+        kelompok.setUser(user);
+        kelompok.setNik(request.getNik());
+        kelompok.setAddress(request.getAddress());
+        kelompok.setUsername(request.getUsername());
+        kelompok.setNamaKelompok(request.getNamaKelompok());
+        kelompok.setTlp(request.getTlp());
+        kelompok.setTglLahir(request.getTglLahir());
+        kelompokRepository.save(kelompok);
+
+        return kelompok;
     }
-    public Optional <Kelompok> findById( Long id) {
+        catch(Exception e){
+            log.error("save error");
+            return null;
+        }
+    }
+    public Optional <Kelompok> findById(Long id) {
         return kelompokRepository.findById(id);
     }
     

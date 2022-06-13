@@ -44,6 +44,7 @@ public class UserService {
             res.setNik(citizen.getNik());
             res.setNoHp(citizen.getNoHp());
             res.setNama(citizen.getNama());
+            res.setRole(citizen.getRole());
             res.setGender(citizen.getGender());
             res.setTglLahir(citizen.getTglLahir());
             res.setAddress(citizen.getAddress());

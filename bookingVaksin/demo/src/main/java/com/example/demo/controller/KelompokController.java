@@ -35,13 +35,13 @@ public class KelompokController {
         return kelompokService.findById(id);
     }
     @PostMapping(value = "")
-    public Kelompok createNewKelompok(@RequestBody Kelompok request) {
+    public Kelompok createNewKelompok(@RequestBody KelompokDTO request) {
         return kelompokService.save(request);
     }
 
     @PutMapping(value = "/{id}") 
     public Optional<Kelompok> updateKelompok(
-        @PathVariable (value = "id") Long id, @RequestBody KelompokDTO  request) {
+        @PathVariable Long id, @RequestBody KelompokDTO  request) {
             return kelompokService.updateKelompok(id, request);
     }
     @DeleteMapping(value = "/{id}")

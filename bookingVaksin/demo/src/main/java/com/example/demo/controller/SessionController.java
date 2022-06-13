@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,43 +15,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Session;
+import com.example.demo.entity.dto.SessionDTO;
 import com.example.demo.repository.SessionRepository;
+import com.example.demo.service.SessionService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/session")
 public class SessionController {
     @Autowired
-    private SessionRepository sessionRepository;
+    private SessionService sessionService;
     
-    @GetMapping("/session")
+    @GetMapping(value = "")
     public List<Session> getSession() {
-        return sessionRepository.findAll();
+        return sessionService.getSession();
+    }
+    
+    @GetMapping(value = "/{id}")
+    public Optional <Session> getSession(@PathVariable(value = "id") Long id) {
+        return sessionService.getSessionById(id);
     }
 
-    @GetMapping("/session/{id}")
-    public Optional<Session> getSessionById(@PathVariable Long id) {
-        return sessionRepository.findById(id);
-    }
-    @PostMapping("/session")
-    public Session createNewKelompok(@RequestBody Session payload) {
-        return sessionRepository.save(payload);
-    }
-    // @PutMapping("/session/{id}")
-    // public Optional<Session> updateSession(
-    //         @PathVariable Long id,
-    //         @RequestBody Session session) {
-    //     Optional<Session>sessionById = sessionRepository.findById(id);
+    @PostMapping("")
+    public Session createNewSession(@RequestBody SessionDTO request) {
+      return sessionService.save(request);
+  }
 
-    //     sessionById.ifPresent(res -> {
-    //         res.setIdHealth(session.getIdHealth());
-    //         res.setNama(session.getNama());
-            
-    //         res.setUpdate_at(session.getUpdate_at());
-    //         res.setCreated_ad(session.getCreated_ad());
-    //         res.setCreated_by(session.getCreated_by());
-    //         sessionRepository.save(res);
-    //     }); 
-    //     return sessionById;
-    // }
+    @DeleteMapping(value = "/{id}")
+    public String deleteSession(@PathVariable (value = "id") Long id) {
+      return sessionService.deleteSession(id);
+    }
     
 }

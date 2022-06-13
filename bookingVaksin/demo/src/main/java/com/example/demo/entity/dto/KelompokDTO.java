@@ -13,7 +13,7 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class KelompokDTO {
 
-    @Column( nullable = false)
+    
     private Long idUser;
    
     @Column( nullable = false)
