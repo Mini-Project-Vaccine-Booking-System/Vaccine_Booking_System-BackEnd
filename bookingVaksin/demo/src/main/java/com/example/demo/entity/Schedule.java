@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,10 +34,11 @@ public class Schedule {
     private Session session;
 
     @Column(name="start")
-    private LocalDateTime start;
+    private Time start;
 
     @Column(name="end")
-    private LocalDateTime end;
+    private Time end;
+
     @Column (name = "update_at")
     private Date update_at;
 

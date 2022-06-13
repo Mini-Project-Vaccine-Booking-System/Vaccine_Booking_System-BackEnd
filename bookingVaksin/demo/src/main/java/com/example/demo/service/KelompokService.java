@@ -37,8 +37,7 @@ public class KelompokService {
         log.info("save kelompok");
         kelompok.setUser(user);
         kelompok.setNik(request.getNik());
-        kelompok.setAddress(request.getAddress());
-        kelompok.setUsername(request.getUsername());
+        kelompok.setHubungan(request.getHubungan());
         kelompok.setNamaKelompok(request.getNamaKelompok());
         kelompok.setTlp(request.getTlp());
         kelompok.setTglLahir(request.getTglLahir());
@@ -64,8 +63,7 @@ public class KelompokService {
         kelompok.ifPresent(res -> {
             res.setUser(user);
             res.setNik(request.getNik());
-            res.setAddress(request.getAddress());
-            res.setUsername(request.getUsername());
+            res.setHubungan(request.getHubungan());
             res.setNamaKelompok(request.getNamaKelompok());
             res.setTlp(request.getTlp());
             res.setTglLahir(request.getTglLahir());

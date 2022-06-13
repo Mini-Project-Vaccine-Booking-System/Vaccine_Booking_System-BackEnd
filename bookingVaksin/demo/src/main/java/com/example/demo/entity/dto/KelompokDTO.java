@@ -19,9 +19,6 @@ public class KelompokDTO {
     @Column( nullable = false)
     private String nik;
 
-    @Column(name = "username")
-    private String username;
-
     @Column ( nullable = false)
     private String namaKelompok;
 
@@ -32,11 +29,11 @@ public class KelompokDTO {
     private Date tglLahir;
 
     @Column( nullable = false)
-    private String address;
+    private String hubungan;
 
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at") 
     private Date createdAt;
 }

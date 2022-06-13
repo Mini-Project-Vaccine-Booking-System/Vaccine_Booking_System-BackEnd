@@ -28,8 +28,6 @@ public class Kelompok {
     @Column(name = "nik")
     private String nik;
 
-    @Column(name = "username",nullable = false)
-    private String username;
 
     @Column (name = "nama_kelompok",nullable = false)
     private String namaKelompok;
@@ -40,8 +38,9 @@ public class Kelompok {
     @Column(name = "tgl_lahir",nullable = false)
     private Date tglLahir;
 
-    @Column(name = "address",nullable = false)
-    private String address;
+
+    @Column(name = "hubungan",nullable = false)
+    private String hubungan;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
