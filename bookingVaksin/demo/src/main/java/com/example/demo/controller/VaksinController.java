@@ -42,21 +42,6 @@ public class VaksinController {
     public String deleteVaksin(@PathVariable (value = "id") Long id) {
       return vaksinService.deleteVaksin(id);
     }
-    // @GetMapping("/vaksinDTO")
-    //     public List<VaksinDTO> getPeminjamanDTO() {
-    //         List<Vaksin> vaksins = vaksinRepository.findAll();
-    //         List<VaksinDTO> vaksinDTO = new ArrayList<>();
-    //         vaksins.forEach(res -> {
-    //             VaksinDTO vaksin1 = new VaksinDTO();
-    //             vaksin1.setIdHealth(res.getIdHealth());
-    //             vaksin1.setNama(res.getNama());
-    //             vaksin1.setQuantity(res.getQuantity());
-    //             vaksin1.setUpdate_at(res.getUpdate_at());
-    //             vaksin1.setCreated_ad(res.getCreated_ad());
-    //             vaksin1.setCreated_by(res.getCreated_by());
-    //             vaksinDTO.add(vaksin1);
-    //         });
-    //         return vaksinDTO;
-    //     }
+
     }
 

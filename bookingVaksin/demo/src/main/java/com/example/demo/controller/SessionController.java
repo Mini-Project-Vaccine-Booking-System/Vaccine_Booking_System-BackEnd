@@ -44,5 +44,10 @@ public class SessionController {
     public String deleteSession(@PathVariable (value = "id") Long id) {
       return sessionService.deleteSession(id);
     }
+    @PutMapping(value = "/{id}") 
+    public Optional<Session> updateSession(
+        @PathVariable Long id, @RequestBody SessionDTO  request) {
+            return sessionService.updateSession(id, request);
+    }
     
 }

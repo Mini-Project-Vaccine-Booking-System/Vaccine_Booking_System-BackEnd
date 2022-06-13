@@ -43,8 +43,8 @@ public class SessionService {
             log.info("search user id {}", request.getIdHealth());
             User user = userRepository.findById(request.getIdHealth())
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdHealth() + "Not Found"));
-            Vaksin vaksin = vaksinRepository.searchByName(request.getNamaVaksin())
-                .orElseThrow(()->  new Exception( " Nama Vaksin" + request.getNamaVaksin() + "Not Found"));
+            Vaksin vaksin = vaksinRepository.searchByName(request.getNama())
+                .orElseThrow(()->  new Exception( " Nama Vaksin" + request.getNama() + "Not Found"));
     
             log.info("save session");
             session.setUser(user);
@@ -59,6 +59,28 @@ public class SessionService {
                 log.error("save error");
                 return null;
             }
+    }
+
+    public Optional<Session> updateSession( Long id, SessionDTO request) {
+        try{    
+            Optional <Session> session = sessionRepository.findById(id);
+            User user = userRepository.searchById(request.getIdHealth())
+                .orElseThrow(()->  new Exception( " Id User" + request.getIdHealth() + "Not Found"));
+            Vaksin vaksin = vaksinRepository.searchByName(request.getNama())
+                .orElseThrow(()->  new Exception( " Nama Vaksin" + request.getNama() + "Not Found"));
+
+        session.ifPresent(res -> {
+            res.setUser(user);
+            res.setVaksin(vaksin);
+            res.setStart(request.getStart());
+            res.setEnd(request.getEnd());
+            sessionRepository.save(res);
+        });
+        return session;
+    }
+        catch(Exception e){
+            return null;
+        }
     }
 
     public String deleteSession(Long id) {

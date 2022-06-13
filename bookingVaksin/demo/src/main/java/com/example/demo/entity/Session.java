@@ -37,14 +37,14 @@ public class Session {
     private User user;
 
     @Column(name="start")
-    private LocalTime start;
+    private Time start;
 
     @ManyToOne
     @JoinColumn(name = "nama_vaksin", nullable = false)
     private Vaksin vaksin;
 
     @Column(name="end")
-    private LocalTime end;
+    private Time end;
     
     @Column (name = "update_at")
     private Date update_at;
