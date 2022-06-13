@@ -40,7 +40,7 @@ public class KelompokService {
         kelompok.setHubungan(request.getHubungan());
         kelompok.setNamaKelompok(request.getNamaKelompok());
         kelompok.setTlp(request.getTlp());
-        kelompok.setTglLahir(request.getTglLahir());
+        kelompok.setTglLahir(request.getTglLahir()); 
         kelompokRepository.save(kelompok);
 
         return kelompok;

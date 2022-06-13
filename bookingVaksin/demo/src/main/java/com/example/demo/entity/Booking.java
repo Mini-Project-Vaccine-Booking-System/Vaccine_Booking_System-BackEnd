@@ -29,7 +29,7 @@ public class Booking {
     @JoinColumn(name = "id_vaksin", nullable = false)
     private Vaksin vaksin;
 
-    @CreationTimestamp
+    @CreationTimestamp 
     @Column(name = "created_at")
     private Date created_at;
 
