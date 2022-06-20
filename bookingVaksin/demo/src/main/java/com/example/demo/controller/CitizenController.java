@@ -50,10 +50,10 @@ public class CitizenController {
       return userService.deleteCitizen(id);
     }
 
-    @GetMapping(value = "/{kota}")
-    public Optional <User> getUserByCity(@PathVariable(value = "kota") String kota) {
-        return userService.findByCity(kota);
-    }
+    // @GetMapping(value = "/{kota}")
+    // public Optional <User> getUserByCity(@PathVariable(value = "kota") String kota) {
+    //     return userService.findByCity(kota);
+    // }
 
     
 }

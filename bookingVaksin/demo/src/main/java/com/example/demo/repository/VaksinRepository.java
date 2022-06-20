@@ -12,4 +12,6 @@ import com.example.demo.entity.Vaksin;
 public interface VaksinRepository extends JpaRepository<Vaksin,Long>  {
     @Query(value = "SELECT * FROM vaksin WHERE nama LIKE %?#{escape([0])} escape ?#{escapeCharacter()}", nativeQuery = true)
     Optional<Vaksin> searchByName(String nama );
+    @Query(value = "SELECT * FROM vaksin WHERE vaksin.id_vaksin = ? ", nativeQuery = true)
+    Optional<Vaksin> searchById (Long id);
 }
