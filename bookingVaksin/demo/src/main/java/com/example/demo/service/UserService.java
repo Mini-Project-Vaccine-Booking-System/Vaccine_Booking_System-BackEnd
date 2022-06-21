@@ -37,9 +37,9 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    // public Optional <User> findByCity( String kota) {
-    //     return userRepository.searchByCity(kota);
-    // }
+    public Optional <User> findByCity( String kota) {
+        return userRepository.searchByCity(kota);
+    }
 
     public Optional<User> updateCitizen( Long id,UserDTO  citizen) {
             Optional<User> citizenById = userRepository.findById(id);
