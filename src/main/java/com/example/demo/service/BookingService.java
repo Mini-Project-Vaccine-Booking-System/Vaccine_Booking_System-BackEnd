@@ -30,8 +30,8 @@ public class BookingService {
     @Autowired
     ScheduleRepository scheduleRepository;
 
-    @Autowired
-    VaksinRepository vaksinRepository;
+    // @Autowired
+    // VaksinRepository vaksinRepository;
 
     public List<Booking> getBooking() {
         return bookingRepository.findAll();
@@ -49,20 +49,20 @@ public class BookingService {
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdKelompok() + "Not Found"));
             Schedule schedule = scheduleRepository.findById(request.getIdSchedule())
                 .orElseThrow(()->  new Exception( " Id Schedule" + request.getIdSchedule()+ "Not Found"));
-            Vaksin vaksin = vaksinRepository.findById(request.getIdVaksin())
-                .orElseThrow(()->  new Exception( " Id Vaksin" + request.getIdVaksin() + "Not Found"));
+            // Vaksin vaksin = vaksinRepository.findById(request.getIdVaksin())
+            //     .orElseThrow(()->  new Exception( " Id Vaksin" + request.getIdVaksin() + "Not Found"));
     
             log.info("save booking");
             booking.setKelompok(kelompok);
             booking.setSchedule(schedule);
-            booking.setVaksin(vaksin);
+            // booking.setVaksin(vaksin);
             bookingRepository.save(booking);
     
             return booking;
         }
             catch(Exception e){
                 log.error("save error");
-                return null;
+                return e;
             }
     }
 
@@ -73,19 +73,19 @@ public class BookingService {
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdKelompok() + "Not Found"));
             Schedule schedule = scheduleRepository.findById(request.getIdSchedule())
                 .orElseThrow(()->  new Exception( " Id Schedule" + request.getIdSchedule()+ "Not Found"));
-            Vaksin vaksin = vaksinRepository.findById(request.getIdVaksin())
-                .orElseThrow(()->  new Exception( " Id Vaksin" + request.getIdVaksin() + "Not Found"));
+            // Vaksin vaksin = vaksinRepository.findById(request.getIdVaksin())
+            //     .orElseThrow(()->  new Exception( " Id Vaksin" + request.getIdVaksin() + "Not Found"));
 
         booking.ifPresent(res -> {
             res.setKelompok(kelompok);
             res.setSchedule(schedule);
-            res.setVaksin(vaksin);
+            // res.setVaksin(vaksin);
             bookingRepository.save(res);
         });
         return booking;
     }
         catch(Exception e){
-            return null;
+            return e;
         }
     }
 
