@@ -30,7 +30,7 @@ public class User {
     @Column(name = "idUser")
     private Long idUser;
 
-    @JsonDeserialize(converter = ToLowerCaseConverter.class)
+   
     @Column(name = "email")
     private String email;
 

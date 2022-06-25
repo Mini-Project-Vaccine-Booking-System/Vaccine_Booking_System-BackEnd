@@ -26,6 +26,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User save( User request) {
+        request.setEmail(request.getEmail().toLowerCase());
         return userRepository.save(request);
     }
 
@@ -63,6 +64,7 @@ public class UserService {
     }
 
     public String deleteCitizen( Long id) {
+        
         Optional<User> citizenById = userRepository.findById(id);
         citizenById.ifPresent(res -> {
             userRepository.delete(res);
