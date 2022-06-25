@@ -62,7 +62,7 @@ public class BookingService {
         }
             catch(Exception e){
                 log.error("save error");
-                return null;
+                return e;
             }
     }
 
@@ -85,7 +85,7 @@ public class BookingService {
         return booking;
     }
         catch(Exception e){
-            return null;
+            return e;
         }
     }
 
