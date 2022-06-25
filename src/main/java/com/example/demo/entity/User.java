@@ -30,6 +30,7 @@ public class User {
     @Column(name = "idUser")
     private Long idUser;
 
+    @ToLowerCase
     @Column(name = "email")
     private String email;
 
