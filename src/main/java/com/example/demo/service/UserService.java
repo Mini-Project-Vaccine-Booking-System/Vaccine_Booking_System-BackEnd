@@ -27,7 +27,17 @@ public class UserService {
 
     public User save( User request) {
         request.setEmail(request.getEmail().toLowerCase());
-        return userRepository.save(request);
+        try{    
+            log.info("save user");
+            userRepository.save(request);
+            return request;
+        }
+            catch(Exception e){
+                throw new RuntimeException(e.getMessage(),e);
+            }
+        
+        //return userRepository.save(request);
+
     }
 
     public List<User> getCitizens() {
@@ -69,11 +79,12 @@ public class UserService {
         citizenById.ifPresent(res -> {
             userRepository.delete(res);
         });
-       if(citizenById.isPresent()){
-           return "success";
-         }else{
-           return "failed";
-         }
+        if(citizenById.isPresent()){
+            return "success";
+        }
+        else{
+            return "failed";
+        }
         
     }
     // public void deleteCitizen( Long id) {
