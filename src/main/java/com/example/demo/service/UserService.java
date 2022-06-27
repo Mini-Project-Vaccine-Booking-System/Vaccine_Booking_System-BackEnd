@@ -72,4 +72,16 @@ public class UserService {
         return "Deleted";
         
     }
+    // public void deleteCitizen( Long id) {
+    //     try {
+    //     userRepository.findById(id)
+    //         .orElseThrow(()-> new Exception("User ID" + id + "Not Found"));
+    //        userRepository.delete(id); 
+    //     } catch (Exception e) {
+    //         log.error ("Delete user error");
+    //         throw new RuntimeException(e.getMessage(), e);
+    //     }
+        
+        
+    // }
 }
