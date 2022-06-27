@@ -45,9 +45,13 @@ public class CitizenController {
         @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
             return userService.updateCitizen(id, citizen);
     }
+    // @DeleteMapping(value = "/{id}")
+    // public String deleteCitizen(@PathVariable (value = "id") Long id) {
+    //   return userService.deleteCitizen(id);
+    // }
     @DeleteMapping(value = "/{id}")
-    public String deleteCitizen(@PathVariable (value = "id") Long id) {
-      return userService.deleteCitizen(id);
+    public ResponseEntity<Object> deleteCitizen(@PathVariable(value = "id") Long id) {
+        return userService.deleteCitizen(id);
     }
 
     @GetMapping(value = "/search/{kota}")

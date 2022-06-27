@@ -63,15 +63,15 @@ public class UserService {
         return citizenById;
     }
 
-    public String deleteCitizen( Long id) {
+    // public String deleteCitizen( Long id) {
         
-        Optional<User> citizenById = userRepository.findById(id);
-        citizenById.ifPresent(res -> {
-            userRepository.delete(res);
-        });
-        return "Deleted";
+    //     Optional<User> citizenById = userRepository.findById(id);
+    //     citizenById.ifPresent(res -> {
+    //         userRepository.delete(res);
+    //     });
+    //     return "Deleted";
         
-    }
+    // }
     // public void deleteCitizen( Long id) {
     //     try {
     //     userRepository.findById(id)
@@ -84,4 +84,14 @@ public class UserService {
         
         
     // }
+    public ResponseEntity<Object> deleteCitizen(Long id) {
+        log.info("Find user id for delete: {}", id);
+        try {
+            userRepository.delete(id);
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Data not found. Error: {}", e.getMessage());
+            return ResponseEntity.badRequest().body(Map.ofEntries(Map.entry("message", "Data not found")));
+        }
+        return ResponseEntity.ok().body(Map.ofEntries(Map.entry("message", "ok")));
+    }
 }
