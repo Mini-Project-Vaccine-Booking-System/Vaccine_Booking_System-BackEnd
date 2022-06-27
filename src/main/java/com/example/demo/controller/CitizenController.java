@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.UserDTO;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,21 @@ public class CitizenController {
         @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
             return userService.updateCitizen(id, citizen);
     }
+    // @DeleteMapping(value = "/{id}")
+    // public String deleteCitizen(@PathVariable (value = "id") Long id) {
+    //   return userService.deleteCitizen(id);
+    // }
     @DeleteMapping(value = "/{id}")
-    public String deleteCitizen(@PathVariable (value = "id") Long id) {
-      return userService.deleteCitizen(id);
+    public ResponseEntity<Long> deleteCitizen(@PathVariable Long id) {
+
+        var isRemoved = UserRepository.delete(id);
+
+        if (isRemoved) {
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        }
+
+        
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/search/{kota}")
