@@ -77,7 +77,11 @@ public class VaksinService {
         vaksinById.ifPresent(res -> {
             vaksinRepository.delete(res);
         });
-        return "Deleted";
+        if (vaksinById.isPresent()) {
+            return "Success";
+        } else {
+            return "Failed";
+        }
     }
 }
 

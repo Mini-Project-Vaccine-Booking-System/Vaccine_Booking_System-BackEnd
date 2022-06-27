@@ -88,7 +88,12 @@ public class SessionService {
         sessionById.ifPresent(res -> {
             sessionRepository.delete(res);
         });
-        return "Deleted";
+        if(sessionById.isPresent()){
+            return "Delete Success";
+        }
+        else{
+            return "Delete Failed";
+        }
     }
 
 }

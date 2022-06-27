@@ -83,7 +83,12 @@ public class KelompokService {
         kelompokById.ifPresent(res -> {
             kelompokRepository.delete(res);
         });
-        return "Deleted";
+        if(kelompokById.isPresent()){
+            return "success";
+        }
+        else{
+            return "failed";
+        }
     }
     
 }

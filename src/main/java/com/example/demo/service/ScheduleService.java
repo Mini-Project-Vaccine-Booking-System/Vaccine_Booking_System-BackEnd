@@ -78,6 +78,11 @@ public class ScheduleService {
         scheduleById.ifPresent(res -> {
             scheduleRepository.delete(res);
         });
-        return "Deleted";
+        if(scheduleById.isPresent()){
+            return "Success";
+        }
+        else{
+            return "Failed";
+        }
     }
 }
