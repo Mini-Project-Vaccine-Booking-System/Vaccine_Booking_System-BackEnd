@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.UserDTO;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CitizenController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
 
 
     @GetMapping(value = "")
@@ -48,19 +45,10 @@ public class CitizenController {
         @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
             return userService.updateCitizen(id, citizen);
     }
-    // @DeleteMapping(value = "/{id}")
-    // public String deleteCitizen(@PathVariable (value = "id") Long id) {
-    //   return userService.deleteCitizen(id);
-    // }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable (value = "id") Long id) {
-        try {
-         userRepository.delete(id);
-         return ResponseEntity.noContent().build();
-        } catch (ResourceNotFoundException e) {
-         return ResponseEntity.notFound().build();
-        }
-       }
+    public Void deleteCitizen(@PathVariable (value = "id") Long id) {
+      return userService.deleteCitizen(id);
+    }
 
     @GetMapping(value = "/search/{kota}")
     public Optional <User> getUserByCity(@PathVariable(value = "kota") String kota) {

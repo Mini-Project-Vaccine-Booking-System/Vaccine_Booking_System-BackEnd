@@ -63,15 +63,15 @@ public class UserService {
         return citizenById;
     }
 
-    // public String deleteCitizen( Long id) {
+    public String deleteCitizen( Long id) {
         
-    //     Optional<User> citizenById = userRepository.findById(id);
-    //     citizenById.ifPresent(res -> {
-    //         userRepository.delete(res);
-    //     });
-    //     return "Deleted";
+        Optional<User> citizenById = userRepository.findById(id);
+        citizenById.ifPresent(res -> {
+            userRepository.delete(res);System.out.println("Deleted");
+        }.orElse(System.out.println("Not Found")));
         
-    // }
+        
+    }
     // public void deleteCitizen( Long id) {
     //     try {
     //     userRepository.findById(id)
@@ -81,7 +81,7 @@ public class UserService {
     //         log.error ("Delete user error");
     //         throw new RuntimeException(e.getMessage(), e);
     //     }
+        
+        
     // }
-
-
 }
