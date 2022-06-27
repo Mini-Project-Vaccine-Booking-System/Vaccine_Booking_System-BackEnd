@@ -94,6 +94,11 @@ public class BookingService {
         bookingById.ifPresent(res -> {
             bookingRepository.delete(res);
         });
-        return "Deleted";
+        if(bookingById.isPresent()){
+            return "Delete Success";
+        }
+        else{
+            return "Delete Failed";
+        }
     }
 }
