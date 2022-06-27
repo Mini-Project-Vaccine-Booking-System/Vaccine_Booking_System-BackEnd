@@ -69,7 +69,11 @@ public class UserService {
         citizenById.ifPresent(res -> {
             userRepository.delete(res);
         });
-        return "Deleted";
+        try {
+            return "success";
+        } catch (Exception e) {
+            return "failed";
+        }
         
     }
     // public void deleteCitizen( Long id) {
