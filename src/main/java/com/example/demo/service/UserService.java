@@ -27,15 +27,16 @@ public class UserService {
 
     public User save( User request) {
         request.setEmail(request.getEmail().toLowerCase());
-        try{    
-            log.info("save user");
-            // userRepository.save(request);
-            // return request;
-            return userRepository.save(request);
-        }
-            catch(Exception e){
-                throw new RuntimeException(e.getMessage(),e);
-            }
+        return userRepository.save(request);
+        // try{    
+        //     log.info("save user");
+        //     // userRepository.save(request);
+        //     // return request;
+        //     return userRepository.save(request);
+        // }
+        //     catch(Exception e){
+        //         throw new RuntimeException(e.getMessage(),e);
+        //     }
         
         
 
