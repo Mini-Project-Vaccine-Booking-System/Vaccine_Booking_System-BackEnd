@@ -70,7 +70,7 @@ public class UserService {
             userRepository.delete(res);
         });
        if(citizenById.isPresent()){
-           return "success";
+           return "successsaada";
          }else{
            return "failed";
          }
