@@ -35,7 +35,13 @@ public class BookingController {
 
     @PostMapping("")
     public Booking createNewBooking(@RequestBody BookingDTO request) {
-      return bookingService.save(request);
+
+        try {
+            return bookingService.save(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+    //   return bookingService.save(request);
   }
 
     @DeleteMapping(value = "/{id}")
