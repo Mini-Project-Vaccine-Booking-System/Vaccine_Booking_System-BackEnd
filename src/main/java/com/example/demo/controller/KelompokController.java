@@ -36,13 +36,7 @@ public class KelompokController {
     }
     @PostMapping(value = "")
     public Kelompok createNewKelompok(@RequestBody KelompokDTO request) {
-        try {
-            return kelompokService.save(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(),e);
-        }
-        
-        // return kelompokService.save(request);
+         return kelompokService.save(request);
     }
 
     @PutMapping(value = "/{id}") 
