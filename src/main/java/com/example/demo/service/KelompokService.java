@@ -67,6 +67,7 @@ public class KelompokService {
             res.setNamaKelompok(request.getNamaKelompok());
             res.setTlp(request.getTlp());
             res.setTglLahir(request.getTglLahir());
+            res.setGender(request.getGender());
             kelompokRepository.save(res);
         });
         return kelompok;

@@ -30,6 +30,9 @@ public class KelompokDTO {
 
     @Column( nullable = false)
     private String hubungan;
+    
+    @Column( nullable = false)
+    private String gender;
 
     @Column(name = "updated_at")
     private Date updatedAt;

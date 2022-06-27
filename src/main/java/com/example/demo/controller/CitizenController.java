@@ -37,14 +37,18 @@ public class CitizenController {
     }
     @PostMapping(value = "")
     public User createNewCitizen(@RequestBody User request) {
-        try {
+        if(cr){
             return userService.save(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(),e);
+        }else{
+            return null;
         }
-        
-        // return kelompokService.save(request);
-
+    }
+        }
+        // try {
+        //     return userService.save(request);
+        // } catch (Exception e) {
+        //     throw new RuntimeException(e.getMessage(),e);
+        // }
     }
 
     @PutMapping(value = "/{id}") 
