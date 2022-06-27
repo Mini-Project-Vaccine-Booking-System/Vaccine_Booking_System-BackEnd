@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CitizenController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
 
     @GetMapping(value = "")
@@ -51,15 +53,14 @@ public class CitizenController {
     //   return userService.deleteCitizen(id);
     // }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Long> deleteCitizen(@PathVariable Long id) {
-
-        var isRemoved = UserRepository.delete(id);
-
-        if (isRemoved) {
-            return new ResponseEntity<>(id, HttpStatus.OK);
-        }else{        
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
-    }
+    public ResponseEntity<Void> deleteById(@PathVariable long userId) {
+        try {
+         userRepository.delete(userId);
+         return ResponseEntity.noContent().build();
+        } catch (ResourceNotFoundException e) {
+         return ResponseEntity.notFound().build();
+        }
+       }
 
     @GetMapping(value = "/search/{kota}")
     public Optional <User> getUserByCity(@PathVariable(value = "kota") String kota) {
