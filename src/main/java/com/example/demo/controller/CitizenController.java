@@ -53,9 +53,9 @@ public class CitizenController {
     //   return userService.deleteCitizen(id);
     // }
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable long userId) {
+    public ResponseEntity<Void> deleteById(@PathVariable long id) {
         try {
-         userRepository.delete(userId);
+         userRepository.delete(id);
          return ResponseEntity.noContent().build();
         } catch (ResourceNotFoundException e) {
          return ResponseEntity.notFound().build();
