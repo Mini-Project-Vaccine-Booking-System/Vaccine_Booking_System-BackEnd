@@ -28,18 +28,7 @@ public class UserService {
     public User save( User request) {
         request.setEmail(request.getEmail().toLowerCase());
         return userRepository.save(request);
-        // try{    
-        //     log.info("save user");
-        //     // userRepository.save(request);
-        //     // return request;
-        //     return userRepository.save(request);
-        // }
-        //     catch(Exception e){
-        //         throw new RuntimeException(e.getMessage(),e);
-        //     }
         
-        
-
     }
 
     public List<User> getCitizens() {
@@ -89,5 +78,16 @@ public class UserService {
         }
         
     }
-    
+    // public void deleteCitizen( Long id) {
+    //     try {
+    //     userRepository.findById(id)
+    //         .orElseThrow(()-> new Exception("User ID" + id + "Not Found"));
+    //        userRepository.delete(id); 
+    //     } catch (Exception e) {
+    //         log.error ("Delete user error");
+    //         throw new RuntimeException(e.getMessage(), e);
+    //     }
+        
+        
+    // }
 }
