@@ -42,6 +42,9 @@ public class Kelompok {
     @Column(name = "hubungan",nullable = false)
     private String hubungan;
 
+    @Column(name = "gender",nullable = false)
+    private String gender;
+
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
