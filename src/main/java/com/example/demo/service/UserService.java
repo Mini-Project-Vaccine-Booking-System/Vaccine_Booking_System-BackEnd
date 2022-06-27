@@ -67,9 +67,9 @@ public class UserService {
         
         Optional<User> citizenById = userRepository.findById(id);
         citizenById.ifPresent(res -> {
-            userRepository.delete(res);System.out.println("Deleted");
-        }.orElse(System.out.println("Not Found")));
-        
+            userRepository.delete(res);
+        });
+        return "Deleted";
         
     }
     // public void deleteCitizen( Long id) {
