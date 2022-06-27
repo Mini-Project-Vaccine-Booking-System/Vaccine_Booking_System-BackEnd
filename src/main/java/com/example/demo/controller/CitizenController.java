@@ -51,7 +51,7 @@ public class CitizenController {
     }
 
     @GetMapping(value = "/search/{kota}")
-    public Optional <User> getUserByCity(@PathVariable(value = "kota") String kota) {
+    public List <User> getUserByCity(@PathVariable(value = "kota") String kota) {
         return userService.findByCity(kota);
     }
 

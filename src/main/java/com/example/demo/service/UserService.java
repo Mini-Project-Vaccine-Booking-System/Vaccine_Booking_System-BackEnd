@@ -39,7 +39,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Optional <User> findByCity( String kota) {
+    public List <User> findByCity( String kota) {
         return userRepository.searchByCity(kota);
     }
 
@@ -78,16 +78,5 @@ public class UserService {
         }
         
     }
-    // public void deleteCitizen( Long id) {
-    //     try {
-    //     userRepository.findById(id)
-    //         .orElseThrow(()-> new Exception("User ID" + id + "Not Found"));
-    //        userRepository.delete(id); 
-    //     } catch (Exception e) {
-    //         log.error ("Delete user error");
-    //         throw new RuntimeException(e.getMessage(), e);
-    //     }
-        
-        
-    // }
+
 }

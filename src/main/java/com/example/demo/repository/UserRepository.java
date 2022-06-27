@@ -3,7 +3,7 @@ package com.example.demo.repository;
 
 
 import java.util.Optional;
-
+import java.util.List;
 import com.example.demo.entity.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +16,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query(value = "SELECT * FROM user WHERE user.id_user = ? ", nativeQuery = true)
     Optional<User> searchById (Long id);
      @Query(value = "SELECT * FROM user WHERE user.kota LIKE %?#{escape([0])} escape ?#{escapeCharacter()} ", nativeQuery = true)
-   Optional<User> searchByCity (String kota);
+   List<User> searchByCity (String kota);
 }
