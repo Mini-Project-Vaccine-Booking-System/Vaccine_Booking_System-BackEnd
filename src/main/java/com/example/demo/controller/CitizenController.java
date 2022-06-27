@@ -57,10 +57,8 @@ public class CitizenController {
 
         if (isRemoved) {
             return new ResponseEntity<>(id, HttpStatus.OK);
-        }
-
-        
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{        
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
     }
 
     @GetMapping(value = "/search/{kota}")
