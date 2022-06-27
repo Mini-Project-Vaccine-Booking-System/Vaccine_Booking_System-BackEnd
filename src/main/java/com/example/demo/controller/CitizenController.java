@@ -46,7 +46,7 @@ public class CitizenController {
             return userService.updateCitizen(id, citizen);
     }
     @DeleteMapping(value = "/{id}")
-    public Void deleteCitizen(@PathVariable (value = "id") Long id) {
+    public String deleteCitizen(@PathVariable (value = "id") Long id) {
       return userService.deleteCitizen(id);
     }
 
