@@ -42,7 +42,7 @@ public class KelompokController {
             throw new RuntimeException(e.getMessage(),e);
         }
         
-        //return kelompokService.save(request);
+        // return kelompokService.save(request);
     }
 
     @PutMapping(value = "/{id}") 
