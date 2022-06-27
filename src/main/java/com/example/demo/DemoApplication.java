@@ -18,7 +18,7 @@ public class DemoApplication {
       return new WebMvcConfigurerAdapter() {
          @Override
          public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/api").allowedOrigins("https://booking-vaksin-alta.herokuapp.com");
+            registry.addMapping("/api/**").allowedOrigins("https://booking-vaksin-alta.herokuapp.com");
          }
       };
    }
