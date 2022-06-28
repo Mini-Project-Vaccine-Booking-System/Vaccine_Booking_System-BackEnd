@@ -41,6 +41,7 @@ public class KelompokService {
         kelompok.setNamaKelompok(request.getNamaKelompok());
         kelompok.setTlp(request.getTlp());
         kelompok.setTglLahir(request.getTglLahir()); 
+        kelompok.setGender(request.getGender());
         kelompokRepository.save(kelompok);
 
         return kelompok;
