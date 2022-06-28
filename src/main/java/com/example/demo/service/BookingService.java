@@ -5,13 +5,11 @@ import java.util.Optional;
 
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.Kelompok;
-import com.example.demo.entity.Schedule;
 import com.example.demo.entity.Session;
 import com.example.demo.entity.Vaksin;
 import com.example.demo.entity.dto.BookingDTO;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.KelompokRepository;
-import com.example.demo.repository.ScheduleRepository;
 import com.example.demo.repository.SessionRepository;
 import com.example.demo.repository.VaksinRepository;
 
@@ -52,7 +50,7 @@ public class BookingService {
            
             log.info("save booking");
             booking.setKelompok(kelompok);
-            booking.setSchedule(session);
+            booking.setSession(session);
             bookingRepository.save(booking);
     
             return booking;
@@ -73,7 +71,7 @@ public class BookingService {
 
         booking.ifPresent(res -> {
             res.setKelompok(kelompok);
-            res.setSchedule(session);
+            res.setSession(session);
             bookingRepository.save(res);
         });
         return booking;
