@@ -49,7 +49,7 @@ public class SessionService {
             log.info("save session");
             session.setUser(user);
             session.setVaksin(vaksin);
-            session.setDate(date);
+            session.setDate(request.getDate());
             session.setStart(request.getStart());
             session.setEnd(request.getEnd());;
             sessionRepository.save(session);
@@ -73,7 +73,7 @@ public class SessionService {
         session.ifPresent(res -> {
             res.setUser(user);
             res.setVaksin(vaksin);
-            res.setDate(date);
+            res.setDate(request.getDate());
             res.setStart(request.getStart());
             res.setEnd(request.getEnd());
             sessionRepository.save(res);
