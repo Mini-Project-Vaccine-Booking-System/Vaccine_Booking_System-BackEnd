@@ -6,11 +6,13 @@ import java.util.Optional;
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.Kelompok;
 import com.example.demo.entity.Schedule;
+import com.example.demo.entity.Session;
 import com.example.demo.entity.Vaksin;
 import com.example.demo.entity.dto.BookingDTO;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.KelompokRepository;
 import com.example.demo.repository.ScheduleRepository;
+import com.example.demo.repository.SessionRepository;
 import com.example.demo.repository.VaksinRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class BookingService {
     KelompokRepository kelompokRepository;
 
     @Autowired
-    ScheduleRepository scheduleRepository;
+    SessionRepository sessionRepository;
 
 
     public List<Booking> getBooking() {
@@ -45,12 +47,12 @@ public class BookingService {
             log.info("search kelompok  id {}", request.getIdKelompok());
             Kelompok kelompok = kelompokRepository.findById(request.getIdKelompok())
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdKelompok() + "Not Found"));
-            Schedule schedule = scheduleRepository.findById(request.getIdSchedule())
-                .orElseThrow(()->  new Exception( " Id Schedule" + request.getIdSchedule()+ "Not Found"));
+            Session session = sessionRepository.findById(request.getIdSession())
+                .orElseThrow(()->  new Exception( " Id Session" + request.getIdSession()+ "Not Found"));
            
             log.info("save booking");
             booking.setKelompok(kelompok);
-            booking.setSchedule(schedule);
+            booking.setSchedule(session);
             bookingRepository.save(booking);
     
             return booking;
@@ -66,12 +68,12 @@ public class BookingService {
             Optional <Booking> booking = bookingRepository.findById(id);
             Kelompok kelompok = kelompokRepository.findById(request.getIdKelompok())
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdKelompok() + "Not Found"));
-            Schedule schedule = scheduleRepository.findById(request.getIdSchedule())
-                .orElseThrow(()->  new Exception( " Id Schedule" + request.getIdSchedule()+ "Not Found"));
+                Session session = sessionRepository.findById(request.getIdSession())
+                .orElseThrow(()->  new Exception( " Id Session" + request.getIdSession()+ "Not Found"));
 
         booking.ifPresent(res -> {
             res.setKelompok(kelompok);
-            res.setSchedule(schedule);
+            res.setSchedule(session);
             bookingRepository.save(res);
         });
         return booking;

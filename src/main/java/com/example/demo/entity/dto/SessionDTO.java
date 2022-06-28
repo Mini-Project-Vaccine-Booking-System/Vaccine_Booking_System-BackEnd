@@ -16,6 +16,7 @@ public class SessionDTO {
     private Long idSession;
     private Long idHealth;
     private String nama;
+    private Date date;
     private Time start;
     private Time end;
     private Date update_at;

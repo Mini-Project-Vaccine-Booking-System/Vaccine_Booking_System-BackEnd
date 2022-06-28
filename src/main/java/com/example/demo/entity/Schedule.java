@@ -48,7 +48,7 @@ public class Schedule {
     @Column (name = "created_by")
     private String created_by;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "schedule")
-    private List<Booking> booking;
+    // @JsonIgnore
+    // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "schedule")
+    // private List<Booking> booking;
 }

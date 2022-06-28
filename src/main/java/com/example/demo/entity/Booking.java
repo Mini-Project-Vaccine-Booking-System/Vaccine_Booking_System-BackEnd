@@ -23,8 +23,8 @@ public class Booking {
     private Kelompok kelompok;
 
     @ManyToOne
-    @JoinColumn(name = "id_schedule", nullable = false)
-    private Schedule schedule;
+    @JoinColumn(name = "id_session", nullable = false)
+    private Session session;
 
 
     @CreationTimestamp 
