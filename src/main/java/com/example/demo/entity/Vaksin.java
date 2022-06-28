@@ -47,7 +47,4 @@ public class Vaksin {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vaksin")
     private List<Session> session;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vaksin")
-    private List<Booking> booking;
 }

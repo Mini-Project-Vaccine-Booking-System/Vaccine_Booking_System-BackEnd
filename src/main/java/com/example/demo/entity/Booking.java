@@ -26,9 +26,6 @@ public class Booking {
     @JoinColumn(name = "id_schedule", nullable = false)
     private Schedule schedule;
 
-    @ManyToOne
-    @JoinColumn(name = "id_vaksin", nullable = false)
-    private Vaksin vaksin;
 
     @CreationTimestamp 
     @Column(name = "created_at")
