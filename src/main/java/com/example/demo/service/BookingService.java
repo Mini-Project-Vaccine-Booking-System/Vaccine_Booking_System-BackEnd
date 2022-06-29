@@ -95,6 +95,6 @@ public class BookingService {
     }
 
     public List <Booking> getByUserId( Long idUser) {
-        return bookingRepository.findByUserId(idUser);
+        return bookingRepository.findByKelompok_User_IdUser(idUser);
     }
 }
