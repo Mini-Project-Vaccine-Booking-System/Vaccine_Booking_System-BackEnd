@@ -53,4 +53,9 @@ public class BookingController {
         @PathVariable Long id, @RequestBody BookingDTO  request) {
             return bookingService.updateBooking(id, request);
     }
+
+    @GetMapping(value = "/s/{idUser}")
+    public List <Booking> findBookingByUserId(@PathVariable(value = "idUser") Long idUser) {
+        return bookingService.getByUserId(idUser);
+    }
 }

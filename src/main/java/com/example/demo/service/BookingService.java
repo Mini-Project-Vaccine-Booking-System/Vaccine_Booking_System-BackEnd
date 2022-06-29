@@ -93,4 +93,8 @@ public class BookingService {
             return "Delete Failed";
         }
     }
+
+    public List <Booking> getByUserId( Long idUser) {
+        return bookingRepository.findByUserId(idUser);
+    }
 }
