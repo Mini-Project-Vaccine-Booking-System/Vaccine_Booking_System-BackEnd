@@ -47,7 +47,7 @@ public class KelompokService {
         return kelompok;
     }
         catch(Exception e){
-            log.error("save error");
+            log.error("save error, "+ e.getMessage());
             return null;
         }
     }
@@ -74,6 +74,7 @@ public class KelompokService {
         return kelompok;
     }
         catch(Exception e){
+            log.error("update error, " + e.getMessage());
             return null;
         }
        
