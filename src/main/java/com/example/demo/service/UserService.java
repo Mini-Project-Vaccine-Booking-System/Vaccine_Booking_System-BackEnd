@@ -46,7 +46,7 @@ public class UserService {
         return userRepository.findCitizen();
     }
     public List <User> getHealth() {
-        return userRepositoryfindHealth();
+        return userRepository.findHealth();
     }
 
     public Optional<User> updateCitizen( Long id,UserDTO  citizen) {
