@@ -71,8 +71,8 @@ public class SessionService {
                 .orElseThrow(()->  new Exception( " Vaksin " + request.getNama() + "by " + request.getIdHealth()+"Not Found"));
 
         session.ifPresent(res -> {
-            res.setUser(request.getUser());
-            res.setVaksin(request.getVaksin());
+            res.setUser(res.getUser(user));
+            res.setVaksin(res.getVaksin(vaksin));
             res.setDate(request.getDate());
             res.setStart(request.getStart());
             res.setEnd(request.getEnd());
