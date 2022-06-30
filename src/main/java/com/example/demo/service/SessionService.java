@@ -42,9 +42,9 @@ public class SessionService {
             Session session = new Session();
             log.info("search user id {}", request.getIdHealth());
             User user = userRepository.findById(request.getIdHealth())
-                .orElseThrow(()->  new Exception( " Id User" + request.getIdHealth() + "Not Found"));
-            Vaksin vaksin = vaksinRepository.searchByName(request.getNama())
-                .orElseThrow(()->  new Exception( " Nama Vaksin" + request.getNama() + "Not Found"));
+                .orElseThrow(()->  new Exception( " Id User " + request.getIdHealth() + "Not Found"));
+            Vaksin vaksin = vaksinRepository.searchForSession(request.getNama(), request.getIdHealth())
+                .orElseThrow(()->  new Exception( " Vaksin " + request.getNama() + "by " + request.getIdHealth()+"Not Found"));
     
             log.info("save session");
             session.setUser(user);
