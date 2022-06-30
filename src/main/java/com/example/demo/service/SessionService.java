@@ -58,7 +58,7 @@ public class SessionService {
         }
             catch(Exception e){
                 log.error("save error" + e.getMessage());
-                return null;
+                return e.getMessage();
             }
     }
 
