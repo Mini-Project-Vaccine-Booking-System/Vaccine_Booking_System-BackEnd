@@ -15,23 +15,11 @@ public class KelompokDTO {
 
     
     private Long idUser;
-   
-    @Column( nullable = false)
     private String nik;
-
-    @Column ( nullable = false)
     private String namaKelompok;
-
-    @Column( nullable = false)
     private String tlp;
-
-    @Column(name = "tgl_lahir")
     private Date tglLahir;
-
-    @Column( nullable = false)
     private String hubungan;
-    
-    @Column( nullable = false)
     private String gender;
 
     @Column(name = "updated_at")
