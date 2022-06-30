@@ -71,8 +71,8 @@ public class SessionService {
                 .orElseThrow(()->  new Exception( " Vaksin " + request.getNama() + "by " + request.getIdHealth()+"Not Found"));
 
         session.ifPresent(res -> {
-            res.setUser(user);
-            res.setVaksin(vaksin);
+            res.setUser(res.getUser());
+            res.setVaksin(res.getVaksin());
             res.setDate(request.getDate());
             res.setStart(request.getStart());
             res.setEnd(request.getEnd());
@@ -82,7 +82,6 @@ public class SessionService {
     }
         catch(Exception e){
             log.error("update error, " + e.getMessage());
-                return null;
             return null;
         }
     }
