@@ -31,7 +31,7 @@ public class UserService {
         
     }
 
-    public List<User> getCitizens() {
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
@@ -41,6 +41,12 @@ public class UserService {
 
     public List <User> findByCity( String kota) {
         return userRepository.searchByCity(kota);
+    }
+    public List <User> getCitizen( ) {
+        return userRepository.findCitizen();
+    }
+    public List <User> getHealth() {
+        return userRepositoryfindHealth();
     }
 
     public Optional<User> updateCitizen( Long id,UserDTO  citizen) {

@@ -15,6 +15,10 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User,Long> {
     @Query(value = "SELECT * FROM user WHERE user.id_user = ? ", nativeQuery = true)
     Optional<User> searchById (Long id);
-     @Query(value = "SELECT * FROM user WHERE (user.kota LIKE %?#{escape([0])} escape ?#{escapeCharacter()} AND user.role = 'admin') ", nativeQuery = true)
-   List<User> searchByCity (String kota);
+    @Query(value = "SELECT * FROM user WHERE (user.kota LIKE %?#{escape([0])} escape ?#{escapeCharacter()} AND user.role = 'admin') ", nativeQuery = true)
+    List<User> searchByCity (String kota);
+    @Query(value = "SELECT * FROM user WHERE user.role   = 'admin' ", nativeQuery = true)
+    List<User> findHealth();
+    @Query(value = "SELECT * FROM user WHERE user.role   = 'user' ", nativeQuery = true)
+    List<User> findCitizen();
 }

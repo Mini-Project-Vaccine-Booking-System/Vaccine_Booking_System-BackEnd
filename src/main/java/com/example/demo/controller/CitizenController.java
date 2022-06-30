@@ -29,23 +29,29 @@ public class CitizenController {
 
     @GetMapping(value = "")
     public List<User> getCitizens() {
-        return userService.getCitizens();
+        return userService.getAll();
+    }
+    @GetMapping(value = "/citizen")
+    public List<User> getUser() {
+        return userService.getCitizen();
     }
     @GetMapping(value = "/{id}")
     public Optional <User> getCitizen(@PathVariable(value = "id") Long id) {
         return userService.findById(id);
     }
+    @GetMapping(value = "/search/{kota}")
+    public List <User> getUserByCity(@PathVariable(value = "kota") String kota) {
+        return userService.findByCity(kota);
+    }
+    @GetMapping(value = "/health")
+    public List <User> getHealth() {
+        return userService.getHealth();
+    }
     @PostMapping(value = "")
     public User createNewCitizen(@RequestBody User request) {
         return userService.save(request);
     }
-        
-        // try {
-        //     return userService.save(request);
-        // } catch (Exception e) {
-        //     throw new RuntimeException(e.getMessage(),e);
-        // }
-    
+          
 
     @PutMapping(value = "/{id}") 
     public Optional<User> updateCitizen(
@@ -57,10 +63,7 @@ public class CitizenController {
       return userService.deleteCitizen(id);
     }
 
-    @GetMapping(value = "/search/{kota}")
-    public List <User> getUserByCity(@PathVariable(value = "kota") String kota) {
-        return userService.findByCity(kota);
-    }
+   
 
     
 }
