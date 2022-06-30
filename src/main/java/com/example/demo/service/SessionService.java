@@ -57,7 +57,7 @@ public class SessionService {
             return session;
         }
             catch(Exception e){
-                log.error("save error" + e.getMessage());
+                log.error("save error, " + e.getMessage());
                 return null;
             }
     }
@@ -65,10 +65,10 @@ public class SessionService {
     public Optional<Session> updateSession( Long id, SessionDTO request) {
         try{    
             Optional <Session> session = sessionRepository.findById(id);
-            User user = userRepository.searchById(request.getIdHealth())
-                .orElseThrow(()->  new Exception( " Id User" + request.getIdHealth() + "Not Found"));
-            Vaksin vaksin = vaksinRepository.searchByName(request.getNama())
-                .orElseThrow(()->  new Exception( " Nama Vaksin" + request.getNama() + "Not Found"));
+            User user = userRepository.findById(request.getIdHealth())
+                .orElseThrow(()->  new Exception( " Id User " + request.getIdHealth() + "Not Found"));
+            Vaksin vaksin = vaksinRepository.searchForSession(request.getNama(), request.getIdHealth())
+                .orElseThrow(()->  new Exception( " Vaksin " + request.getNama() + "by " + request.getIdHealth()+"Not Found"));
 
         session.ifPresent(res -> {
             res.setUser(user);
@@ -81,6 +81,8 @@ public class SessionService {
         return session;
     }
         catch(Exception e){
+            log.error("update error, " + e.getMessage());
+                return null;
             return null;
         }
     }
