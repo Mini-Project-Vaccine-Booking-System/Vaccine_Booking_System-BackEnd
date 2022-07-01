@@ -34,6 +34,10 @@ public class SessionController {
     public Optional <Session> getSession(@PathVariable(value = "id") Long id) {
         return sessionService.getSessionById(id);
     }
+    @GetMapping(value = "/user/{idUser}")
+    public List <Session> findSessionByUserId(@PathVariable(value = "idUser") Long idUser) {
+        return sessionService.getByUserId(idUser);
+    }
 
     @PostMapping("")
     public Session createNewSession(@RequestBody SessionDTO request) {

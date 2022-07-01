@@ -36,6 +36,9 @@ public class SessionService {
     public Optional<Session> getSessionById(Long id) {
         return sessionRepository.findById(id);
     }
+    public List <Session> getByUserId( Long idUser) {
+        return sessionRepository.findByUser_idUser(idUser);
+    }
 
     public Session save(SessionDTO request) {
         try{    
