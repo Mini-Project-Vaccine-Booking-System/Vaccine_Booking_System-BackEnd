@@ -43,6 +43,10 @@ public class SessionController {
     public List <Session> findSessionByDate(@PathVariable(value = "date") Date date) {
         return sessionService.getByDate(date);
     }
+    @GetMapping(value = "/date/{date}/{kota}")
+    public List <Session> findSessionByDateAndUser_kota(@PathVariable(value = "date") Date date, @PathVariable(value = "kota") String kota) {
+        return sessionService.getByDateAndUser_kota(date, kota);
+    }
    
     
     @PostMapping("")

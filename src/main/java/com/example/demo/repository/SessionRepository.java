@@ -15,5 +15,5 @@ public interface SessionRepository extends JpaRepository<Session,Long>  {
     List<Session> findByUser_idUser(Long idUser);
 
     List <Session> findByDate (Date date);
-    
+    List <Session> findByDateAndUser_kota(Date date, String kota);
 }

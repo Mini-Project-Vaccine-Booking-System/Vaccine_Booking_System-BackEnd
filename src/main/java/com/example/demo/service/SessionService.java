@@ -43,7 +43,9 @@ public class SessionService {
     public List <Session> getByDate (Date date) {
         return sessionRepository.findByDate(date);
     }
-  
+    public List <Session> getByDateAndUser_kota(Date date, String kota) {
+        return sessionRepository.findByDateAndUser_kota(date, kota);
+    }
 
 
     public Session save(SessionDTO request) {
