@@ -77,10 +77,10 @@ public class VaksinService {
         vaksinById.ifPresent(res -> {
             vaksinRepository.delete(res);
         });
-        if (vaksinById.isPresent()) {
-            return "Success";
-        } else {
-            return "Failed";
+        try {
+            return "success";
+        } catch (Exception e) {
+            return "failed";
         }
     }
 }
