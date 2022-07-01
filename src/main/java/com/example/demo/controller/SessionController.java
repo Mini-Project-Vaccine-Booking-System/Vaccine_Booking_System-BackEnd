@@ -38,7 +38,10 @@ public class SessionController {
     public List <Session> findSessionByUserId(@PathVariable(value = "idUser") Long idUser) {
         return sessionService.getByUserId(idUser);
     }
-
+    // @GetMapping(value = "/search/{kota}/{idUser}")
+    // public List <Session> getSessionByCity(@PathVariable(value = "kota") String kota, @PathVariable(value = "idUser") Long idUser) {
+      
+    // }
     @PostMapping("")
     public Session createNewSession(@RequestBody SessionDTO request) {
       return sessionService.save(request);
