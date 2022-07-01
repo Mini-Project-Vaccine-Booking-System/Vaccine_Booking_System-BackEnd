@@ -90,12 +90,19 @@ public class KelompokService {
         kelompokById.ifPresent(res -> {
             kelompokRepository.delete(res);
         });
-        if(kelompokById.isPresent()){
+        // if(kelompokById.isPresent()){
+        //     return "success";
+        // }
+        // else{
+        //     return "failed";
+        // }
+        try{
+            kelompokById.orElseThrow(()-> new Exception("Id Kelompok" + id + "Not Found"));
             return "success";
-        }
-        else{
-            return "failed";
-        }
+            }catch(Exception e){
+                log.error("delete error, " + e.getMessage());
+                return "failed";
+            }
     }
     
 }
