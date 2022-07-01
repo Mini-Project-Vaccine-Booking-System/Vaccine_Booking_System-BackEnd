@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,11 @@ public class SessionService {
     public List <Session> getByUserId( Long idUser) {
         return sessionRepository.findByUser_idUser(idUser);
     }
+    public List <Session> getByDate (Date date) {
+        return sessionRepository.findByDate(date);
+    }
+  
+
 
     public Session save(SessionDTO request) {
         try{    

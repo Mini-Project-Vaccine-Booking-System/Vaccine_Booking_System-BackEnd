@@ -14,8 +14,6 @@ public interface SessionRepository extends JpaRepository<Session,Long>  {
     Optional<Session> searchById (Long id);
     List<Session> findByUser_idUser(Long idUser);
 
-    @Query(value = "SELECT * FROM session WHERE session.user_kota = ? AND session.date = ? ", nativeQuery = true)
-    List<Session> searchByCityAndDate(String kota, Date date);
-    Optional<Session> findByUser_idUserAndDate(Long kota, Date date);
+    List <Session> findByDate (Date date);
     
 }
