@@ -101,7 +101,7 @@ public class KelompokService {
             return "success";
             }catch(Exception e){
                 log.error("delete error, " + e.getMessage());
-                return "failed";
+                return "failed " + e.getMessage();
             }
     }
     
