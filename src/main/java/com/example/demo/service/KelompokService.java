@@ -27,6 +27,10 @@ public class KelompokService {
         return kelompokRepository.findAll();
     }
 
+    public List <Kelompok> getByUserId( Long idUser) {
+        return kelompokRepository.findByUser_idUser(idUser);
+    }
+
     public Kelompok save(KelompokDTO request) {
     try{    
         Kelompok kelompok = new Kelompok();

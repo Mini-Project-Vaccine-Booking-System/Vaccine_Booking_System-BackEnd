@@ -12,4 +12,6 @@ import com.example.demo.entity.Kelompok;
 public interface KelompokRepository extends JpaRepository<Kelompok,Long>  {
     @Query(value = "SELECT * FROM kelompok WHERE kelompok.id_kelompok = ? ", nativeQuery = true)
     Optional<Kelompok> searchById (Long id);
+
+    List<Kelompok> findByUser_idUser(Long idUser);
 }

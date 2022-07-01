@@ -39,6 +39,11 @@ public class KelompokController {
          return kelompokService.save(request);
     }
 
+    @GetMapping(value = "/user/{idUser}")
+    public List <Kelompok> findKelompokByUserId(@PathVariable(value = "idUser") Long idUser) {
+        return kelompokService.getByUserId(idUser);
+    }
+
     @PutMapping(value = "/{id}") 
     public Optional<Kelompok> updateKelompok(
         @PathVariable Long id, @RequestBody KelompokDTO  request) {
