@@ -13,7 +13,7 @@ import com.example.demo.entity.Vaksin;
 public interface VaksinRepository extends JpaRepository<Vaksin,Long>  {
     @Query(value = "SELECT * FROM vaksin WHERE nama LIKE %?#{escape([0])} escape ?#{escapeCharacter()}", nativeQuery = true)
     Optional<Vaksin> searchByName(String nama );
-    @Query(value = "SELECT * FROM vaksin v WHERE v.nama = :str AND v.id_health = :str2", nativeQuery = true)
+    @Query(value = "SELECT id_vaksin,nama,quantity,created_at,created_by FROM vaksin v WHERE v.nama = :str AND v.id_health = :str2", nativeQuery = true)
     Optional<Vaksin> searchForSession(@Param("str") String str,@Param("str2") Long str2);
     @Query(value = "SELECT * FROM vaksin WHERE vaksin.id_vaksin = ? ", nativeQuery = true)
     Optional<Vaksin> searchById (Long id);
