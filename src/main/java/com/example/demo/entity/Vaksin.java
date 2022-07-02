@@ -25,6 +25,7 @@ public class Vaksin {
     private Long idVaksin;
     
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_health", nullable = false)
     private  User user;
 
