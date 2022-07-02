@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.sql.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 @Data
 @Table(name = "vaksin")
 public class Vaksin {
+    @JsonManagedReference
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vaksin")
@@ -26,9 +29,11 @@ public class Vaksin {
     @JoinColumn(name = "id_health", nullable = false)
     private  User user;
 
+    @JsonManagedReference
     @Column(name = "nama", nullable = false)
     private String nama;
 
+    @JsonManagedReference
     @Column(name = "quantity",nullable = false)
     private Long quantity;
 
