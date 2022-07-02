@@ -22,7 +22,6 @@ public class Vaksin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vaksin")
-    @JsonManagedReference
     private Long idVaksin;
     
     @ManyToOne
@@ -30,11 +29,9 @@ public class Vaksin {
     private  User user;
 
     @Column(name = "nama", nullable = false)
-    @JsonManagedReference
     private String nama;
 
     @Column(name = "quantity",nullable = false)
-    @JsonManagedReference
     private Long quantity;
 
     @UpdateTimestamp

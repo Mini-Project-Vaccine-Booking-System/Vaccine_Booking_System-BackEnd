@@ -45,7 +45,7 @@ public class Session {
     @Column(name="start")
     private Time start;
 
-    @JsonBackReference
+
     @ManyToOne
     @JoinColumn(name = "nama_vaksin", nullable = false)
     private Vaksin vaksin;
