@@ -19,22 +19,22 @@ import java.util.List;
 @Data
 @Table(name = "vaksin")
 public class Vaksin {
-    @JsonManagedReference
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_vaksin")
+    @JsonManagedReference
     private Long idVaksin;
     
     @ManyToOne
     @JoinColumn(name = "id_health", nullable = false)
     private  User user;
 
-    @JsonManagedReference
     @Column(name = "nama", nullable = false)
+    @JsonManagedReference
     private String nama;
 
-    @JsonManagedReference
     @Column(name = "quantity",nullable = false)
+    @JsonManagedReference
     private Long quantity;
 
     @UpdateTimestamp
