@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.*;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entity.Vaksin;
@@ -17,4 +17,7 @@ public interface VaksinRepository extends JpaRepository<Vaksin,Long>  {
     Optional<Vaksin> searchForSession(@Param("str") String str,@Param("str2") Long str2);
     @Query(value = "SELECT * FROM vaksin WHERE vaksin.id_vaksin = ? ", nativeQuery = true)
     Optional<Vaksin> searchById (Long id);
+
+    List<Vaksin> findByUser_idUser(Long idUser);
+
 }

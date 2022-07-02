@@ -32,6 +32,9 @@ public class VaksinService {
         return vaksinRepository.findById(id);
     }
 
+    public List <Vaksin> getByUserId( Long idUser) {
+        return vaksinRepository.findByUser_idUser(idUser);
+    }
     public Vaksin save(VaksinDTO request) {
         try{    
             Vaksin vaksin = new Vaksin();

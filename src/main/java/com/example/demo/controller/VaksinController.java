@@ -27,6 +27,10 @@ public class VaksinController {
     public Optional <Vaksin> getVaksin(@PathVariable(value = "id") Long id) {
         return vaksinService.findById(id);
     }
+    @GetMapping(value = "/user/{idUser}")
+    public List <Vaksin> findVaksinByUserId(@PathVariable(value = "idUser") Long idUser) {
+        return vaksinService.getByUserId(idUser);
+    }
     
     @PostMapping(value = "")
     public Vaksin createNewVaksin(@RequestBody VaksinDTO request) {

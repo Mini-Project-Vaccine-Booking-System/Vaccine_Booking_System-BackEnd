@@ -38,6 +38,12 @@ public class BookingService {
     public Optional<Booking> getBookingById(Long id) {
         return bookingRepository.findById(id);
     }
+    public List <Booking> getByUserId( Long idUser) {
+        return bookingRepository.findByKelompok_User_IdUser(idUser);
+    }
+    public List <Booking> getByUserHealthId( Long idUser) {
+        return bookingRepository.findBySession_User_IdUser(idUser);
+    }
 
     public Booking save(BookingDTO request) {
         try{    
@@ -94,7 +100,5 @@ public class BookingService {
         }
     }
 
-    public List <Booking> getByUserId( Long idUser) {
-        return bookingRepository.findByKelompok_User_IdUser(idUser);
-    }
+    
 }

@@ -32,7 +32,14 @@ public class BookingController {
     public Optional <Booking> getBooking(@PathVariable(value = "id") Long id) {
         return bookingService.getBookingById(id);
     }
-
+    @GetMapping(value = "/s/{idUser}")
+    public List <Booking> findBookingByUserId(@PathVariable(value = "idUser") Long idUser) {
+        return bookingService.getByUserId(idUser);
+    }
+    @GetMapping(value = "/user/{idUser}")
+    public List <Booking> findBookingByUserHealthId(@PathVariable(value = "idUser") Long idUser) {
+        return bookingService.getByUserHealthId(idUser);
+    }
     @PostMapping("")
     public Booking createNewBooking(@RequestBody BookingDTO request) {
 
@@ -54,8 +61,5 @@ public class BookingController {
             return bookingService.updateBooking(id, request);
     }
 
-    @GetMapping(value = "/s/{idUser}")
-    public List <Booking> findBookingByUserId(@PathVariable(value = "idUser") Long idUser) {
-        return bookingService.getByUserId(idUser);
-    }
+   
 }

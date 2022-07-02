@@ -17,4 +17,5 @@ public interface BookingRepository extends JpaRepository<Booking,Long>{
 
     
     List<Booking> findByKelompok_User_IdUser(Long idUser);
+    List<Booking> findBySession_User_IdUser(Long idUser);
 }
