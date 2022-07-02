@@ -49,9 +49,9 @@ public class BookingService {
         try{    
             Booking booking = new Booking();
             log.info("search kelompok  id {}", request.getIdKelompok());
-            Kelompok kelompok = kelompokRepository.findById(request.getIdKelompok())
+            Kelompok kelompok = kelompokRepository.forBooking(request.getIdKelompok())
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdKelompok() + "Not Found"));
-            Session session = sessionRepository.findById(request.getIdSession())
+            Session session = sessionRepository.forBooking(request.getIdSession())
                 .orElseThrow(()->  new Exception( " Id Session" + request.getIdSession()+ "Not Found"));
            
             log.info("save booking");
