@@ -30,7 +30,10 @@ public class KelompokService {
     public List <Kelompok> getByUserId( Long idUser) {
         return kelompokRepository.findByUser_idUser(idUser);
     }
-
+    public List <Kelompok> getByIdAndHubungan(Long id, String hubungan) {
+        return kelompokRepository.findByIdAndHubungan(id, hubungan);
+    }
+    
     public Kelompok save(KelompokDTO request) {
     try{    
         Kelompok kelompok = new Kelompok();

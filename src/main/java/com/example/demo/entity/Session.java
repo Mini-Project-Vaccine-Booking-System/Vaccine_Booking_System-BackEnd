@@ -49,7 +49,6 @@ public class Session {
     @Column(name="stok")
     private Integer stok;
 
-   
     @ManyToOne
     @JoinColumn(name = "nama_vaksin", nullable = false)
     private Vaksin vaksin;

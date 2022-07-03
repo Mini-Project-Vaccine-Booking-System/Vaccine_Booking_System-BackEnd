@@ -16,4 +16,7 @@ public interface KelompokRepository extends JpaRepository<Kelompok,Long>  {
     Optional<Kelompok> forBooking (Long id);
 
     List<Kelompok> findByUser_idUser(Long idUser);
+
+    
+    List <Kelompok> findByIdAndHubungan(Long id, String hubungan);
 }
