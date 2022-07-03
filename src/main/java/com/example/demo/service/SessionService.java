@@ -63,6 +63,7 @@ public class SessionService {
             session.setDate(request.getDate());
             session.setStart(request.getStart());
             session.setEnd(request.getEnd());;
+            session.setStok(request.getStok());
             sessionRepository.save(session);
     
             return session;
