@@ -43,10 +43,10 @@ public class KelompokController {
     public List <Kelompok> findKelompokByUserId(@PathVariable(value = "idUser") Long idUser) {
         return kelompokService.getByUserId(idUser);
     }
-    @GetMapping(value = "/{id}/{hubungan}")
-    public List <Kelompok> findKelompokByIdAndHubungan(@PathVariable(value = "id") Long id, @PathVariable(value = "hubungan") String hubungan) {
-        return kelompokService.getByIdAndHubungan(id, hubungan);
-    }
+    // @GetMapping(value = "/{id}/{hubungan}")
+    // public List <Kelompok> findKelompokByIdAndHubungan(@PathVariable(value = "id") Long id, @PathVariable(value = "hubungan") String hubungan) {
+    //     return kelompokService.getByIdAndHubungan(id, hubungan);
+    // }
 
     @PutMapping(value = "/{id}") 
     public Optional<Kelompok> updateKelompok(
