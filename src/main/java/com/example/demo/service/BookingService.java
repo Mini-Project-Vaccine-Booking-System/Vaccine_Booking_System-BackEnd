@@ -49,9 +49,9 @@ public class BookingService {
         try{    
             Booking booking = new Booking();
             log.info("search kelompok  id {}", request.getIdKelompok());
-            Kelompok kelompok = kelompokRepository.forBooking(request.getIdKelompok())
+            Kelompok kelompok = kelompokRepository.findById(request.getIdKelompok())
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdKelompok() + "Not Found"));
-            Session session = sessionRepository.forBooking(request.getIdSession())
+            Session session = sessionRepository.findById(request.getIdSession())
                 .orElseThrow(()->  new Exception( " Id Session" + request.getIdSession()+ "Not Found"));
            
             log.info("save booking");
@@ -62,7 +62,7 @@ public class BookingService {
             return booking;
         }
             catch(Exception e){
-                log.error("save error, "+e.getMessage() );
+                log.error("save error, "+e.getMessage());
                 return null;
             }
     }
@@ -70,9 +70,9 @@ public class BookingService {
     public Optional<Booking> updateBooking( Long id, BookingDTO request) {
         try{    
             Optional <Booking> booking = bookingRepository.findById(id);
-            Kelompok kelompok = kelompokRepository.forBooking(request.getIdKelompok())
+            Kelompok kelompok = kelompokRepository.findById(request.getIdKelompok())
                 .orElseThrow(()->  new Exception( " Id User" + request.getIdKelompok() + "Not Found"));
-                Session session = sessionRepository.forBooking(request.getIdSession())
+                Session session = sessionRepository.findById(request.getIdSession())
                 .orElseThrow(()->  new Exception( " Id Session" + request.getIdSession()+ "Not Found"));
 
         booking.ifPresent(res -> {
@@ -83,7 +83,7 @@ public class BookingService {
         return booking;
     }
         catch(Exception e){
-            log.error("update error, "+e.getMessage());
+            log.error("save error, "+e.getMessage());
             return null;
         }
     }

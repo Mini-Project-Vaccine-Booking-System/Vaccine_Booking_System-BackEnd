@@ -12,8 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface SessionRepository extends JpaRepository<Session,Long>  {
     @Query(value = "SELECT * FROM session WHERE session.id_session = ? ", nativeQuery = true)
     Optional<Session> searchById (Long id);
-    @Query(value = "SELECT id_session,date,start,end,nama_vaksin FROM session WHERE session.id_session = ? ", nativeQuery = true)
-    Optional<Session> forBooking (Long id);
+    
     List<Session> findByUser_idUser(Long idUser);
 
     List <Session> findByDate (Date date);

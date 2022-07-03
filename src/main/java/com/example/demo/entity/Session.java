@@ -35,6 +35,7 @@ public class Session {
     @Column(name="id_session")
     private Long idSession;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_health", nullable = false)
     private User user;
