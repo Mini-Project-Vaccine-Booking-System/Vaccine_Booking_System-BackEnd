@@ -18,6 +18,7 @@ public class SessionDTO {
     private String nama;
     private Date date;
     private Time start;
+    private Integer stok;
     private Time end;
     private Date update_at;
     private Date created_ad;

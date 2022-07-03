@@ -46,6 +46,9 @@ public class Session {
     @Column(name="start")
     private Time start;
 
+    @Column(name="stok")
+    private Integer stok;
+
    
     @ManyToOne
     @JoinColumn(name = "nama_vaksin", nullable = false)
