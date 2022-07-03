@@ -88,6 +88,7 @@ public class SessionService {
             res.setDate(request.getDate());
             res.setStart(request.getStart());
             res.setEnd(request.getEnd());
+            res.setStok(request.getStok());
             sessionRepository.save(res);
         });
         return session;

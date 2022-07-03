@@ -21,4 +21,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findHealth();
     @Query(value = "SELECT * FROM user WHERE user.role   = 'user' ", nativeQuery = true)
     List<User> findCitizen();
+
 }
