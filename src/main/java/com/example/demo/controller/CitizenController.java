@@ -63,7 +63,7 @@ public class CitizenController {
             return userService.updateCitizen(id, citizen);
     }
     @DeleteMapping(value = "/{id}")
-    public String deleteCitizen(@PathVariable (value = "id") Long id) {
+    public ResponseEntity<Object> deleteCitizen(@PathVariable (value = "id") Long id) {
       return userService.deleteCitizen(id);
     }
 

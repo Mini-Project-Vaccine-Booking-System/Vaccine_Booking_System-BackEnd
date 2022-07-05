@@ -140,7 +140,6 @@ public class UserService {
                     return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
                 }
         
-        // citizenById.ifPresent(res -> {
             citizenById.get().setNik(citizen.getNik());
             citizenById.get().setNoHp(citizen.getNoHp());
             citizenById.get().setNama(citizen.getNama());
@@ -155,26 +154,26 @@ public class UserService {
             citizenById.get().setUpdatedAt(citizen.getUpdated_at());
             userRepository.save(citizenById.get());
             return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, citizenById.get(), HttpStatus.OK);
-        // });
         } catch (Exception e) {
             log.error("Get an error by update course, Error : {}",e.getMessage());
             return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    public String deleteCitizen( Long id) {
+
+    public ResponseEntity<Object> deleteCitizen( Long id) {
         
-        Optional<User> citizenById = userRepository.findById(id);
-        citizenById.ifPresent(res -> {
-            userRepository.delete(res);
-        });
-        if(citizenById.isPresent()){
-            return "success";
+        try {
+            log.info("Executing delete user by id: {}", id);
+            Optional<User> citizenById = userRepository.findById(id);
+            citizenById.ifPresent(res -> {
+                userRepository.delete(res);
+            });
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Data not found. Error: {}", e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
         }
-        else{
-            return "failed";
-        }
-        
+        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK);       
     }
 
 }
