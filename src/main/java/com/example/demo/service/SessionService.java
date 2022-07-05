@@ -125,7 +125,7 @@ public class SessionService {
             }
             log.info("search vaksin name: ", request.getNama(), " vaksin health id: ", request.getIdHealth());
             Optional <Vaksin> vaksin = vaksinRepository.searchForSession(request.getNama(), request.getIdHealth());
-            if(user.isEmpty()) {
+            if(vaksin.isEmpty()) {
                 log.info(" Vaksin " + request.getNama() + "by " + request.getIdHealth()+"Not Found");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }            
@@ -141,7 +141,7 @@ public class SessionService {
     
             return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, session, HttpStatus.OK);
         }catch (Exception e) {
-            log.error("Get an error by executing create new kelompok, Error : {}",e.getMessage());
+            log.error("Get an error by executing create new session, Error : {}",e.getMessage());
             return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

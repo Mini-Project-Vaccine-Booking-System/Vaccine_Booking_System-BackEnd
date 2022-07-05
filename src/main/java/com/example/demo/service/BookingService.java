@@ -16,6 +16,12 @@ import com.example.demo.repository.VaksinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.util.*;
+import com.example.demo.constant.*;
+import com.example.demo.entity.base.*;
+import org.springframework.http.*;
+import org.springframework.dao.*;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
