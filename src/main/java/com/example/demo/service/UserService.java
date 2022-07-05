@@ -29,7 +29,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<Object> save( UserDTO request) {
+    public ResponseEntity<Object> save( User request) {
         log.info ("Save user: {}",request);
         // User user= User.builder()
         //     .email(request.getEmail().toLowerCase())
