@@ -5,7 +5,6 @@ import java.util.Date;
 import lombok.*;
 
 @Data
-@SuperBuilder
 public class UserDTO {
     private long idUser;
     private String email;

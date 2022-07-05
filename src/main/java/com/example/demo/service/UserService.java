@@ -31,23 +31,24 @@ public class UserService {
 
     public ResponseEntity<Object> save( UserDTO request) {
         log.info ("Save user: {}",request);
-        User user= User.builder()
-            .email(request.getEmail().toLowerCase())
-            .nik(request.getNik())
-            .noHp(request.getNoHp())
-            .nama(request.getNama())
-            .gender(request.getGender())
-            .image(request.getImage())
-            .tglLahir(request.getTglLahir())
-            .address(request.getAddress())
-            .username(request.getUsername())
-            .password(request.getPassword())
-            .kota(request.getKota())
-            .role(request.getRole())
-            .updated_at(request.getUpdated_at())
-            .created_at(request.getCreated_at());
+        // User user= User.builder()
+        //     .email(request.getEmail().toLowerCase())
+        //     .nik(request.getNik())
+        //     .noHp(request.getNoHp())
+        //     .nama(request.getNama())
+        //     .gender(request.getGender())
+        //     .image(request.getImage())
+        //     .tglLahir(request.getTglLahir())
+        //     .address(request.getAddress())
+        //     .username(request.getUsername())
+        //     .password(request.getPassword())
+        //     .kota(request.getKota())
+        //     .role(request.getRole())
+        //     .updated_at(request.getUpdated_at())
+        //     .created_at(request.getCreated_at());
         try {
-            user = userRepository.save(request);
+            request.setEmail(request.getEmail().toLowerCase());
+            Optional<User> user = userRepository.save(request);
             return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Get an error by executing create new user, Error : {}",e.getMessage());

@@ -3,7 +3,7 @@ package com.example.demo.entity;
 
 
 
-import java.util.Date;
+import java.util    .Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -16,12 +16,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.*;
 
 
 @Entity
 @Data
-@SuperBuilder
 @Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
