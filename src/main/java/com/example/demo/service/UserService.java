@@ -76,7 +76,7 @@ public class UserService {
         try {
             log.info("Get user detail");
             List<User> userDetail = userRepository.findById(id);
-            if (user.isEmpty()) {
+            if (userDetail.isEmpty()) {
                 log.info("user is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
@@ -91,7 +91,7 @@ public class UserService {
         try {
             log.info("Get health detail by city");
             List<User> userCity = userRepository.searchByCity(kota);
-            if (user.isEmpty()) {
+            if (userCity.isEmpty()) {
                 log.info("user is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
@@ -105,7 +105,7 @@ public class UserService {
         try {
             log.info("Get all citizen");
             List<User> userCitizen = userRepository.findCitizen();
-            if (user.isEmpty()) {
+            if (userCitizen.isEmpty()) {
                 log.info("citizen is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
@@ -119,7 +119,7 @@ public class UserService {
         try {
             log.info("Get all health facilities");
             List<User> userHealth = userRepository.findHealth();
-            if (user.isEmpty()) {
+            if (userHealth.isEmpty()) {
                 log.info("health facilities is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
