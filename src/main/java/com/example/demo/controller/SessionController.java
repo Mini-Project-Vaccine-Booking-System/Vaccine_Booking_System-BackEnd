@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.Session;
 import com.example.demo.entity.dto.SessionDTO;
 import com.example.demo.repository.SessionRepository;
 import com.example.demo.service.SessionService;
+
 
 @RestController
 @RequestMapping("/session")
@@ -27,41 +30,39 @@ public class SessionController {
     private SessionService sessionService;
     
     @GetMapping(value = "")
-    public List<Session> getSession() {
+    public ResponseEntity<Object> getSession() {
         return sessionService.getSession();
     }
     
     @GetMapping(value = "/{id}")
-    public Optional <Session> getSession(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> getSession(@PathVariable(value = "id") Long id) {
         return sessionService.getSessionById(id);
     }
     @GetMapping(value = "/user/{idUser}")
-    public List <Session> findSessionByUserId(@PathVariable(value = "idUser") Long idUser) {
+    public ResponseEntity<Object> findSessionByUserId(@PathVariable(value = "idUser") Long idUser) {
         return sessionService.getByUserId(idUser);
     }
     @GetMapping(value = "/date/{date}")
-    public List <Session> findSessionByDate(@PathVariable(value = "date") Date date) {
+    public ResponseEntity<Object> findSessionByDate(@PathVariable(value = "date") Date date) {
         return sessionService.getByDate(date);
     }
     @GetMapping(value = "/date/{date}/{kota}")
-    public List <Session> findSessionByDateAndUser_kota(@PathVariable(value = "date") Date date, @PathVariable(value = "kota") String kota) {
+    public ResponseEntity<Object> findSessionByDateAndUser_kota(@PathVariable(value = "date") Date date, @PathVariable(value = "kota") String kota) {
         return sessionService.getByDateAndUser_kota(date, kota);
     }
-   
-    
-    @PostMapping("")
-    public Session createNewSession(@RequestBody SessionDTO request) {
-      return sessionService.save(request);
-  }
-
-    @DeleteMapping(value = "/{id}")
-    public String deleteSession(@PathVariable (value = "id") Long id) {
-      return sessionService.deleteSession(id);
-    }
     @PutMapping(value = "/{id}") 
-    public Optional<Session> updateSession(
+    public ResponseEntity<Object> updateSession(
         @PathVariable Long id, @RequestBody SessionDTO  request) {
             return sessionService.updateSession(id, request);
+    } 
+    @PostMapping("")
+    public ResponseEntity<Object> createNewSession(@RequestBody SessionDTO request) {
+      return sessionService.save(request);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Object> deleteSession(@PathVariable (value = "id") Long id) {
+      return sessionService.deleteSession(id);
     }
     
 }

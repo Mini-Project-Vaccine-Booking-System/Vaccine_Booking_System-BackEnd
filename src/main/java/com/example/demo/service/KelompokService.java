@@ -43,6 +43,20 @@ public class KelompokService {
             return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    public ResponseEntity<Object> findById(Long id) {
+        try {
+            log.info("Get kelompok by id");
+            Optional<Kelompok> kelById = kelompokRepository.findById(id);
+            if (kelById.isEmpty()) {
+                log.info("kelompok is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelById, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error in get kelompok by id , Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     public ResponseEntity<Object> getByUserId( Long idUser) {
         try {
@@ -73,27 +87,11 @@ public class KelompokService {
             return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    public ResponseEntity<Object> findById(Long id) {
-        try {
-            log.info("Get kelompok by id");
-            Optional<Kelompok> kelById = kelompokRepository.findById(id);
-            if (kelById.isEmpty()) {
-                log.info("kelompok is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelById, HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Get an error in get kelompok by id , Error : {}",e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
 
     public ResponseEntity<Object> save(KelompokDTO request) {
     try{    
         log.info("save new kelompok: {}", request);
         log.info("search user id {}", request.getIdUser());
-        
         Optional<User> user = userRepository.findById(request.getIdUser());
         if(user.isEmpty()) {
             log.info("parent user is empty");
