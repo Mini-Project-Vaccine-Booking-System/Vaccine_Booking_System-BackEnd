@@ -3,6 +3,12 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+import com.example.demo.util.*;
+import com.example.demo.constant.*;
+import com.example.demo.entity.base.*;
+import org.springframework.http.*;
+import org.springframework.dao.*;
 
 import com.example.demo.entity.Kelompok;
 import com.example.demo.entity.User;
@@ -23,26 +29,78 @@ public class KelompokService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Kelompok> getKelompok() {
-        return kelompokRepository.findAll();
+    public ResponseEntity<Object> getKelompok() {
+        try {
+            log.info("Get all kelompok");
+            List<Kelompok> kelompok = kelompokRepository.findAll();
+            if (kelompok.isEmpty()) {
+                log.info("kelompok is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by get all kelompok, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List <Kelompok> getByUserId( Long idUser) {
-        return kelompokRepository.findByUser_idUser(idUser);
+    public ResponseEntity<Object> getByUserId( Long idUser) {
+        try {
+            log.info("Get kelompok by user parent's id");
+            List<Kelompok> kelByParent = kelompokRepository.findByUser_idUser(idUser);
+            if (kelByParent.isEmpty()) {
+                log.info("kelompok is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelByParent, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error in get kelompok by parent user's id , Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public List <Kelompok> getByIdAndHubungan(Long id, String hubungan) {
-        return kelompokRepository.findByUser_IdUserAndHubungan(id, hubungan);
+
+    public ResponseEntity<Object> getByIdAndHubungan(Long id, String hubungan) {
+        try {
+            log.info("Get kelompok by user id and hubungan");
+            List<Kelompok> kelIdHub = kelompokRepository.findByUser_IdUserAndHubungan(id, hubungan);
+            if (kelIdHub.isEmpty()) {
+                log.info("kelompok is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelIdHub, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error in kelompok by user id and hubungan, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public ResponseEntity<Object> findById(Long id) {
+        try {
+            log.info("Get kelompok by id");
+            Optional<Kelompok> kelById = kelompokRepository.findById(id);
+            if (kelById.isEmpty()) {
+                log.info("kelompok is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelById, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error in get kelompok by id , Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
-    public Kelompok save(KelompokDTO request) {
-    try{    
-        Kelompok kelompok = new Kelompok();
-        log.info("search user id {}", request.getIdUser());
-        User user = userRepository.findById(request.getIdUser())
-            .orElseThrow(()->  new Exception( " Id User" + request.getIdUser() + "Not Found"));
 
-        log.info("save kelompok");
-        kelompok.setUser(user);
+    public ResponseEntity<Object> save(KelompokDTO request) {
+    try{    
+        log.info("save new kelompok: {}", request);
+        log.info("search user id {}", request.getIdUser());
+        
+        Optional<User> user = userRepository.findById(request.getIdUser());
+        if(user.isEmpty()) {
+            log.info("parent user is empty");
+            return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+        }
+        Kelompok kelompok = new Kelompok(); 
+        kelompok.setUser(user.get());
         kelompok.setNik(request.getNik());
         kelompok.setHubungan(request.getHubungan());
         kelompok.setNamaKelompok(request.getNamaKelompok());
@@ -51,25 +109,30 @@ public class KelompokService {
         kelompok.setGender(request.getGender());
         kelompokRepository.save(kelompok);
 
-        return kelompok;
+        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
+    } catch (Exception e) {
+        log.error("Get an error by executing create new kelompok, Error : {}",e.getMessage());
+        return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
-        catch(Exception e){
-            log.error("save error, "+ e.getMessage());
-            return null;
-        }
-    }
-    public Optional <Kelompok> findById(Long id) {
-        return kelompokRepository.findById(id);
     }
     
-    public Optional<Kelompok> updateKelompok(Long id, KelompokDTO  request) {
+    public ResponseEntity<Object> updateKelompok(Long id, KelompokDTO  request) {
         try{    
+            log.info("search kelompok: ");
             Optional<Kelompok> kelompok = kelompokRepository.findById(id);
-            User user = userRepository.searchById(request.getIdUser())
-            .orElseThrow(()->  new Exception( " Id User" + request.getIdUser() + "Not Found"));
+            if (kelompok.isEmpty()) {
+                log.info("kelompok not found");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            Optional<User> user = userRepository.searchById(request.getIdUser());
+            if(user.isEmpty()) {
+                log.info("user kelompok id: "+ request.getIdUser()+" not found");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
 
+            log.info("Update kelompok: {}", request);
         kelompok.ifPresent(res -> {
-            res.setUser(user);
+            res.setUser(user.get());
             res.setNik(request.getNik());
             res.setHubungan(request.getHubungan());
             res.setNamaKelompok(request.getNamaKelompok());
@@ -78,34 +141,27 @@ public class KelompokService {
             res.setGender(request.getGender());
             kelompokRepository.save(res);
         });
-        return kelompok;
-    }
-        catch(Exception e){
-            log.error("update error, " + e.getMessage());
-            return null;
+         return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by update kelompok, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
        
     }
 
     
-    public String deleteKelompok(Long id) {
-        Optional<Kelompok> kelompokById = kelompokRepository.findById(id);
-        kelompokById.ifPresent(res -> {
-            kelompokRepository.delete(res);
-        });
-        // if(kelompokById.isPresent()){
-        //     return "success";
-        // }
-        // else{
-        //     return "failed";
-        // }
-        try{
-            kelompokById.orElseThrow(()-> new Exception("Id Kelompok" + id + "Not Found"));
-            return "success";
-            }catch(Exception e){
-                log.error("delete error, " + e.getMessage());
-                return "failed " + e.getMessage();
+    public ResponseEntity<Object> deleteKelompok(Long id) {
+            try {
+                log.info("Executing delete kelompok by id: {}", id);
+                Optional<Kelompok> kelompokById = kelompokRepository.findById(id);
+                kelompokById.ifPresent(res -> {
+                    kelompokRepository.delete(res);
+                });
+            } catch (EmptyResultDataAccessException e) {
+                log.error("Data not found. Error: {}", e.getMessage());
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK); 
     }
     
 }

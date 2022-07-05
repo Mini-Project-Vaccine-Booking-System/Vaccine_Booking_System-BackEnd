@@ -32,21 +32,6 @@ public class UserService {
 
     public ResponseEntity<Object> save( User request) {
         log.info ("Save user: {}",request);
-        // User user= User.builder()
-        //     .email(request.getEmail().toLowerCase())
-        //     .nik(request.getNik())
-        //     .noHp(request.getNoHp())
-        //     .nama(request.getNama())
-        //     .gender(request.getGender())
-        //     .image(request.getImage())
-        //     .tglLahir(request.getTglLahir())
-        //     .address(request.getAddress())
-        //     .username(request.getUsername())
-        //     .password(request.getPassword())
-        //     .kota(request.getKota())
-        //     .role(request.getRole())
-        //     .updated_at(request.getUpdated_at())
-        //     .created_at(request.getCreated_at());
         try {
             request.setEmail(request.getEmail().toLowerCase());
             User user = userRepository.save(request);
@@ -132,7 +117,6 @@ public class UserService {
     }
 
     public ResponseEntity<Object>  updateCitizen( Long id,UserDTO  citizen) {
-            // Optional<User> citizenById = userRepository.findById(id);
             try {
                 log.info("Update user: {}", citizen);
                 Optional<User> citizenById = userRepository.findById(id);
@@ -151,6 +135,7 @@ public class UserService {
             citizenById.get().setKota(citizen.getKota());
             citizenById.get().setImage(citizen.getImage());
             citizenById.get().setUsername(citizen.getUsername());
+            citizenById.get().setEmail(citizen.getEmail().toLowerCase());
             citizenById.get().setPassword(citizen.getPassword());
             citizenById.get().setUpdatedAt(citizen.getUpdated_at());
             userRepository.save(citizenById.get());
