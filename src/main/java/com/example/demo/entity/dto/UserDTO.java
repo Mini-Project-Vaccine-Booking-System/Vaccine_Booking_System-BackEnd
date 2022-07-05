@@ -2,9 +2,10 @@ package com.example.demo.entity.dto;
 
 import java.util.Date;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@SuperBuilder
 public class UserDTO {
     private long idUser;
     private String email;

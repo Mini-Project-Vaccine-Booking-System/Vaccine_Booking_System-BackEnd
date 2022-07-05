@@ -21,7 +21,7 @@ import lombok.experimental.*;
 
 @Entity
 @Data
-@Superbuilder
+@SuperBuilder
 @Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
