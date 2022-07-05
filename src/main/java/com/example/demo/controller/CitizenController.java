@@ -36,19 +36,19 @@ public class CitizenController {
         return userService.getAll();
     }
     @GetMapping(value = "/citizen")
-    public List<User> getUser() {
+    public ResponseEntity<Object> getUser() {
         return userService.getCitizen();
     }
     @GetMapping(value = "/{id}")
-    public Optional <User> getCitizen(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> getCitizen(@PathVariable(value = "id") Long id) {
         return userService.findById(id);
     }
     @GetMapping(value = "/search/{kota}")
-    public List <User> getUserByCity(@PathVariable(value = "kota") String kota) {
+    public ResponseEntity<Object> getUserByCity(@PathVariable(value = "kota") String kota) {
         return userService.findByCity(kota);
     }
     @GetMapping(value = "/health")
-    public List <User> getHealth() {
+    public ResponseEntity<Object> getHealth() {
         return userService.getHealth();
     }
     @PostMapping(value = "")

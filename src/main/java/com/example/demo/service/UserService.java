@@ -29,11 +29,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User save( User request) {
-        request.setEmail(request.getEmail().toLowerCase());
-        return userRepository.save(request);
-        
+    public ResponseEntity<Object> save( User request) {
+        try {
+            request.setEmail(request.getEmail().toLowerCase());
+            user = userRepository.save(request);
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by executing create new user, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+        
 
     public ResponseEntity<Object> getAll() {
         try {
@@ -50,18 +56,62 @@ public class UserService {
         }
     }
 
-    public Optional <User> findById( Long id) {
-        return userRepository.findById(id);
+    public ResponseEntity<Object> findById( Long id) {
+        try {
+            log.info("Get user detail");
+            List<User> userDetail = userRepository.findById(id);
+            if (user.isEmpty()) {
+                log.info("user is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, userDetail, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by get user detail, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List <User> findByCity( String kota) {
-        return userRepository.searchByCity(kota);
+    public ResponseEntity<Object> findByCity( String kota) {
+        try {
+            log.info("Get health detail by city");
+            List<User> userCity = userRepository.searchByCity(kota);
+            if (user.isEmpty()) {
+                log.info("user is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, userCity, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by get user health by city, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public List <User> getCitizen( ) {
-        return userRepository.findCitizen();
+    public ResponseEntity<Object> getCitizen( ) {
+        try {
+            log.info("Get all citizen");
+            List<User> userCitizen = userRepository.findCitizen();
+            if (user.isEmpty()) {
+                log.info("citizen is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, userCitizen, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by get all citizen, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public List <User> getHealth() {
-        return userRepository.findHealth();
+    public ResponseEntity<Object> getHealth() {
+        try {
+            log.info("Get all health facilities");
+            List<User> userHealth = userRepository.findHealth();
+            if (user.isEmpty()) {
+                log.info("health facilities is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, userHealth, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by get all health facilities, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public Optional<User> updateCitizen( Long id,UserDTO  citizen) {
