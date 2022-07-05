@@ -52,7 +52,7 @@ public class CitizenController {
         return userService.getHealth();
     }
     @PostMapping(value = "")
-    public User createNewCitizen(@RequestBody User request) {
+    public  ResponseEntity<Object> createNewCitizen(@RequestBody User request) {
         return userService.save(request);
     }
           

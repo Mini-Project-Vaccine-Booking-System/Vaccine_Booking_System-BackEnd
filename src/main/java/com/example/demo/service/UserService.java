@@ -48,7 +48,7 @@ public class UserService {
         //     .created_at(request.getCreated_at());
         try {
             request.setEmail(request.getEmail().toLowerCase());
-            Optional<User> user = userRepository.save(request);
+            User user = userRepository.save(request);
             return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Get an error by executing create new user, Error : {}",e.getMessage());
@@ -75,7 +75,7 @@ public class UserService {
     public ResponseEntity<Object> findById( Long id) {
         try {
             log.info("Get user detail");
-            List<User> userDetail = userRepository.findById(id);
+            Optional<User> userDetail = userRepository.findById(id);
             if (userDetail.isEmpty()) {
                 log.info("user is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
