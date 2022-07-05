@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/booking")
@@ -26,37 +24,42 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping(value = "")
-    public ResponseEntity<Object> getBooking() {
+    public List<Booking> getBooking() {
         return bookingService.getBooking();
     }
     
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Object> getBooking(@PathVariable(value = "id") Long id) {
+    public Optional <Booking> getBooking(@PathVariable(value = "id") Long id) {
         return bookingService.getBookingById(id);
     }
     @GetMapping(value = "/s/{idUser}")
-    public ResponseEntity<Object> findBookingByUserId(@PathVariable(value = "idUser") Long idUser) {
+    public List <Booking> findBookingByUserId(@PathVariable(value = "idUser") Long idUser) {
         return bookingService.getByUserId(idUser);
     }
     @GetMapping(value = "/user/{idUser}")
-    public ResponseEntity<Object> findBookingByUserHealthId(@PathVariable(value = "idUser") Long idUser) {
+    public List <Booking> findBookingByUserHealthId(@PathVariable(value = "idUser") Long idUser) {
         return bookingService.getByUserHealthId(idUser);
     }
+    @PostMapping("")
+    public Booking createNewBooking(@RequestBody BookingDTO request) {
+
+        try {
+            return bookingService.save(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+    //   return bookingService.save(request);
+  }
+
+    @DeleteMapping(value = "/{id}")
+    public String deleteBooking(@PathVariable (value = "id") Long id) {
+      return bookingService.deleteBooking(id);
+    }
     @PutMapping(value = "/{id}") 
-    public ResponseEntity<Object> updateBooking(
+    public Optional<Booking> updateBooking(
         @PathVariable Long id, @RequestBody BookingDTO  request) {
             return bookingService.updateBooking(id, request);
     }
-    @PostMapping("")
-    public ResponseEntity<Object> createNewBooking(@RequestBody BookingDTO request) {
-            return bookingService.save(request);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteBooking(@PathVariable (value = "id") Long id) {
-      return bookingService.deleteBooking(id);
-    }
-
 
    
 }
