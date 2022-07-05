@@ -58,7 +58,7 @@ public class CitizenController {
           
 
     @PutMapping(value = "/{id}") 
-    public Optional<User> updateCitizen(
+    public ResponseEntity<Object> updateCitizen(
         @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
             return userService.updateCitizen(id, citizen);
     }
