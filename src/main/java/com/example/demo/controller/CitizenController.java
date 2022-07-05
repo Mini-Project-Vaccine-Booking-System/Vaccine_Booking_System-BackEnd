@@ -32,7 +32,7 @@ public class CitizenController {
 
 
     @GetMapping(value = "")
-    public List<User> getCitizens() {
+    public ResponseEntity<Object> getCitizens() {
         return userService.getAll();
     }
     @GetMapping(value = "/citizen")

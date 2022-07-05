@@ -31,7 +31,19 @@ public class UserService {
         
     }
 
-    public List<User> getAll() {
+    public ResponseEntity<Object> getAll() {
+        try {
+            log.info("Get all user");
+            List<User> user = userRepository.findAll();
+            if (user.isEmpty()) {
+                log.info("user is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, courses, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by get all user, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return userRepository.findAll();
     }
 
