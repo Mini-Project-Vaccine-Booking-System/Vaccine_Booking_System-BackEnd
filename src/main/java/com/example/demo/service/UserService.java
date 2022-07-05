@@ -29,9 +29,24 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public ResponseEntity<Object> save( User request) {
+    public ResponseEntity<Object> save( UserDTO request) {
+        log.info ("Save user: {}",request);
+        User user= User.builder()
+            .email(request.getEmail().toLowerCase())
+            .nik(request.getNik())
+            .noHp(request.getNoHp())
+            .nama(request.getNama())
+            .gender(request.getGender())
+            .image(request.getImage())
+            .tglLahir(request.getTglLahir())
+            .address(request.getAddress())
+            .username(request.getUsername())
+            .password(request.getPassword())
+            .kota(request.getKota())
+            .role(request.getRole())
+            .updated_at(request.getUpdated_at())
+            .created_at(request.getCreated_at());
         try {
-            request.setEmail(request.getEmail().toLowerCase());
             user = userRepository.save(request);
             return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
         } catch (Exception e) {
