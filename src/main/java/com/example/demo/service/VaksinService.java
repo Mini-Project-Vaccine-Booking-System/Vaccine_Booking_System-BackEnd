@@ -24,67 +24,122 @@ public class VaksinService {
     private UserRepository userRepository;
 
 
-    public List<Vaksin> getvaksin() {
-        return vaksinRepository.findAll();
+    public ResponseEntity<Object> getvaksin() {
+        try {
+            log.info("Get all vaksin");
+            List<Vaksin> vaksin = vaksinRepository.findAll();
+            if (vaksin.isEmpty()) {
+                log.info("vaksin is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, vaksin, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error by get all vaksin, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public Optional<Vaksin> findById( Long id) {
-        return vaksinRepository.findById(id);
+    public ResponseEntity<Object> findById( Long id) {
+        try {
+            log.info("Get vaksin by id");
+            Optional<Vaksin> vaksinById = vaksinRepository.findById(id);
+            if (vaksinById.isEmpty()) {
+                log.info("vaksin is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, vaksinById, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error in get vaksin by id , Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List <Vaksin> getByUserId( Long idUser) {
-        return vaksinRepository.findByUser_idUser(idUser);
+    public ResponseEntity<Object> getByUserId( Long idUser) {
+        try {
+            log.info("Get vaksin by user parent's id");
+            List<Vaksin> vaksinByParent = vaksinRepository.findByUser_idUser(idUser);
+            if (vaksinByParent.isEmpty()) {
+                log.info("vaksin is empty");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, vaksinByParent, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Get an error in get vaksin by parent user's id , Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public Vaksin save(VaksinDTO request) {
+
+    public ResponseEntity<Object> save(VaksinDTO request) {
         try{    
+            log.info("save new vaksin: {}", request);
+            log.info("search user id {}", request.getIdUser());
+        
+            Optional<User> user = userRepository.findById(request.getIdUser());
+            if(user.isEmpty()) {
+            log.info("parent user is empty");
+            return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+        }
             Vaksin vaksin = new Vaksin();
-            log.info("search user id {}", request.getIdHealth());
-            User user = userRepository.findById(request.getIdHealth())
-                .orElseThrow(()->  new Exception( " Id User" + request.getIdHealth() + "Not Found"));
-    
             log.info("save vaksin");
-            vaksin.setUser(user);
+            vaksin.setUser(user.get());
             vaksin.setNama(request.getNama());
             vaksin.setQuantity(request.getQuantity());
             vaksinRepository.save(vaksin);
     
-            return vaksin;
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, vaksin, HttpStatus.OK);
+        }catch (Exception e) {
+            log.error("Get an error by executing create new vaksin, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-            catch(Exception e){
-                log.error("save error");
-                return null;
-            }
     }
 
-    public Optional<Vaksin> updateVaksin( Long id, VaksinDTO request) {
+    public ResponseEntity<Object> updateVaksin( Long id, VaksinDTO request) {
         try{    
+            log.info("search vaksin: ");
             Optional<Vaksin>vaksin= vaksinRepository.findById(id);
-            User user = userRepository.searchById(request.getIdHealth())
-            .orElseThrow(()->  new Exception( " Id User" + request.getIdHealth() + "Not Found"));
+            if (vaksin.isEmpty()) {
+                log.info("vaksin not found");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            log.info("search vaksin parent's by id : "+request.getIdUser());
+            Optional<User> user = userRepository.searchById(request.getIdHealth());
+            if(user.isEmpty()) {
+                log.info("parent user kelompok's id: "+ request.getIdUser()+" not found");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
 
+            log.info("Update vaksin: {}", request);
         vaksin.ifPresent(res -> {
-            res.setUser(user);
+            res.setUser(user.get());
             res.setNama(request.getNama());
             res.setQuantity(request.getQuantity());
             vaksinRepository.save(res);
         });
-        return vaksin;
+        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
+    }catch (Exception e) {
+        log.error("Get an error by update kelompok, Error : {}",e.getMessage());
+        return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
-        catch(Exception e){
-            return null;
-        }
     }
 
-    public String deleteVaksin(Long id) {
-        Optional<Vaksin> vaksinById = vaksinRepository.findById(id);
-        vaksinById.ifPresent(res -> {
-            vaksinRepository.delete(res);
-        });
+    public ResponseEntity<Object> deleteVaksin(Long id) {
         try {
-            return "success";
-        } catch (Exception e) {
-            return "failed";
+            log.info("Check by vaksin id: "+id);
+            Optional<Vaksin> vaksinById = vaksinRepository.findById(id);
+            if(vaksinById.isEmpty()){
+                log.info("Vaksin id "+id+ " NOT FOUND");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            log.info("Executing delete vaksin by id: {}", id);
+            vaksinById.ifPresent(res -> {
+                vaksinRepository.delete(res);
+            });
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Data not found. Error: {}", e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
         }
+        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK); 
+
     }
 }
 

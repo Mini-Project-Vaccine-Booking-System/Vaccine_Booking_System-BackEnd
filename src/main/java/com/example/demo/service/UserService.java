@@ -31,7 +31,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public ResponseEntity<Object> save( User request) {
-        log.info ("Save user: {}",request);
+        log.info ("Save new user: {}",request);
         try {
             request.setEmail(request.getEmail().toLowerCase());
             User user = userRepository.save(request);
@@ -150,8 +150,13 @@ public class UserService {
     public ResponseEntity<Object> deleteCitizen( Long id) {
         
         try {
-            log.info("Executing delete user by id: {}", id);
+            log.info("Check by Kelompok id: "+id);
             Optional<User> citizenById = userRepository.findById(id);
+            if(citizenById.isEmpty()){
+                log.info("User id "+id+ " NOT FOUND");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+            log.info("Executing delete user by id: {}", id);
             citizenById.ifPresent(res -> {
                 userRepository.delete(res);
             });

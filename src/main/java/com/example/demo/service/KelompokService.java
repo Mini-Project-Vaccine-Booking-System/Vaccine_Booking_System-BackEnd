@@ -156,7 +156,7 @@ public class KelompokService {
                 log.info("Check by Kelompok id: "+id);
                 Optional<Kelompok> kelompokById = kelompokRepository.findById(id);
                 if(kelompokById.isEmpty()){
-                    log.info("Kelompok id "+id+ "NOT FOUND");
+                    log.info("Kelompok id "+id+ " NOT FOUND");
                     return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
                 }
                 log.info("Executing delete kelompok by id: {}", id);

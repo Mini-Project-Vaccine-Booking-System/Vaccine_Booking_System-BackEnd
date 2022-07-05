@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/vaksin")
 public class VaksinController {
@@ -19,31 +22,31 @@ public class VaksinController {
     private VaksinService vaksinService;
 
     @GetMapping(value = "")
-    public List<Vaksin> getVaksin() {
+    public ResponseEntity<Object> getVaksin() {
         return vaksinService.getvaksin();
     }
     
     @GetMapping(value = "/{id}")
-    public Optional <Vaksin> getVaksin(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> getVaksin(@PathVariable(value = "id") Long id) {
         return vaksinService.findById(id);
     }
     @GetMapping(value = "/user/{idUser}")
-    public List <Vaksin> findVaksinByUserId(@PathVariable(value = "idUser") Long idUser) {
+    public ResponseEntity<Object> findVaksinByUserId(@PathVariable(value = "idUser") Long idUser) {
         return vaksinService.getByUserId(idUser);
     }
     
     @PostMapping(value = "")
-    public Vaksin createNewVaksin(@RequestBody VaksinDTO request) {
+    public ResponseEntity<Object> createNewVaksin(@RequestBody VaksinDTO request) {
         return vaksinService.save(request);
     }
     
     @PutMapping(value = "/{id}") 
-    public Optional<Vaksin> updateVaksin(
+    public ResponseEntity<Object> updateVaksin(
         @PathVariable Long id, @RequestBody VaksinDTO  request) {
             return vaksinService.updateVaksin(id, request);
     }
     @DeleteMapping(value = "/{id}")
-    public String deleteVaksin(@PathVariable (value = "id") Long id) {
+    public ResponseEntity<Object> deleteVaksin(@PathVariable (value = "id") Long id) {
       return vaksinService.deleteVaksin(id);
     }
 
