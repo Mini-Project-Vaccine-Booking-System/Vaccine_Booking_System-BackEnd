@@ -8,6 +8,11 @@ import com.example.demo.entity.Vaksin;
 import com.example.demo.entity.dto.VaksinDTO;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.VaksinRepository;
+import com.example.demo.util.*;
+import com.example.demo.constant.*;
+import com.example.demo.entity.base.*;
+import org.springframework.http.*;
+import org.springframework.dao.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,9 +77,8 @@ public class VaksinService {
     public ResponseEntity<Object> save(VaksinDTO request) {
         try{    
             log.info("save new vaksin: {}", request);
-            log.info("search user id {}", request.getIdUser());
-        
-            Optional<User> user = userRepository.findById(request.getIdUser());
+            log.info("search user id {}", request.getIdHealth());
+            Optional<User> user = userRepository.findById(request.getIdHealth());
             if(user.isEmpty()) {
             log.info("parent user is empty");
             return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
@@ -101,10 +105,10 @@ public class VaksinService {
                 log.info("vaksin not found");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
-            log.info("search vaksin parent's by id : "+request.getIdUser());
+            log.info("search vaksin parent's by id : "+request.getIdHealth());
             Optional<User> user = userRepository.searchById(request.getIdHealth());
             if(user.isEmpty()) {
-                log.info("parent user kelompok's id: "+ request.getIdUser()+" not found");
+                log.info("parent user kelompok's id: "+ request.getIdHealth()+" not found");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
 
@@ -115,7 +119,7 @@ public class VaksinService {
             res.setQuantity(request.getQuantity());
             vaksinRepository.save(res);
         });
-        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
+        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, vaksin, HttpStatus.OK);
     }catch (Exception e) {
         log.error("Get an error by update kelompok, Error : {}",e.getMessage());
         return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
