@@ -130,8 +130,15 @@ public class UserService {
         }
     }
 
-    public Optional<User> updateCitizen( Long id,UserDTO  citizen) {
-            Optional<User> citizenById = userRepository.findById(id);
+    public ResponseEntity<Object>  updateCitizen( Long id,UserDTO  citizen) {
+            // Optional<User> citizenById = userRepository.findById(id);
+            try {
+                log.info("Update user: {}", request);
+                Optional<User> citizenById = userRepository.findById(id);
+                if (citizenById.isEmpty()) {
+                    log.info("user not found");
+                    return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+                }
         
         citizenById.ifPresent(res -> {
             res.setNik(citizen.getNik());
@@ -147,8 +154,12 @@ public class UserService {
             res.setPassword(citizen.getPassword());
             res.setUpdatedAt(citizen.getUpdated_at());
             userRepository.save(res);
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, res, HttpStatus.OK);
         });
-        return citizenById;
+        } catch (Exception e) {
+            log.error("Get an error by update course, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public String deleteCitizen( Long id) {
