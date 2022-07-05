@@ -43,12 +43,11 @@ public class UserService {
                 log.info("user is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, courses, HttpStatus.OK);
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Get an error by get all user, Error : {}",e.getMessage());
             return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return userRepository.findAll();
     }
 
     public Optional <User> findById( Long id) {
