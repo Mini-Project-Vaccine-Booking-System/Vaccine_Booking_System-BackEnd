@@ -13,6 +13,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
+
+    Optional <User> findByEmail(String email);
+    
     @Query(value = "SELECT * FROM user WHERE user.id_user = ? ", nativeQuery = true)
     Optional<User> searchById (Long id);
     @Query(value = "SELECT * FROM user WHERE (user.kota LIKE %?#{escape([0])} escape ?#{escapeCharacter()} AND user.role = 'admin') ", nativeQuery = true)

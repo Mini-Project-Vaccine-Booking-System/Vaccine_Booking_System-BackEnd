@@ -30,6 +30,11 @@ public class CitizenController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserDTO userDTO;
+
+    
+
 
     @GetMapping(value = "")
     public ResponseEntity<Object> getCitizens() {
@@ -67,7 +72,11 @@ public class CitizenController {
       return userService.deleteCitizen(id);
     }
 
-   
+    public ResponseEntity<ResponseData<User>> register(@RequestBody UserDTO userDTO) {
+        //ResponseData<User> responseData = new ResponseData<>();
+      
+        
+    }
 
     
 }

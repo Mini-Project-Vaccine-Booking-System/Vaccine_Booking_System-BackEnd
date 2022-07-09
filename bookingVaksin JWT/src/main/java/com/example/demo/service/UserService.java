@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.example.demo.entity.AppUserRole;
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.UserDTO;
 import com.example.demo.repository.UserRepository;
@@ -15,6 +16,10 @@ import com.example.demo.entity.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.dao.*;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Transactional
-public class UserService {
+public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
@@ -144,7 +149,7 @@ public class UserService {
             citizenById.get().setNik(citizen.getNik());
             citizenById.get().setNoHp(citizen.getNoHp());
             citizenById.get().setNama(citizen.getNama());
-            citizenById.get().setRole(citizen.getRole());
+            //citizenById.get().setRole(citizen.getRole());
             citizenById.get().setGender(citizen.getGender());
             citizenById.get().setTglLahir(citizen.getTglLahir());
             citizenById.get().setAddress(citizen.getAddress());
@@ -177,4 +182,34 @@ public class UserService {
         return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK);       
     }
 
-}
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> 
+                new UsernameNotFoundException("User not found with email : " + email));
+    }
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    public User registerUser(User user) {
+        boolean userExists = userRepository.findByEmail(user.getEmail()).isPresent();
+        if(userExists){
+          
+            throw new RuntimeException(
+                String.format("User with email %s already exist", user.getEmail()));
+        }
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        return userRepository.save(user);
+        
+   }
+    //    boolean userExist = userRepository.findByEmail(user.getEmail()).isPresent();
+    //    if (userExist) {
+    //        throw new RuntimeException(
+    //             String.format("User with email %s already exist", user.getEmail())
+    //             );
+           
+    //    }
+    
+    }
+
