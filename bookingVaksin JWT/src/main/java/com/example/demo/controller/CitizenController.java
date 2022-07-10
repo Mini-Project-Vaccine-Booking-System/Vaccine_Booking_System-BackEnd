@@ -11,8 +11,9 @@ import com.example.demo.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +32,7 @@ public class CitizenController {
     private UserService userService;
 
     @Autowired
-    private UserDTO userDTO;
-
-    
+    private ModelMapper modelMapper;
 
 
     @GetMapping(value = "")
@@ -72,11 +71,11 @@ public class CitizenController {
       return userService.deleteCitizen(id);
     }
 
-    public ResponseEntity<ResponseData<User>> register(@RequestBody UserDTO userDTO) {
-        //ResponseData<User> responseData = new ResponseData<>();
-      
-        
-    }
+    // @PostMapping(value = "/register")
+    // public ResponseEntity<Object> register(@RequestBody UserDTO citizen) {
+    //     return userService.register(citizen);
+    // }
+   
 
     
 }

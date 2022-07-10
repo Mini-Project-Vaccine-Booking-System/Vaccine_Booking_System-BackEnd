@@ -203,6 +203,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
         
    }
+   
     //    boolean userExist = userRepository.findByEmail(user.getEmail()).isPresent();
     //    if (userExist) {
     //        throw new RuntimeException(
