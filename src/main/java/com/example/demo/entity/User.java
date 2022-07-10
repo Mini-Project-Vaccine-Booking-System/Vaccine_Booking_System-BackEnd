@@ -20,7 +20,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints={
+    @UniqueConstraint(columnNames = {"email", "nik"})})
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

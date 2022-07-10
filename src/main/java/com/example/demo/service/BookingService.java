@@ -105,17 +105,24 @@ public class BookingService {
                 log.info("kelompok booking id: ", request.getIdKelompok()," is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
+            int stok = sessionRepository.sessionStok(request.getIdSession());
+            if(stok>0) {
+                log.info("session stok by id: " + request.getIdSession() + " before booking is: " + stok);
+                sessionRepository.setStokMinus(request.getIdSession());  
+            }
             log.info("search session  id {}", request.getIdSession());
             Optional<Session> session = sessionRepository.findById(request.getIdSession());
             if(session.isEmpty()) {
                 log.info("session booking id: ",request.getIdSession()," is empty");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }           
+            }
+           
             log.info("save booking");
             Booking booking = new Booking();
             booking.setKelompok(kelompok.get());
             booking.setSession(session.get());
             bookingRepository.save(booking);
+            
     
             return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, booking, HttpStatus.OK);
         }catch (Exception e) {

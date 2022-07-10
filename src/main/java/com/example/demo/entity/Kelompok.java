@@ -25,7 +25,7 @@ public class Kelompok {
     @JoinColumn(name = "idUser")
     private User user;
    
-    @Column(name = "nik")
+    @Column(name = "nik", unique=true,nullable = false)
     private String nik;
 
 
