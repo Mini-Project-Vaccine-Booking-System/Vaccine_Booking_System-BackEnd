@@ -18,6 +18,7 @@ import org.springframework.http.*;
 import org.springframework.dao.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Transactional
+@Builder
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -165,6 +167,11 @@ public class UserService {
             return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
         }
         return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK);       
+    }
+
+
+    public ResponseEntity<Object> findAll() {
+        return null;
     }
 
 }

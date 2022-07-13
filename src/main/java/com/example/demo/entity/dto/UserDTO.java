@@ -3,7 +3,7 @@ package com.example.demo.entity.dto;
 import java.util.Date;
 
 import lombok.*;
-
+@Builder
 @Data
 public class UserDTO {
     private long idUser;
