@@ -1,11 +1,19 @@
 package com.example.demo.entity.dto;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.example.demo.entity.RoleEnum;
 
 import lombok.*;
 
 @Data
-public class UserDTO {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO  implements Serializable {
+    private static final long serialVersionUID =  1L;
     private long idUser;
     private String email;
     private String nik;
@@ -15,10 +23,12 @@ public class UserDTO {
     private String image;
     private Date tglLahir;
     private String address;
-    private String username;
+    // private String username;
     private String password;
+    private String currentPassword;
+    private String newPassword;
     private String kota;
-    private String role;
+    private List<RoleEnum> roles;
     private Date updated_at;
     private Date created_at;
 }

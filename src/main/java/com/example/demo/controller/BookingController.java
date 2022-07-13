@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,20 +40,25 @@ public class BookingController {
         return bookingService.getByUserId(idUser);
     }
     @GetMapping(value = "/user/{idUser}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> findBookingByUserHealthId(@PathVariable(value = "idUser") Long idUser) {
         return bookingService.getByUserHealthId(idUser);
     }
+
     @PutMapping(value = "/{id}") 
     public ResponseEntity<Object> updateBooking(
         @PathVariable Long id, @RequestBody BookingDTO  request) {
             return bookingService.updateBooking(id, request);
     }
+
     @PostMapping("")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> createNewBooking(@RequestBody BookingDTO request) {
             return bookingService.save(request);
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> deleteBooking(@PathVariable (value = "id") Long id) {
       return bookingService.deleteBooking(id);
     }

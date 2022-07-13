@@ -15,33 +15,37 @@ import com.example.demo.entity.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.dao.*;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 @Transactional
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<Object> save( User request) {
-        log.info ("Save new user: {}",request);
-        try {
-            request.setEmail(request.getEmail().toLowerCase());
-            User user = userRepository.save(request);
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Get an error by executing create new user, Error : {}",e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    // public ResponseEntity<Object> save( User request) {
+    //     log.info ("Save new user: {}",request);
+    //     try {
+    //         request.setEmail(request.getEmail().toLowerCase());
+    //         User user = userRepository.save(request);
+    //         return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
+    //     } catch (Exception e) {
+    //         log.error("Get an error by executing create new user, Error : {}",e.getMessage());
+    //         return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
         
+
+    @Autowired
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public ResponseEntity<Object> getAll() {
         try {
@@ -128,14 +132,12 @@ public class UserService {
             citizenById.get().setNik(citizen.getNik());
             citizenById.get().setNoHp(citizen.getNoHp());
             citizenById.get().setNama(citizen.getNama());
-            citizenById.get().setRole(citizen.getRole());
             citizenById.get().setGender(citizen.getGender());
             citizenById.get().setTglLahir(citizen.getTglLahir());
             citizenById.get().setAddress(citizen.getAddress());
             citizenById.get().setKota(citizen.getKota());
             citizenById.get().setImage(citizen.getImage());
-            citizenById.get().setUsername(citizen.getUsername());
-            citizenById.get().setEmail(citizen.getEmail().toLowerCase());
+            citizenById.get().setUsername(citizen.getEmail().toLowerCase());
             citizenById.get().setPassword(citizen.getPassword());
             citizenById.get().setUpdatedAt(citizen.getUpdated_at());
             userRepository.save(citizenById.get());
@@ -150,21 +152,37 @@ public class UserService {
     public ResponseEntity<Object> deleteCitizen( Long id) {
         
         try {
-            log.info("Check by Kelompok id: "+id);
-            Optional<User> citizenById = userRepository.findById(id);
-            if(citizenById.isEmpty()){
-                log.info("User id "+id+ " NOT FOUND");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }
             log.info("Executing delete user by id: {}", id);
-            citizenById.ifPresent(res -> {
-                userRepository.delete(res);
-            });
+            userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             log.error("Data not found. Error: {}", e.getMessage());
             return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
         }
         return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK);       
+    }
+
+    public ResponseEntity<Object> changePassword(UserDTO request) {
+        try {
+            log.info("Find user: {}", request);
+            Optional<User> user = userRepository.findByUsername(request.getEmail());
+            if (user.isEmpty()) {
+                log.info("user not found");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+
+            log.info("Check password");
+            Boolean isMatch = passwordEncoder.matches(request.getCurrentPassword(), user.get().getPassword());
+            if(!isMatch) throw new Exception("Password does not match");
+
+            log.info("Save new password");
+            user.get().setPassword(passwordEncoder.encode(request.getNewPassword()));
+            
+            userRepository.save(user.get());
+            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, user.get(), HttpStatus.OK);
+        } catch(Exception e) {
+            log.error("Change password error, Error : {}",e.getMessage());
+            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

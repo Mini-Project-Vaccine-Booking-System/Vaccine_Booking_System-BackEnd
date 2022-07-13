@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,7 +23,8 @@ public class Kelompok {
     private Long idKelompok;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "idUser",nullable = false)
+    @JsonManagedReference
     private User user;
    
     @Column(name = "nik", unique=true,nullable = false)

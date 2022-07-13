@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,16 +37,19 @@ public class VaksinController {
     }
     
     @PostMapping(value = "")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> createNewVaksin(@RequestBody VaksinDTO request) {
         return vaksinService.save(request);
     }
     
     @PutMapping(value = "/{id}") 
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> updateVaksin(
         @PathVariable Long id, @RequestBody VaksinDTO  request) {
             return vaksinService.updateVaksin(id, request);
     }
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deleteVaksin(@PathVariable (value = "id") Long id) {
       return vaksinService.deleteVaksin(id);
     }

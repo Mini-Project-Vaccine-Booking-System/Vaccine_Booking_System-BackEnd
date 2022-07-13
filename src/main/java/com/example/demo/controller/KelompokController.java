@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,32 +31,41 @@ public class KelompokController {
 
 
     @GetMapping(value = "")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getKelompok() {
         return kelompokService.getKelompok();
     }
+    
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> getKelompok(@PathVariable(value = "id") Long id) {
         return kelompokService.findById(id);
     }
+
     @GetMapping(value = "/user/{idUser}")
     public ResponseEntity<Object> findKelompokByUserId(@PathVariable(value = "idUser") Long idUser) {
         return kelompokService.getByUserId(idUser);
     }
+
     @GetMapping(value = "/{id}/{hubungan}")
     public ResponseEntity<Object> findKelompokByIdAndHubungan(@PathVariable(value = "id") Long id, @PathVariable(value = "hubungan") String hubungan) {
         return kelompokService.getByIdAndHubungan(id, hubungan);
     }
+
     @PostMapping(value = "")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> createNewKelompok(@RequestBody KelompokDTO request) {
          return kelompokService.save(request);
     }
 
     @PutMapping(value = "/{id}") 
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> updateKelompok(
         @PathVariable Long id, @RequestBody KelompokDTO  request) {
             return kelompokService.updateKelompok(id, request);
     }
+
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deleteKelompok(@PathVariable (value = "id") Long id) {
       return kelompokService.deleteKelompok(id);
     }

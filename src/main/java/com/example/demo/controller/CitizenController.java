@@ -10,6 +10,7 @@ import com.example.demo.service.UserService;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,13 @@ public class CitizenController {
 
 
     @GetMapping(value = "")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getCitizens() {
         return userService.getAll();
     }
+    
     @GetMapping(value = "/citizen")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getUser() {
         return userService.getCitizen();
     }
@@ -51,10 +55,10 @@ public class CitizenController {
     public ResponseEntity<Object> getHealth() {
         return userService.getHealth();
     }
-    @PostMapping(value = "")
-    public  ResponseEntity<Object> createNewCitizen(@RequestBody User request) {
-        return userService.save(request);
-    }
+    // @PostMapping(value = "")
+    // public  ResponseEntity<Object> createNewCitizen(@RequestBody User request) {
+    //     return userService.save(request);
+    // }
           
 
     @PutMapping(value = "/{id}") 
@@ -62,7 +66,10 @@ public class CitizenController {
         @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
             return userService.updateCitizen(id, citizen);
     }
+
+    
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deleteCitizen(@PathVariable (value = "id") Long id) {
       return userService.deleteCitizen(id);
     }
