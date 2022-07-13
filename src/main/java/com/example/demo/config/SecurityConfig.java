@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -55,11 +54,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors().and().csrf().disable()
             .authorizeRequests()
-            .antMatchers("/user/register", "/user/login", "/h2-console/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/category/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/course/**").permitAll()  
-            .antMatchers(HttpMethod.GET, "/enrolled/courses/**").permitAll()          
-            .antMatchers("/**").hasAnyRole("ADMIN", "USER", "MENTOR")
+            .antMatchers("/regHealth","/regUser", "/login", "/h2-console/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/user/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/kelompok/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/session/**").permitAll()    
+            .antMatchers(HttpMethod.GET, "/vaksin/**").permitAll()   
+            .antMatchers(HttpMethod.GET, "/booking/**").permitAll()          
+            .antMatchers("/**").hasAnyRole("ADMIN", "USER")
             .anyRequest().authenticated();
 
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);

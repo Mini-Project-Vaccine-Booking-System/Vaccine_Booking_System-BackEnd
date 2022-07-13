@@ -55,13 +55,15 @@ public class AuthService {
             log.info("role");
 
             Set<Role> roles = new HashSet<>();
-                if(req.getRoles() == null) {
-                    Role role = roleRepository.findByName(RoleEnum.ROLE_ADMIN)
-                        .orElseThrow(() -> new RuntimeException("ROLE NOT FOUND"));
-                    
-                    roles.add(role);
-                }
+            if(req.getRoles() == null) {
+                Role role = roleRepository.findByName(RoleEnum.ROLE_ADMIN)
+                    .orElseThrow(() -> new RuntimeException("ROLE NOT FOUND"));
+                
+                roles.add(role);
+            }
                 user.setRoles(roles);
+                log.info("role: " +roles);
+                log.info("user role: "+user.getRoles());
             userRepository.save(user);
 
             req.setPassword("*".repeat(req.getPassword().length()));
