@@ -58,7 +58,7 @@ public class BookingController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> deleteBooking(@PathVariable (value = "id") Long id) {
       return bookingService.deleteBooking(id);
     }

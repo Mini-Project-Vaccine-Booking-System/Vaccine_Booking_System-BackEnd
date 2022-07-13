@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,10 +63,18 @@ public class CitizenController {
           
 
     @PutMapping(value = "/{id}") 
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Object> updateCitizen(
         @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
             return userService.updateCitizen(id, citizen);
     }
+    
+    @PutMapping(value = "/health/{id}") 
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> updateHealth(
+        @PathVariable (value = "id") Long id, @RequestBody UserDTO  citizen) {
+            return userService.updateCitizen(id, citizen);
+    }   
 
     
     @DeleteMapping(value = "/{id}")
@@ -73,6 +82,11 @@ public class CitizenController {
     public ResponseEntity<Object> deleteCitizen(@PathVariable (value = "id") Long id) {
       return userService.deleteCitizen(id);
     }
+    @PutMapping(value = "/change-password")
+    public ResponseEntity<Object> changePassword(Principal principal, @RequestBody UserDTO request) {
+        request.setEmail(principal.getName());
+        return userService.changePassword(request);
+    }   
 
    
 

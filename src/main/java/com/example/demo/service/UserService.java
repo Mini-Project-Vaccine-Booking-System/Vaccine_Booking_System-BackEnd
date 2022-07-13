@@ -138,7 +138,7 @@ public class UserService {
             citizenById.get().setKota(citizen.getKota());
             citizenById.get().setImage(citizen.getImage());
             citizenById.get().setUsername(citizen.getEmail().toLowerCase());
-            citizenById.get().setPassword(citizen.getPassword());
+            // citizenById.get().setPassword(citizen.getPassword());
             citizenById.get().setUpdatedAt(citizen.getUpdated_at());
             userRepository.save(citizenById.get());
             return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, citizenById.get(), HttpStatus.OK);
@@ -147,6 +147,31 @@ public class UserService {
             return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<Object>  updateHealth( Long id,UserDTO  citizen) {
+        try {
+            log.info("Update user: {}", citizen);
+            Optional<User> citizenById = userRepository.searchHealthById(id);
+            if (citizenById.isEmpty()) {
+                log.info("user not found");
+                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            }
+    
+        citizenById.get().setNoHp(citizen.getNoHp());
+        citizenById.get().setNama(citizen.getNama());
+        citizenById.get().setAddress(citizen.getAddress());
+        citizenById.get().setKota(citizen.getKota());
+        citizenById.get().setImage(citizen.getImage());
+        citizenById.get().setUsername(citizen.getEmail().toLowerCase());
+        // citizenById.get().setPassword(citizen.getPassword());
+        citizenById.get().setUpdatedAt(citizen.getUpdated_at());
+        userRepository.save(citizenById.get());
+        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, citizenById.get(), HttpStatus.OK);
+    } catch (Exception e) {
+        log.error("Get an error by update course, Error : {}",e.getMessage());
+        return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
 
 
     public ResponseEntity<Object> deleteCitizen( Long id) {
