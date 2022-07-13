@@ -123,7 +123,7 @@ public class KelompokService {
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
             log.info("search kelompok parent's by id : "+request.getIdUser());
-            Optional<User> user = userRepository.searchById(request.getIdUser());
+            Optional<User> user = userRepository.findById(request.getIdUser());
             if(user.isEmpty()) {
                 log.info("parent user kelompok's id: "+ request.getIdUser()+" not found");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);

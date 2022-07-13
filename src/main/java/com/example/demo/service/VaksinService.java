@@ -106,7 +106,7 @@ public class VaksinService {
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
             log.info("search vaksin parent's by id : "+request.getIdHealth());
-            Optional<User> user = userRepository.searchById(request.getIdHealth());
+            Optional<User> user = userRepository.searchHealthById(request.getIdHealth());
             if(user.isEmpty()) {
                 log.info("parent user kelompok's id: "+ request.getIdHealth()+" not found");
                 return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
