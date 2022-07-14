@@ -68,6 +68,7 @@ public class AuthService {
 
             req.setPassword("*".repeat(req.getPassword().length()));
             log.info("User {} saved", req.getEmail());
+            
             return user;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
