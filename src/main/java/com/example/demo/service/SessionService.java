@@ -48,14 +48,14 @@ public class SessionService {
             if (session.isEmpty()) {
                 log.info("session is empty");
                 throw new Exception("SESSION IS EMPTY");
-               // return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
             }
             return session;
-           // return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, session, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Get an error by get all session, Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 
@@ -65,15 +65,11 @@ public class SessionService {
             Session sessionById = sessionRepository.findById(id)
             .orElseThrow(() -> new Exception("SESSION ID " + id + " NOT FOUND"));
             return sessionById;
-                    // if (sessionById.isEmpty()) {
-                    //     log.info("session is empty");
-                    //     return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-                    // }
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, sessionById, HttpStatus.OK);
+                    
         } catch (Exception e) {
             log.error("Get an error in get session by id , Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 
@@ -84,14 +80,14 @@ public class SessionService {
             if (sessionByParent.isEmpty()) {
                 log.info("session is empty");
                 throw new Exception("SESSION BY USER ID "+ idUser+" IS EMPTY"); 
-                //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
             }
             return sessionByParent;
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, sessionByParent, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Get an error in get session by parent health's id , Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 
@@ -102,14 +98,14 @@ public class SessionService {
             if (sessionByDate.isEmpty()) {
                 log.info("session is empty");
                 throw new Exception("SESSION BY DATE "+date+" IS EMPTY"); 
-                //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
             }
             return sessionByDate;
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, sessionByDate, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Get an error in get session by date , Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e); 
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
 
     }
@@ -121,14 +117,14 @@ public class SessionService {
             if (sesDateKota.isEmpty()) {
                 log.info("session is empty");
                 throw new Exception("SESSION BY DATE "+date+ " IN " +kota+ " IS EMPTY");
-                //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
             }
             return sesDateKota;
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, sesDateKota, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Get an error in session by user city and date, Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e); 
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 
@@ -145,7 +141,7 @@ public class SessionService {
             if(vaksin.isEmpty()) {
                 log.info(" Vaksin " + request.getNama() + "by " + request.getIdHealth()+"Not Found");
                 throw new Exception("VAKSIN "+request.getNama()+ " BY " +request.getIdHealth()+ " IS EMPTY");
-                //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
             }            
             Session session = new Session();
             log.info("save session");
@@ -158,11 +154,10 @@ public class SessionService {
             sessionRepository.save(session);
             return session;
     
-           // return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, session, HttpStatus.OK);
+
         }catch (Exception e) {
             log.error("Get an error by executing create new session, Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -171,22 +166,18 @@ public class SessionService {
             log.info("search session: ");
             Session session = sessionRepository.findById(id)
             .orElseThrow(() -> new Exception("SESSION ID " + id +" NOT FOUND"));
-            // if (session.isEmpty()) {
-            //     log.info("session not found");
-            //     return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            // }
+            
+            
             log.info("search user id {}", request.getIdHealth());
             User user = userService.findById(request.getIdHealth());
-            // if(user.isEmpty()) {
-            //     log.info("parent user is empty");
-            //     return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            // }
+           
+            
             log.info("search vaksin name: ", request.getNama(), " vaksin health id: ", request.getIdHealth());
             Optional <Vaksin> vaksin = vaksinRepository.searchForSession(request.getNama(), request.getIdHealth());
             if(vaksin.isEmpty()) {
                 log.info(" Vaksin " + request.getNama() + "by " + request.getIdHealth()+"Not Found");
                 throw new Exception("VAKSIN "+request.getNama()+ " BY " +request.getIdHealth()+ " IS EMPTY");
-                //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
             }  
             log.info("Update session: {}", request);
         
@@ -199,11 +190,11 @@ public class SessionService {
             sessionRepository.save(session);
         
             return session;
-        //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, session, HttpStatus.OK);
-    }catch (Exception e) {
+
+        }catch (Exception e) {
         log.error("Get an error by update kelompok, Error : {}",e.getMessage());
         throw new RuntimeException(e.getMessage(), e);
-        //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
     }
 
@@ -212,19 +203,16 @@ public class SessionService {
             log.info("Check by Session id: "+id);
             Session session = sessionRepository.findById(id)
             .orElseThrow(() -> new Exception("SESSION ID " + id +" NOT FOUND"));
-                        // if(sessionById.isEmpty()){
-                        //     log.info("Session id "+id+ " NOT FOUND");
-                        //     return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-                        // }
+                       
             log.info("Executing delete session by id: {}", id);
                 sessionRepository.deleteById(id);
 
         } catch (Exception e) {
             log.error("Data not found. Error: {}", e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
         }
-        //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK); 
+
     }
 
 

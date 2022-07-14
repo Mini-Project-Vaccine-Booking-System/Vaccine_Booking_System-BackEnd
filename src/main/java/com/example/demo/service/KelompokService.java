@@ -28,8 +28,7 @@ public class KelompokService {
     private KelompokRepository kelompokRepository;
     @Autowired
     private UserService userService;
-    // @Autowired
-    // private UserRepository userRepository;
+
 
 
     public List <Kelompok> getKelompok() {
@@ -39,14 +38,14 @@ public class KelompokService {
             if (kelompok.isEmpty()) {
                 log.info("kelompok is empty");
                 throw new Exception("KELOMPOK IS EMPTY");
-                //return ResponseUtil.build(AppConstant.ResponseCode., null, HttpStatus.NOT_FOUND);
+
             }
             return kelompok;
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Get an error by get all kelompok, Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
     public Kelompok findById(Long id) {
@@ -55,16 +54,12 @@ public class KelompokService {
             Kelompok kelById = kelompokRepository.findById(id).
             orElseThrow(() -> new Exception("KELOMPOK ID " + id + " NOT FOUND"));
             return kelById;
-            // if (kelById.isEmpty()) {
-            //     log.info("kelompok is empty");
-
-            //    // return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            // }
-            // return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelById, HttpStatus.OK);
+           
+            
         } catch (Exception e) {
             log.error("Get an error in get kelompok by id , Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            // return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
     }
 
@@ -75,14 +70,13 @@ public class KelompokService {
             if (kelByParent.isEmpty()) {
                 log.info("kelompok is empty");
                 throw new Exception("KELOMPOK BY USER ID "+ idUser+" IS EMPTY"); 
-                //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+
             }
             return kelByParent;
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelByParent, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error("Get an error in get kelompok by parent user's id , Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -93,14 +87,11 @@ public class KelompokService {
             if (kelIdHub.isEmpty()) {
                 log.info("kelompok is empty");
                 throw new Exception("KELOMPOK BY USER ID AND HUBUNGAN IS EMPTY"); 
-                //return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
             return kelIdHub;
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelIdHub, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Get an error in kelompok by user id and hubungan, Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e); 
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -110,7 +101,6 @@ public class KelompokService {
         log.info("search user id {}", request.getIdUser());
         User user = userService.findById(request.getIdUser());
 
-        //Optional<User> user = userRepository.findById(request.getIdUser());
         Kelompok kelompok = new Kelompok(); 
         kelompok.setUser(user);
         kelompok.setNik(request.getNik());
@@ -121,11 +111,9 @@ public class KelompokService {
         kelompok.setGender(request.getGender());
         kelompokRepository.save(kelompok);
         return kelompok;
-        //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
     } catch (Exception e) {
         log.error("Get an error by executing create new kelompok, Error : {}",e.getMessage());
         throw new RuntimeException(e.getMessage(), e);
-        //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
     }
     
@@ -150,11 +138,9 @@ public class KelompokService {
             kelompokRepository.save(kelompok);
 
             return kelompok;
-         //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, kelompok, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Get an error by update kelompok, Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
-            //return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
         }
        
     }
@@ -173,9 +159,7 @@ public class KelompokService {
             } catch (Exception e) {
                 log.error("Data not found. Error: {}", e.getMessage());
                 throw new RuntimeException(e.getMessage(), e);
-               // return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
             }
-            //return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK); 
     }
     
 }

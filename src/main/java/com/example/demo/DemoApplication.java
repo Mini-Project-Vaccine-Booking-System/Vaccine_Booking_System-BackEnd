@@ -50,7 +50,7 @@ public class DemoApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry){
-				registry.addMapping("/**").allowedOrigins("http://localhost:3000", "https://test-booking-alta.herokuapp.com/", "https://test-vaksinqu.vercel.app/" ).allowCredentials(true).allowedMethods("GET", "PUT", "POST", "DELETE");
+				registry.addMapping("/**").allowedOrigins("http://localhost:3000", "https://booking-vaksin-alta.herokuapp.com/", "https://test-vaksinqu.vercel.app/" ).allowCredentials(true).allowedMethods("GET", "PUT", "POST", "DELETE");
 			}
 		};
 	}
