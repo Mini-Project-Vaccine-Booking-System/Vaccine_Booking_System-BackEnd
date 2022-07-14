@@ -134,7 +134,7 @@ public class SessionService {
             log.info("save new session: {}", request);
             
             log.info("search user id {}", request.getIdHealth());
-            User user = userService.findById(request.getIdHealth());
+            User user = userService.searchHealthById(request.getIdHealth());
             
             log.info("search vaksin name: ", request.getNama(), " vaksin health id: ", request.getIdHealth());
             Optional <Vaksin> vaksin = vaksinRepository.searchForSession(request.getNama(), request.getIdHealth());
@@ -169,7 +169,7 @@ public class SessionService {
             
             
             log.info("search user id {}", request.getIdHealth());
-            User user = userService.findById(request.getIdHealth());
+            User user = userService.searchHealthById(request.getIdHealth());
            
             
             log.info("search vaksin name: ", request.getNama(), " vaksin health id: ", request.getIdHealth());

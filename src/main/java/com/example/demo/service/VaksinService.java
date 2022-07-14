@@ -100,7 +100,7 @@ public class VaksinService {
             .orElseThrow(() -> new Exception("VAKSIN ID " + id +" NOT FOUND"));
                         
             log.info("search vaksin parent's by id : "+request.getIdHealth());
-            User user = userService.findById(request.getIdHealth());
+            User user = userService.searchHealthById(request.getIdHealth());
                     
 
             log.info("Update vaksin: {}", request);
