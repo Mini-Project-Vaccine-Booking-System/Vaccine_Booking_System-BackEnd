@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.User;
 import com.example.demo.entity.dto.UserDTO;
 import com.example.demo.response.TokenResponse;
 import com.example.demo.service.AuthService;
@@ -23,8 +24,8 @@ public class AuthController {
     @PostMapping(value = "/regHealth")
     public ResponseEntity<?> registerAdmin(@RequestBody UserDTO req) {
         try {
-            authService.registerAdmin(req);
-            return ResponseUtil.build("REGISTRATION HEALTH FACILITY SUCCESS",AppConstant.ResponseCode.SUCCESS, req, HttpStatus.CREATED);
+            User regAdmin = authService.registerAdmin(req);
+            return ResponseUtil.build("REGISTRATION HEALTH FACILITY SUCCESS",AppConstant.ResponseCode.SUCCESS, regAdmin, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -33,8 +34,8 @@ public class AuthController {
     @PostMapping(value = "/regUser")
     public ResponseEntity<?> registerUser(@RequestBody UserDTO req) {
         try {
-            authService.registerUser(req);
-            return ResponseUtil.build("REGISTRATION USER SUCCESS",AppConstant.ResponseCode.SUCCESS, req, HttpStatus.CREATED);
+            User regUser= authService.registerUser(req);
+            return ResponseUtil.build("REGISTRATION USER SUCCESS",AppConstant.ResponseCode.SUCCESS, regUser, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

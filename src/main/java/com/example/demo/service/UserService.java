@@ -51,7 +51,7 @@ public class UserService {
         try {
             log.info("Get user detail");
              User user = userRepository.searchHealthById(id)
-             .orElseThrow(() -> new Exception("HEALH FACILITY ID " + id + " NOT FOUND"));
+             .orElseThrow(() -> new Exception("USER ID " + id + " NOT FOUND"));
               return user;
               } catch (Exception e) {
             log.error("Get an error by get user detail, Error : {}",e.getMessage());

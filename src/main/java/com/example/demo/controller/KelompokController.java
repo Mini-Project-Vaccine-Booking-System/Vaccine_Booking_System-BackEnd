@@ -29,7 +29,6 @@ public class KelompokController {
 
 
     @GetMapping(value = "")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getKelompok() {
         try {
             List<Kelompok> kelompoks =  kelompokService.getKelompok();
@@ -94,7 +93,6 @@ public class KelompokController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteKelompok(@PathVariable (value = "id") Long id) {
         try {
             kelompokService.deleteKelompok(id);

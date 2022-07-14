@@ -32,7 +32,6 @@ public class CitizenController {
 
 
     @GetMapping(value = "")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAll() {
         try {
             List<User> users =  userService.getAll();
