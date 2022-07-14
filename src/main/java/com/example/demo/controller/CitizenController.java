@@ -95,7 +95,7 @@ public class CitizenController {
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDTO citizen) {
         try {
             User user = userService.updateUser(id, citizen);
-            return ResponseUtil.build("KELOMPOK ID " + id + " UPDATED",AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
+            return ResponseUtil.build("USER ID " + id + " UPDATED",AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
             } catch (Exception e) {
                 return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
             } 
@@ -106,7 +106,7 @@ public class CitizenController {
     public ResponseEntity<?> updateHealth(@PathVariable Long id, @RequestBody UserDTO health) {
         try {
             User user = userService.updateHealth(id, health);
-            return ResponseUtil.build("KELOMPOK ID " + id + " UPDATED",AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
+            return ResponseUtil.build("HEALTH FACILITY ID " + id + " UPDATED",AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
             } catch (Exception e) {
                 return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
             } 
@@ -126,9 +126,9 @@ public class CitizenController {
 
 
     @PutMapping(value = "/change-password")
-    public ResponseEntity<Object> changePassword(Principal principal, @RequestBody UserDTO request) {
+    public ResponseEntity<?> changePassword(Principal principal, @RequestBody UserDTO request) {
     try {
-        request.setEmail(principal.getName());
+        request.setEmail(principal.getName().toLowerCase());
         User user = userService.changePassword(request);
         return ResponseUtil.build("PASSWORD CHANGED",AppConstant.ResponseCode.SUCCESS, user, HttpStatus.OK);
     } catch (Exception e) {

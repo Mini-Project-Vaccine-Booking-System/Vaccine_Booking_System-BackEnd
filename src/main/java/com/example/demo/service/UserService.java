@@ -50,8 +50,8 @@ public class UserService {
      public User findById(Long id) {
         try {
             log.info("Get user detail");
-             User user = userRepository.findById(id)
-             .orElseThrow(() -> new Exception("USER ID " + id + " NOT FOUND"));
+             User user = userRepository.searchHealthById(id)
+             .orElseThrow(() -> new Exception("HEALH FACILITY ID " + id + " NOT FOUND"));
               return user;
               } catch (Exception e) {
             log.error("Get an error by get user detail, Error : {}",e.getMessage());
@@ -107,6 +107,18 @@ public class UserService {
             log.error("Get an error by get all health facilities, Error : {}",e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
 
+        }
+    }
+
+    public User searchHealthById(Long id){
+        try {
+            log.info("Get user detail");
+             User user = userRepository.findById(id)
+             .orElseThrow(() -> new Exception("USER ID " + id + " NOT FOUND"));
+              return user;
+              } catch (Exception e) {
+            log.error("Get an error by get user detail, Error : {}",e.getMessage());
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

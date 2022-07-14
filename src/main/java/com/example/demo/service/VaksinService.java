@@ -75,7 +75,7 @@ public class VaksinService {
         try{    
             log.info("save new vaksin: {}", request);
             log.info("search user id {}", request.getIdHealth());
-            User user = userService.findById(request.getIdHealth());
+            User user = userService.searchHealthById(request.getIdHealth());
                 
             Vaksin vaksin = new Vaksin();
             log.info("save vaksin");
