@@ -127,12 +127,19 @@ public class AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String jwt = jwtTokenProvider.generateToken(authentication);
+            User user = userRepository.findUsername(req.getEmail());
+
 
 
             TokenResponse tokenResponse = new TokenResponse();
             tokenResponse.setToken(jwt);
+            tokenResponse.setUser(user);
+            
+            
+
             log.info("Token created");
             return tokenResponse;
+
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
