@@ -50,7 +50,7 @@ public class UserService {
      public User findById(Long id) {
         try {
             log.info("Get user detail");
-             User user = userRepository.searchHealthById(id)
+             User user = userRepository.findById(id)
              .orElseThrow(() -> new Exception("USER ID " + id + " NOT FOUND"));
               return user;
               } catch (Exception e) {
