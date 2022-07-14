@@ -33,7 +33,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public UserDTO registerAdmin(UserDTO req) { 
+    public User registerAdmin(UserDTO req) { 
         try {
             log.info("Search username in database");
             if (userRepository.findUsername(req.getEmail()) != null) {
@@ -68,14 +68,14 @@ public class AuthService {
 
             req.setPassword("*".repeat(req.getPassword().length()));
             log.info("User {} saved", req.getEmail());
-            return req;
+            return user;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    public UserDTO registerUser(UserDTO req) { 
+    public User registerUser(UserDTO req) { 
         try {
             log.info("Search username in database");
             if (userRepository.findUsername(req.getEmail()) != null) {
@@ -111,7 +111,7 @@ public class AuthService {
 
             req.setPassword("*".repeat(req.getPassword().length()));
             log.info("User {} saved", req.getEmail());
-            return req;
+            return user;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
