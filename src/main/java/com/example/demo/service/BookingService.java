@@ -29,6 +29,10 @@ import lombok.extern.slf4j.Slf4j;
 public class BookingService {
     @Autowired
     BookingRepository bookingRepository;
+    @Autowired
+    KelompokService kelompokService;
+    @Autowired
+    SessionService sessionService;
 
     @Autowired
     KelompokRepository kelompokRepository;
@@ -37,146 +41,157 @@ public class BookingService {
     SessionRepository sessionRepository;
 
 
-    public ResponseEntity<Object> getBooking() {
+    public List<Booking> getBooking() {
         try {
             log.info("Get all booking");
             List<Booking> booking = bookingRepository.findAll();
             if (booking.isEmpty()) {
                 log.info("booking is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+                throw new Exception("BOOKING IS EMPTY");
+               
             }
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, booking, HttpStatus.OK);
+            return booking;
+            
         } catch (Exception e) {
             log.error("Get an error by get all booking, Error : {}",e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e.getMessage(), e);
+            
         }
     }
 
-    public ResponseEntity<Object> getBookingById(Long id) {
+    public Booking getBookingById(Long id) {
         try {
             log.info("Get booking by id");
-            Optional<Booking> bookingById = bookingRepository.findById(id);
-            if (bookingById.isEmpty()) {
-                log.info("booking is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, bookingById, HttpStatus.OK);
+            Booking bookingById = bookingRepository.findById(id)
+                .orElseThrow(() -> new Exception("BOOKING ID " + id + " NOT FOUND"));
+                return bookingById;
+            
         } catch (Exception e) {
             log.error("Get an error in get booking by id , Error : {}",e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e.getMessage(), e);
+            
         }
     }
-    public ResponseEntity<Object> getByUserId( Long idUser) {
+    public List<Booking> getByUserId( Long idUser) {
         try {
             log.info("Get booking by kelompok parent's id");
             List<Booking> bookingByParent = bookingRepository.findByKelompok_User_IdUser(idUser);
             if (bookingByParent.isEmpty()) {
                 log.info("booking is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+                throw new Exception("BOOKING BY USER ID "+ idUser+" IS EMPTY");
+                
             }
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, bookingByParent, HttpStatus.OK);
+            return bookingByParent;
+         
+            
         } catch (Exception e) {
             log.error("Get an error in get booking by kelompok' parent's id , Error : {}",e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e.getMessage(), e);
+            
         }
     }
-    public ResponseEntity<Object> getByUserHealthId( Long idUser) {
+    public List<Booking> getByUserHealthId( Long idUser) {
         try {
             log.info("Get booking by session health's id");
             List<Booking> bookingBySesParent = bookingRepository.findBySession_User_IdUser(idUser);
             if (bookingBySesParent.isEmpty()) {
                 log.info("booking is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+                throw new Exception("BOOKING BY HEALTH FACILITIES ID "+ idUser+" IS EMPTY");
+                
             }
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, bookingBySesParent, HttpStatus.OK);
+            return bookingBySesParent;
+            
         } catch (Exception e) {
             log.error("Get an error in get booking by session' health's id , Error : {}",e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e.getMessage(), e); 
+            
         }
     }
 
-    public ResponseEntity<Object> save(BookingDTO request) {
+    public Booking save(BookingDTO request) {
         try{    
             log.info("save new booking: {}", request);
             
             log.info("search kelompok  id {}", request.getIdKelompok());
-            Optional <Kelompok> kelompok = kelompokRepository.findById(request.getIdKelompok());
-            if(kelompok.isEmpty()) {
-                log.info("kelompok booking id: ", request.getIdKelompok()," is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }
+            Kelompok kelompok = kelompokService.findById(request.getIdKelompok());
+            
+            Optional<Booking> checkBooking = bookingRepository.findByKelompok_IdKelompok(request.getIdKelompok());
+            if(checkBooking.isPresent()) {
+                log.info("USER : " + request.getIdKelompok() + " HAS ALREADY BOOKED VACCINE: ");
+                throw new Exception("USER HAS ALREADY BOOKED VACCINE"); }
+                
+
             int stok = sessionRepository.sessionStok(request.getIdSession());
             if(stok>0) {
                 log.info("session stok by id: " + request.getIdSession() + " before booking is: " + stok);
                 sessionRepository.setStokMinus(request.getIdSession());  
             }
             log.info("search session  id {}", request.getIdSession());
-            Optional<Session> session = sessionRepository.findById(request.getIdSession());
-            if(session.isEmpty()) {
-                log.info("session booking id: ",request.getIdSession()," is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }
+            Session session = sessionService.getSessionById(request.getIdSession());
+            
            
             log.info("save booking");
             Booking booking = new Booking();
-            booking.setKelompok(kelompok.get());
-            booking.setSession(session.get());
+            booking.setKelompok(kelompok);
+            booking.setSession(session);
             bookingRepository.save(booking);
-            
+            return booking;
     
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, booking, HttpStatus.OK);
+           
         }catch (Exception e) {
             log.error("Get an error by executing create new booking, Error : {}",e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(e.getMessage(), e);
+           
         }
     }
 
-    public ResponseEntity<Object> updateBooking( Long id, BookingDTO request) {
+    public Booking updateBooking( Long id, BookingDTO request) {
         try{    
             log.info("search booking: ");
-            Optional <Booking> booking = bookingRepository.findById(id);
+            Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new Exception("BOOKING ID " + id +" NOT FOUND"));
+            
             log.info("search kelompok booking update  id {}", request.getIdSession());
-            Optional <Kelompok> kelompok = kelompokRepository.findById(request.getIdKelompok());
-            if(kelompok.isEmpty()) {
-                log.info("kelompok booking update id: ", request.getIdKelompok()," is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }
+
+
+            Kelompok kelompok = kelompokService.findById(request.getIdKelompok());
+            
+
+
             log.info("search session booking update  id {}", request.getIdSession());
-            Optional<Session> session = sessionRepository.findById(request.getIdSession());
-            if(session.isEmpty()) {
-                log.info("session booking update id: ",request.getIdSession()," is empty");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }   
-            log.info("Update session: {}", request);
-        booking.ifPresent(res -> {
-            res.setKelompok(kelompok.get());
-            res.setSession(session.get());
-            bookingRepository.save(res);
-        });
-        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, booking, HttpStatus.OK);
+            Session session = sessionService.getSessionById(request.getIdSession());
+              
+            log.info("Update Booking: {}", request);
+        
+            booking.setKelompok(kelompok);
+            booking.setSession(session);
+            bookingRepository.save(booking);
+            return booking;
+        
+        
     }catch (Exception e) {
         log.error("Get an error by update booking, Error : {}",e.getMessage());
-        return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR,null,HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new RuntimeException(e.getMessage(), e);
+        
     }
     }
 
-    public ResponseEntity<Object> deleteBooking(Long id) {
+    public void deleteBooking(Long id) {
         try {
             log.info("Check by Booking id: "+id);
-            Optional<Booking> bookingById = bookingRepository.findById(id);
-            if(bookingById.isEmpty()){
-                log.info("Booking id "+id+ " NOT FOUND");
-                return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
-            }
+            bookingRepository.findById(id)
+                .orElseThrow(() -> new Exception("BOOKING ID " + id + " NOT FOUND"));
+            
             log.info("Executing delete booking by id: {}", id);
-            bookingById.ifPresent(res -> {
-                bookingRepository.delete(res);
-            });
-        } catch (EmptyResultDataAccessException e) {
+            
+                bookingRepository.deleteById(id);
+           
+        } catch (Exception e) {
             log.error("Data not found. Error: {}", e.getMessage());
-            return ResponseUtil.build(AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.NOT_FOUND);
+            throw new RuntimeException(e.getMessage(), e);
+            
         }
-        return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK); 
+        
     }
 
     

@@ -1,6 +1,10 @@
 package com.example.demo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -17,6 +21,10 @@ import java.util.List;
 
 @Entity
 @Data
+@SuperBuilder
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "vaksin")
 public class Vaksin {
     @Id

@@ -20,7 +20,7 @@ public class ApiResponse<T> implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime timestamp;
 
-    private String responseCode;
+     private String responseCode;
 
     private String message;
 

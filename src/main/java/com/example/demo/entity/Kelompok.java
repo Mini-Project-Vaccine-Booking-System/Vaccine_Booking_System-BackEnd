@@ -11,11 +11,19 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table
 @Data
+@SuperBuilder
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Kelompok {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

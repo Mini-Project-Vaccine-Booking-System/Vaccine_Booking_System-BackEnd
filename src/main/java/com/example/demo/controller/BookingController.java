@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.example.demo.constant.AppConstant;
 import com.example.demo.entity.Booking;
 import com.example.demo.entity.dto.BookingDTO;
 import com.example.demo.service.BookingService;
+import com.example.demo.util.ResponseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/booking")
@@ -27,40 +28,80 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping(value = "")
-    public ResponseEntity<Object> getBooking() {
-        return bookingService.getBooking();
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getBooking() {
+        try {
+            List<Booking> bookings =  bookingService.getBooking();
+            return ResponseUtil.build("GET All BOOKING",AppConstant.ResponseCode.SUCCESS, bookings, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
     }
     
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Object> getBooking(@PathVariable(value = "id") Long id) {
-        return bookingService.getBookingById(id);
+    public ResponseEntity<?> getBooking(@PathVariable(value = "id") Long id) {
+        try {
+            Booking booking =  bookingService.getBookingById(id);
+            return ResponseUtil.build("GET BOOKING DETAIL",AppConstant.ResponseCode.SUCCESS, booking, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }  
     }
+
+
     @GetMapping(value = "/s/{idUser}")
-    public ResponseEntity<Object> findBookingByUserId(@PathVariable(value = "idUser") Long idUser) {
-        return bookingService.getByUserId(idUser);
+    public ResponseEntity<?> findBookingByUserId(@PathVariable(value = "idUser") Long idUser) {
+        try {
+            List<Booking> bookings =  bookingService.getByUserId(idUser);
+            return ResponseUtil.build("GET BOOKING BY USER ID ",AppConstant.ResponseCode.SUCCESS, bookings, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            } 
     }
+
+
     @GetMapping(value = "/user/{idUser}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> findBookingByUserHealthId(@PathVariable(value = "idUser") Long idUser) {
-        return bookingService.getByUserHealthId(idUser);
+    public ResponseEntity<?> findBookingByUserHealthId(@PathVariable(value = "idUser") Long idUser) {
+        try {
+            List<Booking> bookings =  bookingService.getByUserHealthId(idUser);
+            return ResponseUtil.build("GET BOOKING BY HEALTH FACILITY ID ",AppConstant.ResponseCode.SUCCESS, bookings, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }  
     }
 
     @PutMapping(value = "/{id}") 
-    public ResponseEntity<Object> updateBooking(
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> updateBooking(
         @PathVariable Long id, @RequestBody BookingDTO  request) {
-            return bookingService.updateBooking(id, request);
+            try {
+                Booking booking = bookingService.updateBooking(id, request);
+                return ResponseUtil.build("BOOKING ID " + id + " UPDATED",AppConstant.ResponseCode.SUCCESS, booking, HttpStatus.OK);
+            } catch (Exception e) {
+                return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            } 
     }
 
     @PostMapping("")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Object> createNewBooking(@RequestBody BookingDTO request) {
-            return bookingService.save(request);
+    public ResponseEntity<?> createNewBooking(@RequestBody BookingDTO request) {
+        try {
+            Booking booking = bookingService.save(request);
+            return ResponseUtil.build("BOOKING CREATED",AppConstant.ResponseCode.SUCCESS, booking, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
     }
 
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> deleteBooking(@PathVariable (value = "id") Long id) {
-      return bookingService.deleteBooking(id);
+    public ResponseEntity<?> deleteBooking(@PathVariable (value = "id") Long id) {
+        try {
+            bookingService.deleteBooking(id);
+            return ResponseUtil.build("BOOKING ID " + id + " DELETED",AppConstant.ResponseCode.SUCCESS, null, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseUtil.build(e.getMessage(),AppConstant.ResponseCode.DATA_NOT_FOUND, null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } 
     }
 
 

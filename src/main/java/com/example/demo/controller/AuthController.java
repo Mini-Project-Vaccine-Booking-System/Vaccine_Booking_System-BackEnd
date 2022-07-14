@@ -24,9 +24,9 @@ public class AuthController {
     public ResponseEntity<?> registerAdmin(@RequestBody UserDTO req) {
         try {
             authService.registerAdmin(req);
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, req, HttpStatus.CREATED);
+            return ResponseUtil.build("REGISTRATION HEALTH FACILITY SUCCESS", req, HttpStatus.CREATED);
         } catch (Exception e) {
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseUtil.build(e.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -34,9 +34,9 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody UserDTO req) {
         try {
             authService.registerUser(req);
-            return ResponseUtil.build(AppConstant.ResponseCode.SUCCESS, req, HttpStatus.CREATED);
+            return ResponseUtil.build("REGISTRATION USER SUCCESS", req, HttpStatus.CREATED);
         } catch (Exception e) {
-            return ResponseUtil.build(AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseUtil.build(e.getMessage(), null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
