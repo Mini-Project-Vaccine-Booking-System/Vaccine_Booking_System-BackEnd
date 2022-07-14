@@ -15,7 +15,7 @@ public interface BookingRepository extends JpaRepository<Booking,Long>{
     @Query(value = "SELECT * FROM booking WHERE booking.id_booking = ? ", nativeQuery = true)
     Optional<Booking> searchById (Long id);
 
-    
+    Optional<Booking> findByKelompok_IdKelompok(Long id);
     List<Booking> findByKelompok_User_IdUser(Long idUser);
     List<Booking> findBySession_User_IdUser(Long idUser);
 }
