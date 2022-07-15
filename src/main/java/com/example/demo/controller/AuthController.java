@@ -43,16 +43,15 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> generateToken(@RequestBody UserDTO req) {
+        
+        try{TokenResponse token = authService.generateToken(req);
 
-        TokenResponse token = authService.generateToken(req);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Authorization", token.getToken());
-        try {
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("Authorization", token.getToken());
             return ResponseEntity.ok().headers(responseHeaders).body(token);
-        } catch (Exception e) {
-            return ResponseUtil.build("LOGIN GAGAL SILAHKAN PERIKSA EMAIL DAN PASSWORD",AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        }catch(Exception e){return ResponseUtil.build("LOGIN ERROR",AppConstant.ResponseCode.UNKNOWN_ERROR, null, HttpStatus.UNAUTHORIZED);}
+        
         
     }
+
 }
