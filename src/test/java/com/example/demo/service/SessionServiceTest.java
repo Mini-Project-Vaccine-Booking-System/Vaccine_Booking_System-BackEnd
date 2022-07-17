@@ -3,17 +3,20 @@ package com.example.demo.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.demo.entity.Session;
+import com.example.demo.entity.Vaksin;
 import com.example.demo.entity.dto.SessionDTO;
 import com.example.demo.repository.SessionRepository;
 import com.example.demo.repository.UserRepository;
@@ -183,11 +186,41 @@ public class SessionServiceTest {
 
     @Test
     void testSave() {
-
+        
     }
 
-    @Test
-    void testUpdateSession() {
+    // @Test
+    // void testUpdateSession() {
+    //     SessionDTO sessionDTO = new SessionDTO();
+        
+    //     sessionDTO = new SessionDTO();
+    //     //sessionDTO.setVaksin(vaksinRepository.getVaksinById()); //enggak dapat isi vaksinnya
+    //     sessionDTO.setDate(Date.valueOf("2020-01-01"));
+    //     sessionDTO.setStart(Time.valueOf("08:00:00"));
+    //     sessionDTO.setEnd(Time.valueOf("12:00:00"));
+    //     sessionDTO.setStok(50);
+
+    //     doReturn(Optional.of(session))
+    //     .when(sessionRepository).findById(id);
+
+    //     //session.setVaksin(vaksinRepository.getVaksinById(4L)); //enggak dapat isi vaksinnya
+    //     session.setVaksin(Vaksin.valueOf(5));
+    //     session.setDate(Date.valueOf("2020-01-01"));
+    //     session.setStart(Time.valueOf("08:00:00"));
+    //     session.setEnd(Time.valueOf("12:00:00"));
+    //     session.setStok(50);
+        
+    //     when(sessionRepository.save(session)).thenReturn(session);
+    //     var result = sessionService.updateSession(id, sessionDTO);
+
+    //     assertEquals(session, result);
+    // }
+        @Test
+        void updateSessionException_Test() {
+          SessionDTO sessionDTO = EASY_RANDOM.nextObject(SessionDTO.class);
+          assertThrows(RuntimeException.class, () -> {
+            sessionService.updateSession(id, sessionDTO);
+          });
 
     }
 }

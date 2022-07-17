@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import com.example.demo.entity.Vaksin;
 import com.example.demo.entity.dto.VaksinDTO;
 import com.example.demo.repository.VaksinRepository;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
@@ -141,6 +143,30 @@ public class VaksinServiceTest {
 
     @Test
     void testUpdateVaksin() {
+        VaksinDTO vaksinDTO = new VaksinDTO();
 
+        vaksinDTO = new VaksinDTO();
+        vaksinDTO.setNama("Vaksin");
+        vaksinDTO.setQuantity(50L);
+
+        doReturn(Optional.of(vaksin))
+        .when(vaksinRepository).findById(id);
+
+        vaksin.setNama("polan");
+        vaksin.setQuantity(10L);
+        
+        when(vaksinRepository.save(vaksin)).thenReturn(vaksin);
+
+        var result = vaksinService.updateVaksin(id, vaksinDTO);
+        assertEquals(vaksin, result);
+
+    }
+    @Test
+    void testUpdateException_Test() {
+        VaksinDTO vaksinDTO = EASY_RANDOM.nextObject(VaksinDTO.class);
+
+        assertThrows(RuntimeException.class, () -> {
+            vaksinService.updateVaksin(id, vaksinDTO);
+        });
     }
 }

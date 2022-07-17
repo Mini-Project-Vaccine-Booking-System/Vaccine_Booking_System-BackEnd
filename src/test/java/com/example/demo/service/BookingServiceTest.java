@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,6 +19,8 @@ import com.example.demo.entity.dto.BookingDTO;
 import com.example.demo.repository.BookingRepository;
 import com.example.demo.repository.KelompokRepository;
 import com.example.demo.repository.SessionRepository;
+
+
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,6 +68,8 @@ public class BookingServiceTest {
     private KelompokRepository kelompokRepository;
     @MockBean
     private BookingRepository bookingRepository;
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
 
     @Test
@@ -166,6 +171,33 @@ public class BookingServiceTest {
 
     @Test
     void testUpdateBooking() {
+        BookingDTO bookingDTO = new BookingDTO();
+
+        bookingDTO = new BookingDTO();
+        bookingDTO.setIdKelompok(4L);
+        bookingDTO.setIdSession(4L);
+
+        doReturn(Optional.of(bookingDTO))
+        .when(bookingRepository).findById(id);
+
+        
+        //booking.setKelompok(kelompokService.getKelompokById(4L));
+        booking.setSession(sessionService.getSessionById(4L));
+
+        when(bookingRepository.save(booking)).thenReturn(booking);
+        var result = bookingService.updateBooking(id, bookingDTO);
+        assertEquals(booking, result);
+        
 
     }
+    @Test
+    void updateException_Test() {
+        BookingDTO bookingDTO = EASY_RANDOM.nextObject(BookingDTO.class);
+
+        assertThrows(RuntimeException.class, () -> {
+            bookingService.updateBooking(id, bookingDTO);
+        });
+
+    }
+
 }

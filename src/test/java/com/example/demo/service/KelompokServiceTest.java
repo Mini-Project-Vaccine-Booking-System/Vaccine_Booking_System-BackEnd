@@ -19,8 +19,12 @@ import javax.persistence.Entity;
 import com.example.demo.entity.Kelompok;
 import com.example.demo.entity.User;
 import com.example.demo.entity.dto.KelompokDTO;
+import com.example.demo.entity.dto.VaksinDTO;
 import com.example.demo.repository.KelompokRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.VaksinRepository;
+
+import lombok.var;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
@@ -194,6 +198,38 @@ public class KelompokServiceTest {
 
     @Test
     void testUpdateKelompok() {
+        KelompokDTO kelompokDTO = new KelompokDTO();
+       
+        kelompokDTO = new KelompokDTO();
+        kelompokDTO.setNik("123456789");
+        kelompokDTO.setHubungan("Kepala Kelompok");
+        kelompokDTO.setNamaKelompok("polan");
+        kelompokDTO.setTlp("081234567890");
+        kelompokDTO.setTglLahir(new Date());
+        kelompokDTO.setGender("male");
+        kelompokDTO.setUpdatedAt(new Date());
+        
+        doReturn(Optional.of(kelompok))
+        .when(kelompokRepository).findById(id);
 
+        kelompok.setNik("123456789");
+        kelompok.setHubungan("Kepala Kelompok");
+        kelompok.setNamaKelompok("polan");
+        kelompok.setTlp("081234567890");
+        kelompok.setTglLahir(new Date());
+        kelompok.setGender("male");
+        kelompok.setUpdatedAt(new Date());
+
+        when(kelompokRepository.save(kelompok)).thenReturn(kelompok);
+        var result = kelompokService.updateKelompok(id,kelompokDTO);
+        assertEquals(kelompok, result);
+
+    }
+    @Test
+    void updateKelompokException_Test() {
+        KelompokDTO kelompokDTO = EASY_RANDOM.nextObject(KelompokDTO.class);
+        assertThrows(RuntimeException.class, () -> {
+            kelompokService.updateKelompok(id,kelompokDTO);
+        });
     }
 }
