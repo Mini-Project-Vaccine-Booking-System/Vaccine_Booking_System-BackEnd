@@ -2,9 +2,11 @@ package com.example.demo.service;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -39,7 +41,7 @@ public class VaksinServiceTest {
     @Autowired
     private VaksinService vaksinService;
     @MockBean
-    VaksinRepository vaksinRepository;
+    private VaksinRepository vaksinRepository;
     @MockBean
     private UserService userService;
 
@@ -80,18 +82,56 @@ public class VaksinServiceTest {
     }
 
     @Test
-    void testFindById() {
+    void testFindById_Success() {
+        when(vaksinRepository.findById(vaksin.getIdVaksin()))
+            .thenReturn(Optional.of(vaksin));
+        
+        var result = vaksinService.findById(vaksin.getIdVaksin());
 
+        assertEquals(vaksin, result);
+
+    }
+    @Test
+    void getIdException_Test() {
+        assertThrows(RuntimeException.class, () -> {
+            vaksinService.findById(id);
+        });
     }
 
     @Test
-    void testGetByUserId() {
+    void testGetByUserId_Success() {
+        when(vaksinRepository.findByUser_idUser(vaksin.getUser().getIdUser()))
+        .thenReturn(vaksins);
+    
+            var result = vaksinService.getByUserId(vaksin.getUser().getIdUser());
 
+
+            assertEquals(vaksins, result);
+        }
+        @Test
+        void getByUserIdException_Test() {
+            assertThrows(RuntimeException.class, () -> {
+                vaksinService.getByUserId(id);
+            });
+        }
+
+    @Test
+    void testGetvaksin_Success() {
+        when(vaksinRepository.findAll())
+        .thenReturn(vaksins);
+    
+        var result = vaksinService.getvaksin();
+
+        verify(vaksinRepository, times(1)).findAll();
+
+        assertEquals(vaksins, result);
     }
 
     @Test
-    void testGetvaksin() {
-
+    void getAllException_Test() {
+        assertThrows(RuntimeException.class, () -> {
+            vaksinService.getvaksin();
+        });
     }
 
     @Test

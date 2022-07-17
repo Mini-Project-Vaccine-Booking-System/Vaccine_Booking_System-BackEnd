@@ -9,9 +9,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.persistence.Entity;
 
 import com.example.demo.entity.Kelompok;
 import com.example.demo.entity.User;
@@ -24,10 +27,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -122,7 +128,7 @@ public class KelompokServiceTest {
     }
 
     @Test
-    void testGetByUserId() {
+    void testGetByUserId_Success() {
         when(kelompokRepository.findByUser_idUser(kelompok.getUser().getIdUser()))
             .thenReturn(kelompoks);
         
@@ -160,10 +166,11 @@ public class KelompokServiceTest {
     void testSave_Success() {
     
         // User user = new User();
+        
         // when(userService.findById(kelompokDTO.getIdUser()))
-        // .thenReturn(user);
+        // .thenReturn(user.builder().idUser(kelompokDTO.getIdUser()).build());
 
-        // kelompok.setUser(user);
+        // kelompok.setUser(user.builder().idUser(kelompokDTO.getIdUser()).build());
         // kelompok.setNik(kelompokDTO.getNik()    );
         // kelompok.setHubungan(kelompokDTO.getHubungan());
         // kelompok.setNamaKelompok(kelompokDTO.getNamaKelompok());
