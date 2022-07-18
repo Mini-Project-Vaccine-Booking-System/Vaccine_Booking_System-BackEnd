@@ -24,7 +24,6 @@ import com.example.demo.repository.KelompokRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.VaksinRepository;
 
-import lombok.var;
 
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
