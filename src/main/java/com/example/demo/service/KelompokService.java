@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@Transactional
 public class KelompokService {
     @Autowired
     private KelompokRepository kelompokRepository;

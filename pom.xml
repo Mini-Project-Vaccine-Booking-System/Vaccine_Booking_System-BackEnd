@@ -48,6 +48,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-random-core</artifactId>
+			<version>4.0.0</version>
+		</dependency>	
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -106,6 +118,40 @@
         <artifactId>heroku-maven-plugin</artifactId>
         <version>3.0.3</version>
       </plugin>
+	  <plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.8</version>
+				<configuration>
+					<excludes>
+						<exclude>**/config/*.class</exclude>
+						<exclude>**/constant/*.class</exclude>
+						<exclude>**/controller/*.class</exclude>
+						<exclude>**/entity/**/*.class</exclude>
+						<exclude>**/repository/*.class</exclude>
+						<exclude>**/response/*.class</exclude>
+						<exclude>**/security/*.class</exclude>
+						<exclude>**/service/UserDetailsImpl.class</exclude>
+						<exclude>**/demo/*.class</exclude>
+						<exclude>**/util/*.class</exclude>
+					</excludes>
+				</configuration>
+				<executions>	
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
