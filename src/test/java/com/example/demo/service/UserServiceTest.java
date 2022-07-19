@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -21,13 +22,17 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
 import org.jeasy.random.EasyRandom;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.NullValueInNestedPathException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -37,8 +42,9 @@ public class UserServiceTest {
     private final EasyRandom EASY_RANDOM = new EasyRandom(); 
     private Long id;
     private List<User> users;
-    //private UserDTO userDto;
+    private UserDTO userDto;
     private User user;
+    
 
     @MockBean
     private UserRepository userRepository;
@@ -50,15 +56,34 @@ public class UserServiceTest {
         id = EASY_RANDOM.nextObject(Long.class);
         users = EASY_RANDOM.objects(User.class, 2)
                     .collect(Collectors.toList());
-     //   userDto = EASY_RANDOM.nextObject(UserDTO.class);
+       userDto = EASY_RANDOM.nextObject(UserDTO.class);
         user= EASY_RANDOM.nextObject(User.class);
+    }
+
+    @Bean public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Autowired
     private UserService userService;
 
     @Test
-    void testChangePassword() {
+    void testChangePassword_Success() {
+        when(userRepository.findByUsername(userDto.getEmail()))
+        .thenReturn(Optional.of(user));
+
+    when(passwordEncoder.matches(userDto.getCurrentPassword(), user.getPassword()))
+        .thenReturn(true);
+
+    var result = userService.changePassword(userDto);
+
+    assertEquals(user, result);
+    }
+    @Test
+    void changePasswordExceptionTest() {
+        assertThrows(RuntimeException.class, () -> {
+            userService.changePassword(userDto);
+        });
     }
 
     @Test
@@ -208,13 +233,11 @@ public class UserServiceTest {
         doReturn(Optional.of(user))
         .when(userRepository).searchHealthById(id);
 
-        String message= "HEALTH FACILITY IS NOT FOUND";
-        when(userRepository.searchHealthById(null)).thenThrow(ExceptionInInitializerError.class);
-
-        user.setUsername("faskes@gmail.com");
-        user.setNoHp("081");
-        user.setNama("rs wirogunan");
-        user.setAddress("JL Wirogunan");
+        
+        user.setUsername("faskes1@gmail.com");
+        user.setNoHp("0812");
+        user.setNama("rs wirogunan jogja");
+        user.setAddress("JL Wirogunan 1");
         user.setKota("Yogyakarta");
         user.setImage("image.jpg");
 
@@ -235,7 +258,9 @@ public class UserServiceTest {
         assertThrows(RuntimeException.class, () -> {
             userService.updateHealth(id, userDTO);
         });
+        
     }
+
 
     @Test
     void testUpdateUser() {

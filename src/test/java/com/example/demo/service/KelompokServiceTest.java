@@ -189,7 +189,9 @@ public class KelompokServiceTest {
     }
     @Test
     void saveException_Test() {
-        
+        // KelompokDTO kelompokDTO =new KelompokDTO();
+        // when(kelompokRepository.findById(kelompok.getIdKelompok()))
+        //     .thenReturn(Optional.of(kelompok));
         // assertThrows(RuntimeException.class, () -> {
         //     kelompokService.save(kelompokDTO);
         // });

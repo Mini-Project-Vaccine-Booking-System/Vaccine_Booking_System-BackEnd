@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.demo.entity.Session;
+import com.example.demo.entity.User;
 import com.example.demo.entity.Vaksin;
 import com.example.demo.entity.dto.SessionDTO;
 import com.example.demo.repository.SessionRepository;
@@ -30,7 +31,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -41,6 +41,8 @@ public class SessionServiceTest {
     private Session session;
     private List<Session> sessions;
     private SessionDTO sessionDTO;
+    private Vaksin vaksin;
+    private User user;
 
     java.util.Date utilDate = new java.util.Date();
     java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -67,6 +69,7 @@ public class SessionServiceTest {
                     .collect(Collectors.toList());
         sessionDTO = EASY_RANDOM.nextObject(SessionDTO.class);
         session= EASY_RANDOM.nextObject(Session.class);
+        vaksin= EASY_RANDOM.nextObject(Vaksin.class);
         
     }
 
@@ -189,22 +192,26 @@ public class SessionServiceTest {
         
     }
 
-    // @Test
-    // void testUpdateSession() {
+    @Test
+    void testUpdateSession() {
     //     SessionDTO sessionDTO = new SessionDTO();
+    //     sessionDTO.setIdSession(id);
+    //  when(vaksinRepository.searchForSession(sessionDTO.getNama(), sessionDTO.getIdHealth())).thenReturn(Optional.of(vaksin));
         
     //     sessionDTO = new SessionDTO();
-    //     //sessionDTO.setVaksin(vaksinRepository.getVaksinById()); //enggak dapat isi vaksinnya
+    //     sessionDTO.setNama(Optional.of(vaksin).get().getNama()); //enggak dapat isi vaksinnya
     //     sessionDTO.setDate(Date.valueOf("2020-01-01"));
     //     sessionDTO.setStart(Time.valueOf("08:00:00"));
     //     sessionDTO.setEnd(Time.valueOf("12:00:00"));
     //     sessionDTO.setStok(50);
+       
 
     //     doReturn(Optional.of(session))
     //     .when(sessionRepository).findById(id);
 
+    //     session.setUser(user);
     //     //session.setVaksin(vaksinRepository.getVaksinById(4L)); //enggak dapat isi vaksinnya
-    //     session.setVaksin(Vaksin.valueOf(5));
+    //     session.setVaksin(Optional.of(vaksin).get());
     //     session.setDate(Date.valueOf("2020-01-01"));
     //     session.setStart(Time.valueOf("08:00:00"));
     //     session.setEnd(Time.valueOf("12:00:00"));
@@ -214,7 +221,7 @@ public class SessionServiceTest {
     //     var result = sessionService.updateSession(id, sessionDTO);
 
     //     assertEquals(session, result);
-    // }
+    }
         @Test
         void updateSessionException_Test() {
           SessionDTO sessionDTO = EASY_RANDOM.nextObject(SessionDTO.class);
