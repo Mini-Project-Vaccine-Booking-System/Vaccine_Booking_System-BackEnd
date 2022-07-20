@@ -1,7 +1,7 @@
-*Vaccine Booking Javaspring*<br>
-<br> Jangkauan Proyek<br><BR>
+**Vaccine Booking Javaspring**<br>
+<br> *Jangkauan Proyek*<br><BR>
 Pemerintah ingin membangun aplikasi seluler yang memfasilitasi warga untuk memesan sesi vaksinasi di fasilitas kesehatan terdekat dengan mudah. Jadi singkatnya, seharusnya hanya ada sistem pemesanan vaksinasi tunggal dan akan terhubung/dikonsumsi oleh kesehatan fasilitas.<br> <BR>
-<br>Tujuan Proyek<br><br>
+<br>*Tujuan Proyek*<br><br>
 Tujuan dari proyek ini adalah untuk membantu tujuan pemerintah dalam vaksinasi Covid-19 dengan memfasilitasi pengguna untuk memesan sesi vaksinasi dengan mudah dan membuat sistem fasilitas kesehatan.<BR>
 <br>
 [Link ERD](https://dbdiagram.io/d/62a0751c54ce26352783100d) <br>
